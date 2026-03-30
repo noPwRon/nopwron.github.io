@@ -205,9 +205,11 @@
       document.getElementById('game')?.remove();
       document.querySelector('.right')?.remove();
       document.getElementById('togglePause')?.remove();
+      document.getElementById('centerMessage')?.remove();
       document.body.style.overflow = 'auto';
     } else {
 
+    // ... rest of original JS unchanged ...
 
     const canvas = document.getElementById('game');
     const ctx = canvas.getContext('2d');
@@ -654,13 +656,8 @@
 
     resetGame();
     requestAnimationFrame(loop);
-  
 
     }
   </script>
 </body>
 </html>
-
-
-
-  
