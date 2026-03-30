@@ -1,182 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jeremy Guido | Retro Resume Arcade</title>
-  <style>
-    :root {
-      --bg: #06070a;
-      --panel: rgba(8, 14, 22, 0.92);
-      --line: #8cf7ff;
-      --line-dim: rgba(140, 247, 255, 0.35);
-      --text: #d8fbff;
-      --accent: #ffe169;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jeremy Guido | Retro Resume Arcade</title>
 
-    * { box-sizing: border-box; }
+<style>
+:root{
+--bg:#06070a;
+--panel:rgba(8,14,22,0.9);
+--line:#8cf7ff;
+--line-dim:rgba(140,247,255,0.35);
+--text:#d8fbff;
+--accent:#ffe169;
+}
 
-    html, body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Courier New", monospace;
-    }
+*{box-sizing:border-box}
 
-    canvas {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-    }
+body{
+margin:0;
+background:var(--bg);
+color:var(--text);
+font-family:Courier New,monospace;
+}
 
-    .hud {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      padding: 16px;
-    }
+/* GAME */
+canvas{
+position:fixed;
+inset:0;
+width:100vw;
+height:100vh;
+z-index:0;
+}
 
-    .panel {
-      background: var(--panel);
-      border: 2px solid var(--line-dim);
-      padding: 16px;
-    }
+/* UI */
+.hud{
+position:relative;
+z-index:2;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;
+padding:16px;
+}
 
-    h1 { margin: 0 0 8px; }
+.panel{
+background:var(--panel);
+border:2px solid var(--line-dim);
+padding:16px;
+}
 
-    .badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      list-style: none;
-      padding: 0;
-    }
+.badges{
+display:flex;
+flex-wrap:wrap;
+gap:6px;
+list-style:none;
+padding:0;
+}
 
-    .badges li {
-      border: 1px solid var(--line-dim);
-      padding: 6px 10px;
-    }
+.badges li{
+border:1px solid var(--line-dim);
+padding:6px 10px;
+}
 
-    .links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
+.links{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin-top:12px;
+}
 
-    .btn {
-      border: 2px solid var(--line);
-      padding: 8px 12px;
-      text-decoration: none;
-      color: var(--text);
-      display: inline-block;
-    }
+.btn{
+border:2px solid var(--line);
+padding:8px 12px;
+text-decoration:none;
+color:var(--text);
+}
 
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      background: var(--panel);
-      border: 2px solid var(--line-dim);
-      padding: 10px;
-      font-size: 14px;
-    }
+.topbar{
+display:flex;
+justify-content:space-between;
+background:var(--panel);
+border:2px solid var(--line-dim);
+padding:10px;
+font-size:14px;
+}
 
-    /* MOBILE CONTROLS */
-    .mobile-controls {
-      position: fixed;
-      bottom: 10px;
-      left: 0;
-      right: 0;
-      display: none;
-      justify-content: space-between;
-      padding: 10px;
-      z-index: 3;
-    }
-
-    .dpad, .actions {
-      display: flex;
-      gap: 10px;
-    }
-
-    .touch-btn {
-      width: 60px;
-      height: 60px;
-      border: 2px solid var(--line);
-      background: rgba(140,247,255,0.1);
-      color: var(--text);
-      font-size: 18px;
-    }
-
-    @media (max-width: 900px) {
-      .hud {
-        grid-template-columns: 1fr;
-      }
-      .mobile-controls {
-        display: flex;
-      }
-    }
-  </style>
+/* MOBILE = NO GAME */
+@media(max-width:900px){
+canvas{display:none;}
+.hud{grid-template-columns:1fr;}
+}
+</style>
 </head>
+
 <body>
 
 <canvas id="game"></canvas>
 
 <div class="hud">
-  <div class="panel">
-    <h1>Jeremy Guido</h1>
+<div class="panel">
+<h1>Jeremy Guido</h1>
 
-    <ul class="badges">
-      <li>Chef</li>
-      <li>Engineer</li>
-      <li>Performer</li>
-    </ul>
+<ul class="badges">
+<li>Chef</li>
+<li>Engineer</li>
+<li>Performer</li>
+</ul>
 
-    <div class="links">
-      <a class="btn" href="resume.pdf" target="_blank">Resume</a>
-      <a class="btn" href="https://github.com/nopwron" target="_blank">GitHub</a>
-      <a class="btn" href="https://www.linkedin.com/in/jeremy-guido" target="_blank">LinkedIn</a>
-      <a class="btn" href="mailto:jeremy.a.guido@gmail.com">Email</a>
-    </div>
-  </div>
+<p>Engineer, builder, performer. Practical systems, creative execution.</p>
 
-  <div class="topbar">
-    <div>Score: <span id="score">0</span></div>
-    <div>Lives: <span id="lives">3</span></div>
-  </div>
+<div class="links">
+<a class="btn" href="resume.pdf" target="_blank">Resume</a>
+<a class="btn" href="https://github.com/nopwron" target="_blank">GitHub</a>
+<a class="btn" href="https://www.linkedin.com/in/jeremy-guido" target="_blank">LinkedIn</a>
+<a class="btn" href="mailto:jeremy.a.guido@gmail.com">Email</a>
+</div>
 </div>
 
-<!-- MOBILE CONTROLS -->
-<div class="mobile-controls">
-  <div class="dpad">
-    <button class="touch-btn" data-key="ArrowLeft">◀</button>
-    <button class="touch-btn" data-key="ArrowUp">▲</button>
-    <button class="touch-btn" data-key="ArrowRight">▶</button>
-  </div>
-  <div class="actions">
-    <button class="touch-btn" data-key="Space">●</button>
-  </div>
+<div class="topbar">
+<div>Score: <span id="score">0</span></div>
+<div>Lives: <span id="lives">3</span></div>
+</div>
 </div>
 
 <script>
-const keys = new Set();
+/* ONLY RUN GAME ON DESKTOP */
+if(window.innerWidth > 900){
 
-// TOUCH SUPPORT
-for (const btn of document.querySelectorAll('.touch-btn')) {
-  btn.addEventListener('touchstart', e => {
-    e.preventDefault();
-    keys.add(btn.dataset.key);
-  });
-  btn.addEventListener('touchend', e => {
-    e.preventDefault();
-    keys.delete(btn.dataset.key);
-  });
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+
+let w, h;
+function resize(){
+w = canvas.width = window.innerWidth;
+h = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+/* STATE */
+let keys = {};
+let bullets = [];
+let asteroids = [];
+let score = 0;
+let lives = 3;
+
+const ship = {
+x: w/2,
+y: h/2,
+vx:0,
+vy:0,
+angle:0
+};
+
+/* INPUT */
+document.addEventListener('keydown', e => keys[e.key]=true);
+document.addEventListener('keyup', e => keys[e.key]=false);
+
+/* HELPERS */
+function wrap(o){
+if(o.x<0)o.x=w;
+if(o.x>w)o.x=0;
+if(o.y<0)o.y=h;
+if(o.y>h)o.y=0;
 }
 
-// BASIC GAME LOOP (kept minimal here, your existing logic still applies)
+function spawnAsteroid(){
+asteroids.push({
+x: Math.random()*w,
+y: Math.random()*h,
+vx: (Math.random()-0.5)*2,
+vy: (Math.random()-0.5)*2,
+r: 30+Math.random()*20
+});
+}
+
+for(let i=0;i<5;i++) spawnAsteroid();
+
+/* LOOP */
+function loop(){
+
+ctx.clearRect(0,0,w,h);
+
+/* SHIP */
+if(keys['ArrowLeft']) ship.angle -= 0.05;
+if(keys['ArrowRight']) ship.angle += 0.05;
+
+if(keys['ArrowUp']){
+ship.vx += Math.cos(ship.angle)*0.2;
+ship.vy += Math.sin(ship.angle)*0.2;
+}
+
+ship.x += ship.vx;
+ship.y += ship.vy;
+ship.vx *= 0.99;
+ship.vy *= 0.99;
+wrap(ship);
+
+/* FIRE */
+if(keys[' '] && bullets.length < 5){
+bullets.push({
+x: ship.x,
+y: ship.y,
+vx: Math.cos(ship.angle)*5,
+vy: Math.sin(ship.angle)*5
+});
+}
+
+/* DRAW SHIP */
+ctx.save();
+ctx.translate(ship.x, ship.y);
+ctx.rotate(ship.angle);
+ctx.strokeStyle = '#8cf7ff';
+ctx.beginPath();
+ctx.moveTo(0,-10);
+ctx.lineTo(6,10);
+ctx.lineTo(-6,10);
+ctx.closePath();
+ctx.stroke();
+ctx.restore();
+
+/* BULLETS */
+bullets.forEach(b=>{
+b.x+=b.vx;
+b.y+=b.vy;
+wrap(b);
+
+ctx.fillStyle='#ffe169';
+ctx.fillRect(b.x,b.y,2,2);
+});
+
+/* ASTEROIDS */
+asteroids.forEach(a=>{
+a.x+=a.vx;
+a.y+=a.vy;
+wrap(a);
+
+ctx.strokeStyle='#fff';
+ctx.beginPath();
+ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
+ctx.stroke();
+
+/* COLLISION */
+if(Math.hypot(ship.x-a.x, ship.y-a.y) < a.r){
+lives--;
+document.getElementById('lives').textContent = lives;
+ship.x=w/2; ship.y=h/2;
+}
+});
+
+/* SCORE */
+document.getElementById('score').textContent = score;
+
+requestAnimationFrame(loop);
+}
+
+loop();
+}
 </script>
 
 </body>
