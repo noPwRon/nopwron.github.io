@@ -15,12 +15,9 @@
       --danger: #ff7a7a;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html,
-    body {
+    html, body {
       margin: 0;
       height: 100%;
       background:
@@ -89,10 +86,7 @@
     .panel h2,
     .panel p,
     .panel li,
-    .panel a,
-    .topbar,
-    .controls,
-    .notice {
+    .panel a {
       text-shadow: 0 0 8px rgba(140, 247, 255, 0.28);
     }
 
@@ -103,54 +97,6 @@
       margin-bottom: 10px;
     }
 
-    h1 {
-      margin: 0 0 10px;
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      line-height: 1;
-    }
-
-    .subtitle {
-      color: #b6eef3;
-      margin: 0 0 18px;
-      line-height: 1.5;
-      max-width: 46ch;
-    }
-
-    .badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 0 0 18px;
-      padding: 0;
-      list-style: none;
-    }
-
-    .badges li {
-      border: 1px solid var(--line-dim);
-      padding: 6px 10px;
-      font-size: 0.86rem;
-      background: rgba(140, 247, 255, 0.06);
-    }
-
-    .section {
-      margin-top: 18px;
-      padding-top: 18px;
-      border-top: 1px solid var(--line-dim);
-    }
-
-    .section h2 {
-      margin: 0 0 10px;
-      font-size: 1rem;
-      color: var(--accent);
-      letter-spacing: 0.08em;
-    }
-
-    .section ul {
-      margin: 0;
-      padding-left: 20px;
-      line-height: 1.5;
-    }
-
     .links {
       display: flex;
       flex-wrap: wrap;
@@ -159,71 +105,22 @@
     }
 
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 42px;
       padding: 10px 14px;
       border: 2px solid var(--line);
       color: var(--text);
       text-decoration: none;
       background: rgba(140, 247, 255, 0.08);
-      transition: transform 120ms ease, background 120ms ease, box-shadow 120ms ease;
-    }
-
-    .btn:hover,
-    .btn:focus-visible {
-      transform: translateY(-1px);
-      background: rgba(140, 247, 255, 0.16);
-      box-shadow: 0 0 16px rgba(140, 247, 255, 0.22);
-      outline: none;
     }
 
     .btn.alt {
       border-color: var(--accent);
-      background: rgba(255, 225, 105, 0.08);
-    }
-
-    .right {
-      display: grid;
-      grid-template-rows: auto auto 1fr auto;
-      gap: 16px;
-      align-self: start;
-    }
-
-    .topbar,
-    .controls,
-    .notice {
-      padding: 12px 14px;
-      pointer-events: auto;
     }
 
     .topbar {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(4, 1fr);
       text-align: center;
-      font-size: 0.95rem;
-    }
-
-    .metric strong {
-      display: block;
-      color: var(--accent);
-      font-size: 0.76rem;
-      margin-bottom: 2px;
-      letter-spacing: 0.08em;
-    }
-
-    .controls {
-      line-height: 1.55;
-      font-size: 0.92rem;
-    }
-
-    .notice {
-      justify-self: end;
-      max-width: 34ch;
-      font-size: 0.9rem;
-      color: #cdeff2;
+      padding: 12px;
     }
 
     .center-message {
@@ -233,61 +130,32 @@
       transform: translate(-50%, -50%);
       text-align: center;
       z-index: 2;
-      pointer-events: none;
-      width: min(90vw, 700px);
-      padding: 20px;
-    }
-
-    .center-message .big {
-      font-size: clamp(2rem, 6vw, 4.7rem);
-      color: var(--accent);
-      letter-spacing: 0.16em;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
-
-    .center-message .small {
-      font-size: clamp(0.95rem, 2vw, 1.15rem);
-      color: var(--text);
-      background: rgba(8, 14, 22, 0.72);
-      border: 2px solid var(--line-dim);
-      display: inline-block;
-      padding: 10px 14px;
-    }
-
-    .hidden {
-      display: none;
     }
 
     @media (max-width: 980px) {
-      body {
-        overflow: auto;
-      }
-
-      canvas {
-        position: fixed;
-      }
+      body { overflow: auto; }
 
       .hud {
         grid-template-columns: 1fr;
-        align-content: start;
         padding: 12px;
       }
 
-      .right {
-        grid-template-rows: auto auto auto auto;
-      }
-
-      .topbar {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
       .panel {
-        order: 2;
+        max-width: 680px;
+        margin: 0 auto;
+      }
+
+      .links {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
       }
     }
   </style>
 </head>
+
 <body class="scanlines">
   <canvas id="game"></canvas>
 
@@ -295,69 +163,52 @@
     <section class="panel">
       <div class="eyebrow">INSERT CREDENTIALS</div>
       <h1>JEREMY GUIDO</h1>
-      <p class="subtitle">
-        Hospitality first, backed by engineering discipline and stage presence. Built for fast floors, sharp service, and memorable guest experience.      
+
+      <p>
+        Hospitality first, backed by engineering discipline and stage presence.
       </p>
 
-      <ul class="badges">
+      <ul>
         <li>Hospitality</li>
         <li>Service</li>
         <li>Performance</li>
       </ul>
 
-      <div class="section">
-        <h2>MISSION BRIEF</h2>
-        <ul>
-            <li>Stay composed in the rush, keep service fast, clean, and consistent.</li>
-            <li>Read people quickly and adjust, no scripts, just good judgment.</li>
-            <li>Add presence without getting in the way, the floor runs better when it has energy.</li>
-        </ul>
-      </div>
-
-      <div class="section">
-        <h2>ARCADE HOOK</h2>
-        <ul>
-          <li>Play the Asteroids clone in the background.</li>
-          <li>Shoot rocks to earn points.</li>
-          <li>Every few rounds, the field gets meaner. As arcades should.</li>
-        </ul>
-      </div>
-
       <div class="links">
-        <a class="btn alt" href="assets/resume.pdf" target="_blank" rel="noopener noreferrer">Resume/a>
-        <a class="btn" href="https:www.instagram.com/nopwron" target="_blank" rel="noopener noreferrer">Instagram</a>
-        <a class="btn" href="https://github.com/nopwron" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a class="btn" href="https://www.linkedin.com/in/jeremy-guido" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="btn alt" href="assets/resume.pdf" target="_blank">Open Resume PDF</a>
+        <a class="btn" href="#" id="togglePause">Pause Game</a>
+        <a class="btn" href="https://www.instagram.com/nopwron" target="_blank">Instagram</a>
+        <a class="btn" href="https://github.com/nopwron" target="_blank">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/jeremy-guido" target="_blank">LinkedIn</a>
         <a class="btn" href="mailto:jeremy.a.guido@gmail.com">Email</a>
       </div>
     </section>
 
     <div class="right">
       <div class="topbar">
-        <div class="metric"><strong>SCORE</strong><span id="score">0</span></div>
-        <div class="metric"><strong>LIVES</strong><span id="lives">3</span></div>
-        <div class="metric"><strong>WAVE</strong><span id="wave">1</span></div>
-        <div class="metric"><strong>HI-SCORE</strong><span id="highScore">0</span></div>
+        <div>SCORE<br><span id="score">0</span></div>
+        <div>LIVES<br><span id="lives">3</span></div>
+        <div>WAVE<br><span id="wave">1</span></div>
+        <div>HI<br><span id="highScore">0</span></div>
       </div>
-
-      <div class="controls">
-        <strong>Controls:</strong> ← → rotate, ↑ thrust, space fire, P pause, R restart after game over.
-      </div>
-
-      <div></div>
-
-      <!-- <div class="notice"> -->
-        <!-- Replace the text on the left with your real summary, key experience, and contact links. Keep the PDF link live as the serious version, keep the game as the wink. -->
-      <!-- </div> -->
     </div>
   </div>
 
   <div id="centerMessage" class="center-message">
-    <div class="big">Press Space</div>
-    <div class="small">Launch the ship, dodge the rocks, then hit “Open Resume PDF” when curiosity wins.</div>
+    <div>Press Space</div>
   </div>
 
   <script>
+    const isMobile = window.matchMedia("(max-width: 980px)").matches;
+
+    if (isMobile) {
+      document.getElementById('game')?.remove();
+      document.querySelector('.right')?.remove();
+      document.getElementById('togglePause')?.remove();
+      document.body.style.overflow = 'auto';
+    } else {
+
+
     const canvas = document.getElementById('game');
     const ctx = canvas.getContext('2d');
 
@@ -803,6 +654,13 @@
 
     resetGame();
     requestAnimationFrame(loop);
+  
+
+    }
   </script>
 </body>
 </html>
+
+
+
+  
