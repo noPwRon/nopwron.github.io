@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ENGINEERING — Jeremy Guido</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #08131a;
+    --bg2:       #0d1f2d;
+    --bg3:       #0a1a24;
+    --amber:     #f0a500;
+    --amber-dim: #7a5200;
+    --cyan:      #00d4ff;
+    --cyan-dim:  #004d5e;
+    --white:     #ffffff;
+    --dim:       #4a6a7a;
+    --mono:      'Share Tech Mono', 'Courier New', monospace;
+    --sans:      'Rajdhani', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--mono);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── STAR FIELD ── */
+  #stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── SCAN LINE OVERLAY ── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── HUD BAR ── */
+  .hud {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 56px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    background: rgba(8,19,26,0.92);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    z-index: 100;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+  }
+
+  .hud-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .hud-back {
+    color: var(--amber);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    font-size: 11px;
+    border: 1px solid var(--amber);
+    padding: 5px 12px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .hud-back:hover { background: var(--amber); color: var(--bg); }
+
+  .hud-title {
+    color: var(--white);
+    letter-spacing: 0.2em;
+    font-size: 12px;
+  }
+
+  .hud-right {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .hud-stat {
+    text-align: center;
+  }
+  .hud-stat-label {
+    color: var(--dim);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    display: block;
+  }
+  .hud-stat-value {
+    color: var(--white);
+    font-size: 12px;
+    display: block;
+    margin-top: 1px;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    position: relative;
+    z-index: 2;
+    padding: 88px 0 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    margin-bottom: 48px;
+    position: relative;
+    padding-left: 20px;
+    border-left: 2px solid var(--cyan);
+  }
+
+  .section-prefix {
+    color: var(--cyan);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: var(--sans);
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    line-height: 1.1;
+  }
+
+  .section-title span {
+    color: var(--cyan);
+    font-weight: 600;
+  }
+
+  .section-sub {
+    margin-top: 12px;
+    color: var(--dim);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  /* ── GRID RULE ── */
+  .rule {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--cyan-dim), transparent);
+    margin: 40px 0;
+  }
+
+  /* ── FEATURED PROJECT ── */
+  .featured-project {
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    background: rgba(0,212,255,0.03);
+    padding: 32px;
+    position: relative;
+    margin-bottom: 48px;
+  }
+
+  .featured-project::before {
+    content: 'FEATURED PROJECT';
+    position: absolute;
+    top: -1px; left: 24px;
+    background: var(--bg);
+    color: var(--cyan);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    padding: 0 8px;
+    transform: translateY(-50%);
+  }
+
+  .featured-project::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 40px; height: 40px;
+    border-top: 1px solid var(--cyan);
+    border-right: 1px solid var(--cyan);
+  }
+
+  .project-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    margin-bottom: 12px;
+  }
+
+  .project-name {
+    font-family: var(--sans);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .project-org {
+    font-size: 11px;
+    color: var(--dim);
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+  }
+
+  .project-bullets {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 24px;
+  }
+
+  @media (max-width: 600px) {
+    .project-bullets { grid-template-columns: 1fr; }
+  }
+
+  .project-bullets li {
+    font-size: 12px;
+    color: rgba(255,255,255,0.75);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.6;
+    letter-spacing: 0.03em;
+  }
+
+  .project-bullets li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+  }
+
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .tag {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    padding: 4px 10px;
+    border: 1px solid var(--cyan-dim);
+    color: var(--cyan);
+    background: rgba(0,212,255,0.05);
+  }
+
+  /* ── EXPERIENCE TIMELINE ── */
+  .timeline {
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, var(--amber-dim), transparent 90%);
+  }
+
+  .timeline-item {
+    padding-left: 32px;
+    padding-bottom: 36px;
+    position: relative;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 6px;
+    width: 9px; height: 9px;
+    border: 1px solid var(--amber);
+    background: var(--bg);
+    transform: rotate(45deg);
+  }
+
+  .timeline-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+
+  .timeline-role {
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.05em;
+  }
+
+  .timeline-date {
+    font-size: 10px;
+    color: var(--amber);
+    letter-spacing: 0.15em;
+  }
+
+  .timeline-org {
+    font-size: 11px;
+    color: var(--dim);
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
+  }
+
+  .timeline-bullets {
+    list-style: none;
+  }
+
+  .timeline-bullets li {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    padding-left: 14px;
+    position: relative;
+    margin-bottom: 5px;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+  }
+
+  .timeline-bullets li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--amber-dim);
+  }
+
+  /* ── SKILLS GRID ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.1);
+    margin-bottom: 48px;
+  }
+
+  .skill-cell {
+    background: var(--bg3);
+    padding: 20px;
+  }
+
+  .skill-cell-label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--amber);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .skill-items {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .skill-item {
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+  }
+
+  /* ── EDUCATION STRIP ── */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .edu-card {
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 20px;
+    position: relative;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .edu-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 24px; height: 24px;
+    border-bottom: 1px solid var(--dim);
+    border-right: 1px solid var(--dim);
+  }
+
+  .edu-year {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--cyan);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .edu-degree {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 4px;
+    letter-spacing: 0.03em;
+  }
+
+  .edu-school {
+    font-size: 11px;
+    color: var(--dim);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── SECTION DIVIDER LABEL ── */
+  .divider-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 40px 0 28px;
+  }
+
+  .divider-label span {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--amber);
+    white-space: nowrap;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--amber-dim), transparent);
+  }
+
+  /* ── FOOTER NAV ── */
+  .footer-nav {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .nav-btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    padding: 9px 18px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.6);
+    background: transparent;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .nav-btn:hover {
+    border-color: var(--white);
+    color: var(--white);
+  }
+  .nav-btn.amber {
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+  .nav-btn.amber:hover {
+    background: var(--amber);
+    color: var(--bg);
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<!-- HUD -->
+<nav class="hud">
+  <div class="hud-left">
+    <a href="../" class="hud-back">← BACK</a>
+    <span class="hud-title">ENGINEERING</span>
+  </div>
+  <div class="hud-right">
+    <div class="hud-stat">
+      <span class="hud-stat-label">CREDENTIAL</span>
+      <span class="hud-stat-value">B.ENG</span>
+    </div>
+    <div class="hud-stat">
+      <span class="hud-stat-label">FIELD</span>
+      <span class="hud-stat-value">MECHANICAL</span>
+    </div>
+    <div class="hud-stat">
+      <span class="hud-stat-label">EXPERIENCE</span>
+      <span class="hud-stat-value">9+ YRS</span>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- HEADER -->
+  <header class="section-header">
+    <span class="section-prefix">// DISCIPLINE_01</span>
+    <h1 class="section-title">MECHANICAL<br><span>ENGINEERING</span></h1>
+    <p class="section-sub">
+      Hands-on mechanical engineer with experience building, testing, and commissioning electro-mechanical and automated systems. Background spans applied research, industrial refrigeration, and embedded sensing.
+    </p>
+  </header>
+
+  <!-- FEATURED PROJECT -->
+  <div class="divider-label">
+    <span>SELECTED PROJECT</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="featured-project">
+    <div class="project-label">CAMOSUN INNOVATES — APPLIED RESEARCH</div>
+    <div class="project-name">Distributed Backflow Preventer Monitoring System</div>
+    <div class="project-org">Embedded sensing / LoRa mesh networking / Field deployment</div>
+    <ul class="project-bullets">
+      <li>Designed, tested, and deployed a remote monitoring system to detect leaks and failure modes in backflow preventers operating in live installations</li>
+      <li>Developed firmware on ESP32 microcontrollers with LoRa mesh networking to support battery-powered operation in remote locations</li>
+      <li>Implemented sensing strategies, fault detection logic, data acquisition, and gateway communication to a web-based monitoring platform</li>
+      <li>Performed field deployment, commissioning, reliability testing, and power optimisation; supported client demonstrations and technical documentation</li>
+    </ul>
+    <div class="tech-tags">
+      <span class="tag">ESP32</span>
+      <span class="tag">LORA MESH</span>
+      <span class="tag">FIRMWARE</span>
+      <span class="tag">SENSOR INTEGRATION</span>
+      <span class="tag">DATA ACQUISITION</span>
+      <span class="tag">FIELD DEPLOYMENT</span>
+      <span class="tag">BATTERY OPTIMISATION</span>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <div class="divider-label">
+    <span>WORK HISTORY</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-meta">
+        <span class="timeline-role">Project Engineer</span>
+        <span class="timeline-date">AUG 2023 — JAN 2026</span>
+      </div>
+      <div class="timeline-org">POLAR ENGINEERING — Victoria, BC</div>
+      <ul class="timeline-bullets">
+        <li>Delivered energy audits and feasibility studies for buildings and industrial facilities</li>
+        <li>Developed retrofit concepts involving refrigeration, heat recovery, and low-carbon systems</li>
+        <li>Conducted site investigations to assess system operation, controls, and performance gaps</li>
+        <li>Produced technical reports, grant documentation, and coordinated vendor inputs</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-meta">
+        <span class="timeline-role">Mechanical Engineer</span>
+        <span class="timeline-date">JUN 2022 — JUL 2023</span>
+      </div>
+      <div class="timeline-org">FOCAL ENGINEERING — Victoria, BC</div>
+      <ul class="timeline-bullets">
+        <li>Supported development and calibration of building energy models from design drawings</li>
+        <li>Assisted with mechanical system design, calculations, and drawing production</li>
+        <li>Prepared technical summaries documenting assumptions, methods, and results</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-meta">
+        <span class="timeline-role">Applied Research Technologist II</span>
+        <span class="timeline-date">JAN 2016 — JUN 2022</span>
+      </div>
+      <div class="timeline-org">CAMOSUN INNOVATES — Victoria, BC</div>
+      <ul class="timeline-bullets">
+        <li>Led applied research projects involving mechanical systems, automation, sensing, and embedded control</li>
+        <li>Designed and built instrumented prototypes using CAD/CAM, CNC machining, and rapid prototyping tools</li>
+        <li>Supported automation and control systems through development, testing, and validation in live environments</li>
+        <li>Worked with industry partners and students on project scoping, technical execution, and documentation</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-meta">
+        <span class="timeline-role">Design Technologist</span>
+        <span class="timeline-date">JUN 2016 — JUL 2018</span>
+      </div>
+      <div class="timeline-org">ACCENT REFRIGERATION — Victoria, BC</div>
+      <ul class="timeline-bullets">
+        <li>Designed packaged industrial refrigeration and heat pump systems for manufacture</li>
+        <li>Produced P&IDs and detailed 3D CAD models for fabrication and assembly</li>
+        <li>Developed mechanical layouts and full-system 3D models for ice rinks and ice plants</li>
+        <li>Supported installation, commissioning, and coordination with fabricators and technicians</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- SKILLS -->
+  <div class="divider-label">
+    <span>TECHNICAL SKILLS</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-cell">
+      <span class="skill-cell-label">PROGRAMMING</span>
+      <div class="skill-items">
+        <span class="skill-item">Python</span>
+        <span class="skill-item">C / C++</span>
+        <span class="skill-item">MATLAB</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <span class="skill-cell-label">CONTROLS + EMBEDDED</span>
+      <div class="skill-items">
+        <span class="skill-item">ESP32</span>
+        <span class="skill-item">Sensor integration</span>
+        <span class="skill-item">Control logic</span>
+        <span class="skill-item">Data logging</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <span class="skill-cell-label">CAD + DOCUMENTATION</span>
+      <div class="skill-items">
+        <span class="skill-item">SolidWorks</span>
+        <span class="skill-item">AutoCAD / Inventor</span>
+        <span class="skill-item">P&IDs</span>
+        <span class="skill-item">Technical reporting</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <span class="skill-cell-label">MANUFACTURING</span>
+      <div class="skill-items">
+        <span class="skill-item">CNC machining</span>
+        <span class="skill-item">Laser cutting</span>
+        <span class="skill-item">Waterjet cutting</span>
+        <span class="skill-item">Rapid prototyping</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="divider-label">
+    <span>EDUCATION</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="edu-grid">
+    <div class="edu-card">
+      <span class="edu-year">2018 — 2021</span>
+      <div class="edu-degree">Bachelor of Engineering</div>
+      <div class="edu-school">UNIVERSITY OF VICTORIA — Victoria, BC</div>
+    </div>
+    <div class="edu-card">
+      <span class="edu-year">2015 — 2017</span>
+      <div class="edu-degree">Mechanical Engineering Technologist</div>
+      <div class="edu-school">CAMOSUN COLLEGE — Victoria, BC</div>
+    </div>
+    <div class="edu-card">
+      <span class="edu-year">2008 — 2012</span>
+      <div class="edu-degree">Red Seal Chef</div>
+      <div class="edu-school">OKANAGAN COLLEGE — Kelowna, BC</div>
+    </div>
+  </div>
+
+  <!-- FOOTER NAV -->
+  <div class="divider-label">
+    <span>EXPLORE</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <nav class="footer-nav">
+    <a href="../" class="nav-btn">← MAIN</a>
+    <a href="../hospitality" class="nav-btn amber">HOSPITALITY →</a>
+    <a href="../forge" class="nav-btn">THE FORGE →</a>
+    <a href="mailto:jeremy.a.guido@gmail.com" class="nav-btn">EMAIL</a>
+    <a href="https://www.linkedin.com/in/jeremy-guido" target="_blank" class="nav-btn">LINKEDIN</a>
+    <a href="https://github.com/nopwron" target="_blank" class="nav-btn">GITHUB</a>
+  </nav>
+
+</main>
+
+<script>
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+let stars = [];
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+function initStars() {
+  stars = [];
+  const count = Math.floor((canvas.width * canvas.height) / 6000);
+  for (let i = 0; i < count; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.2,
+      a: Math.random() * 0.6 + 0.1,
+      speed: Math.random() * 0.08 + 0.01
+    });
+  }
+}
+
+function drawStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  grad.addColorStop(0, '#08131a');
+  grad.addColorStop(1, '#0d1f2d');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  stars.forEach(s => {
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,255,255,${s.a})`;
+    ctx.fill();
+    s.y -= s.speed;
+    if (s.y < 0) { s.y = canvas.height; s.x = Math.random() * canvas.width; }
+  });
+
+  requestAnimationFrame(drawStars);
+}
+
+resize();
+initStars();
+drawStars();
+window.addEventListener('resize', () => { resize(); initStars(); });
+</script>
+</body>
+</html>
