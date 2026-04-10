@@ -231,7 +231,22 @@
       font-size: 10px; letter-spacing: 0.1em; line-height: 1.8;
     }
 
-    .hidden { display: none !important; }
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 980px) {
+      body { overflow: auto; }
+
+      .hud {
+        grid-template-columns: 1fr;
+        padding: 12px;
+      }
+
+      .panel {
+        max-width: 680px;
+        margin: 0 auto;
+      }
 
     /* ── MOBILE ── */
     @media (max-width: 980px) {
@@ -325,7 +340,7 @@
           <div class="nav-title">ENGINEERING</div>
           <div class="nav-text">Projects, systems, technical work, energy studies, controls, and embedded builds.</div>
         </div>
-        <a class="btn cyan" href="enginnering/engineering.html">OPEN</a>
+        <a class="btn cyan" href="engineering/engineering.html">OPEN</a>
       </article>
       <article class="nav-card hospitality">
         <div class="nav-card-body">
