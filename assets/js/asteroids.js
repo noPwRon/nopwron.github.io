@@ -13,20 +13,25 @@
     const isMobile = window.matchMedia(MOBILE_QUERY).matches;
 
     if (isMobile) {
-      canvas.remove();
       const scoreBar = document.querySelector('.score-bar');
       const pauseButton = document.getElementById('togglePause');
       const centerMessage = document.getElementById('centerMessage');
 
+      canvas.remove();
+
       if (scoreBar) {
         scoreBar.remove();
       }
+
       if (pauseButton) {
         pauseButton.remove();
       }
+
       if (centerMessage) {
         centerMessage.remove();
       }
+
+      document.body.style.overflow = 'auto';
 
       return {
         mobile: true
@@ -88,12 +93,14 @@
       dpr = Math.max(1, window.devicePixelRatio || 1);
       width = rect.width;
       height = rect.height;
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
+      canvas.width = Math.max(1, Math.floor(width * dpr));
+      canvas.height = Math.max(1, Math.floor(height * dpr));
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
-    function rng(min, max) {
+    function randomRange(min, max) {
       return Math.random() * (max - min) + min;
     }
 
@@ -112,7 +119,7 @@
       }
     }
 
-    function dist(a, b) {
+    function distance(a, b) {
       return Math.hypot(a.x - b.x, a.y - b.y);
     }
 
@@ -129,10 +136,7 @@
     function spawnAsteroid(size, x, y) {
       let ax = x;
       let ay = y;
-
-      if (size == null) {
-        size = 3;
-      }
+      const asteroidSize = size == null ? 3 : size;
 
       if (ax == null || ay == null) {
         const edge = Math.floor(Math.random() * 4);
@@ -153,15 +157,15 @@
       }
 
       const angle = Math.random() * Math.PI * 2;
-      const speed = 25 + wave * 6;
-      const scale = size === 3 ? 1 : size === 2 ? 1.35 : 1.8;
-      const radius = size === 3 ? 46 : size === 2 ? 28 : 16;
+      const speedBase = 25 + wave * 6;
+      const scale = asteroidSize === 3 ? 1 : asteroidSize === 2 ? 1.35 : 1.8;
+      const radius = asteroidSize === 3 ? 46 : asteroidSize === 2 ? 28 : 16;
       const points = [];
       const pointCount = 9 + Math.floor(Math.random() * 4);
 
       for (let i = 0; i < pointCount; i += 1) {
         const theta = (i / pointCount) * Math.PI * 2;
-        const pointRadius = radius * rng(0.72, 1.15);
+        const pointRadius = radius * randomRange(0.72, 1.15);
         points.push({
           x: Math.cos(theta) * pointRadius,
           y: Math.sin(theta) * pointRadius
@@ -171,11 +175,11 @@
       asteroids.push({
         x: ax,
         y: ay,
-        vx: Math.cos(angle) * rng(speed * 0.55, speed * 0.95) * scale,
-        vy: Math.sin(angle) * rng(speed * 0.55, speed * 0.95) * scale,
+        vx: Math.cos(angle) * randomRange(speedBase * 0.55, speedBase * 0.95) * scale,
+        vy: Math.sin(angle) * randomRange(speedBase * 0.55, speedBase * 0.95) * scale,
         angle: Math.random() * Math.PI * 2,
-        spin: rng(-1.2, 1.2),
-        size,
+        spin: randomRange(-1.2, 1.2),
+        size: asteroidSize,
         radius,
         points
       });
@@ -188,7 +192,7 @@
       while (spawned < count) {
         spawnAsteroid(3);
 
-        if (dist(asteroids[asteroids.length - 1], ship) < 220) {
+        if (distance(asteroids[asteroids.length - 1], ship) < 220) {
           asteroids.pop();
           continue;
         }
@@ -201,13 +205,13 @@
       }
     }
 
-    function explosion(x, y, count) {
+    function createExplosion(x, y, count) {
       const total = count == null ? 18 : count;
 
       for (let i = 0; i < total; i += 1) {
         const angle = Math.random() * Math.PI * 2;
-        const speed = rng(20, 150);
-        const maxLife = rng(0.35, 0.9);
+        const speed = randomRange(20, 150);
+        const maxLife = randomRange(0.35, 0.9);
 
         particles.push({
           x,
@@ -228,7 +232,7 @@
       ui.centerMessage.classList.remove('hidden');
       ui.centerMessage.innerHTML =
         '<div class="big">PRESS <span>SPACE</span></div>' +
-        '<div class="small">Launch the ship, dodge the rocks,<br>or ignore the arcade bait and pick a page.</div>';
+        '<div class="small">Launch the ship, dodge the rocks, or pick a direction and dive deeper.</div>';
     }
 
     function setGameOverMessage() {
@@ -290,7 +294,7 @@
       }
 
       updateHighScore();
-      explosion(asteroid.x, asteroid.y, asteroid.size === 3 ? 14 : 10);
+      createExplosion(asteroid.x, asteroid.y, asteroid.size === 3 ? 14 : 10);
 
       if (asteroid.size > 1) {
         spawnAsteroid(asteroid.size - 1, asteroid.x, asteroid.y);
@@ -310,7 +314,7 @@
         return;
       }
 
-      explosion(ship.x, ship.y, 22);
+      createExplosion(ship.x, ship.y, 22);
       lives -= 1;
 
       if (ui.lives) {
@@ -427,7 +431,7 @@
         const asteroid = asteroids[i];
 
         for (let j = bullets.length - 1; j >= 0; j -= 1) {
-          if (dist(asteroid, bullets[j]) < asteroid.radius) {
+          if (distance(asteroid, bullets[j]) < asteroid.radius) {
             bullets.splice(j, 1);
             splitAsteroid(i);
             break;
@@ -437,29 +441,24 @@
 
       for (let i = 0; i < asteroids.length; i += 1) {
         const asteroid = asteroids[i];
-        if (dist(asteroid, ship) < asteroid.radius + ship.radius * 0.85) {
+        if (distance(asteroid, ship) < asteroid.radius + ship.radius * 0.85) {
           loseLife();
           break;
         }
       }
     }
 
-    function drawBackground() {
+    function drawStarfield() {
       ctx.clearRect(0, 0, width, height);
 
-      const gradient = ctx.createLinearGradient(0, 0, 0, height);
-      gradient.addColorStop(0, '#08131a');
-      gradient.addColorStop(1, '#0d1f2d');
-
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, width, height);
-
-      const count = Math.floor((width * height) / 10000);
+      const count = Math.floor((width * height) / 22000);
 
       for (let i = 0; i < count; i += 1) {
-        ctx.globalAlpha = 0.35 + ((i * 17) % 10) / 22;
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect((i * 137.5) % width, (i * 83.3) % height, 1.2, 1.2);
+        const x = (i * 137.5) % width;
+        const y = (i * 83.3) % height;
+        ctx.globalAlpha = 0.4 + ((i * 17) % 10) / 20;
+        ctx.fillStyle = '#d8fbff';
+        ctx.fillRect(x, y, 1.2, 1.2);
       }
 
       ctx.globalAlpha = 1;
@@ -474,7 +473,7 @@
         ctx.globalAlpha = 0.3;
       }
 
-      ctx.strokeStyle = '#00d4ff';
+      ctx.strokeStyle = '#8cf7ff';
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(0, -16);
@@ -485,7 +484,7 @@
       ctx.stroke();
 
       if (keys.has('ArrowUp') && !paused && !gameOver) {
-        ctx.strokeStyle = '#f0a500';
+        ctx.strokeStyle = '#ffe169';
         ctx.beginPath();
         ctx.moveTo(-5, 12);
         ctx.lineTo(0, 22 + Math.random() * 8);
@@ -497,7 +496,7 @@
     }
 
     function drawAsteroids() {
-      ctx.strokeStyle = '#ffffff';
+      ctx.strokeStyle = '#d8fbff';
       ctx.lineWidth = 2;
 
       for (let i = 0; i < asteroids.length; i += 1) {
@@ -508,13 +507,14 @@
         ctx.rotate(asteroid.angle);
         ctx.beginPath();
 
-        asteroid.points.forEach(function (point, pointIndex) {
-          if (pointIndex === 0) {
+        for (let j = 0; j < asteroid.points.length; j += 1) {
+          const point = asteroid.points[j];
+          if (j === 0) {
             ctx.moveTo(point.x, point.y);
           } else {
             ctx.lineTo(point.x, point.y);
           }
-        });
+        }
 
         ctx.closePath();
         ctx.stroke();
@@ -523,7 +523,7 @@
     }
 
     function drawBullets() {
-      ctx.fillStyle = '#f0a500';
+      ctx.fillStyle = '#ffe169';
 
       for (let i = 0; i < bullets.length; i += 1) {
         const bullet = bullets[i];
@@ -540,7 +540,7 @@
 
         ctx.globalAlpha = alpha;
         ctx.lineWidth = 1.5;
-        ctx.strokeStyle = alpha > 0.55 ? '#f0a500' : '#00d4ff';
+        ctx.strokeStyle = alpha > 0.55 ? '#ffe169' : '#8cf7ff';
         ctx.beginPath();
         ctx.moveTo(particle.x, particle.y);
         ctx.lineTo(
@@ -553,31 +553,21 @@
       ctx.globalAlpha = 1;
     }
 
-    function drawPaused() {
+    function drawPausedOverlay() {
       if (!paused || gameOver) {
         return;
       }
 
-      ctx.fillStyle = 'rgba(8,19,26,0.45)';
+      ctx.fillStyle = 'rgba(6, 7, 10, 0.35)';
       ctx.fillRect(0, 0, width, height);
-
-      ctx.strokeStyle = '#00d4ff';
+      ctx.strokeStyle = '#8cf7ff';
       ctx.lineWidth = 1;
-
-      const boxWidth = 200;
-      const boxHeight = 64;
-
-      ctx.strokeRect(
-        width / 2 - boxWidth / 2,
-        height / 2 - boxHeight / 2,
-        boxWidth,
-        boxHeight
-      );
-
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '22px Share Tech Mono';
+      ctx.strokeRect(width / 2 - 130, height / 2 - 44, 260, 88);
+      ctx.fillStyle = '#d8fbff';
+      ctx.font = '28px "Share Tech Mono", "Courier New", monospace';
       ctx.textAlign = 'center';
-      ctx.fillText('PAUSED', width / 2, height / 2 + 7);
+      ctx.textBaseline = 'middle';
+      ctx.fillText('PAUSED', width / 2, height / 2);
     }
 
     function loop(now) {
@@ -585,7 +575,7 @@
       last = now;
 
       update(dt);
-      drawBackground();
+      drawStarfield();
       drawParticles();
       drawAsteroids();
       drawBullets();
@@ -594,7 +584,7 @@
         drawShip();
       }
 
-      drawPaused();
+      drawPausedOverlay();
       rafId = window.requestAnimationFrame(loop);
     }
 
