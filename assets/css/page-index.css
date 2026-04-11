@@ -2,7 +2,7 @@
   position: fixed;
   top: var(--hud-height);
   left: calc(var(--index-left-width) + var(--shell-pad) + var(--shell-gap));
-  right: calc(var(--index-right-width) + var(--shell-pad) + var(--shell-gap));
+  right: var(--shell-pad);
   height: var(--scorebar-height);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -35,7 +35,7 @@
   position: fixed;
   top: calc(var(--hud-height) + var(--scorebar-height));
   left: calc(var(--index-left-width) + var(--shell-pad) + var(--shell-gap));
-  right: calc(var(--index-right-width) + var(--shell-pad) + var(--shell-gap));
+  right: var(--shell-pad);
   bottom: var(--shell-pad);
   z-index: 1;
   border-left: 1px solid var(--color-border-game);
@@ -48,7 +48,6 @@
   position: fixed;
   top: calc(var(--hud-height) + var(--shell-gap));
   bottom: var(--shell-pad);
-  width: var(--index-left-width);
   padding: 22px;
   background: var(--color-bg-panel-glass);
   border: 1px solid var(--color-border);
@@ -60,14 +59,11 @@
 
 .site-index .index-panel {
   left: var(--shell-pad);
+  width: min(420px, calc(100vw - (2 * var(--shell-pad))));
 }
 
 .site-index .index-nav-panel {
-  right: var(--shell-pad);
-  width: var(--index-right-width);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  display: none;
 }
 
 .site-index .index-panel::after,
@@ -195,7 +191,7 @@
   position: fixed;
   top: 50%;
   left: calc(var(--index-left-width) + var(--shell-pad) + var(--shell-gap));
-  right: calc(var(--index-right-width) + var(--shell-pad) + var(--shell-gap));
+  right: var(--shell-pad);
   transform: translateY(-50%);
   text-align: center;
   z-index: 4;
@@ -244,6 +240,10 @@
     left: auto;
     width: 100%;
     max-width: 100%;
+  }
+
+  .site-index .index-nav-panel {
+    display: none;
   }
 
   .site-index .nav-card {
