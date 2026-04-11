@@ -2,9 +2,14 @@
    INDEX PAGE LAYOUT
 ───────────────────────────── */
 
-body.site-index,
+body.site-index {
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 body.scanlines {
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* Full-page HUD grid used by the landing page */
@@ -13,7 +18,7 @@ body.scanlines {
   inset: 0;
   z-index: 2;
   display: grid;
-  grid-template-columns: minmax(280px, 440px) minmax(280px, 1fr);
+  grid-template-columns: minmax(320px, 440px) minmax(280px, 1fr);
   gap: 20px;
   padding: 20px;
   pointer-events: none;
@@ -42,16 +47,6 @@ body.scanlines {
 
 .panel p {
   max-width: 34ch;
-}
-
-.panel ul {
-  margin-top: 16px;
-  padding-left: 18px;
-}
-
-.panel li {
-  margin-bottom: 6px;
-  color: var(--text);
 }
 
 /* Accent eyebrow */
@@ -124,89 +119,7 @@ body.scanlines {
   line-height: 1.5;
 }
 
-/* Mobile: keep the panel, lose the game chrome */
-@media (max-width: 980px) {
-  body.site-index,
-  body.scanlines {
-    overflow: auto;
-  }
-
-  .hud {
-    grid-template-columns: 1fr;
-    padding: 12px;
-  }
-
-  .panel {
-    max-width: 680px;
-    margin: 0 auto;
-  }
-
-  .right {
-    display: block;
-  }
-
-  .links {
-    flex-direction: column;
-  }
-
-  .btn {
-    width: 100%;
-  }
-}
-
-.discipline-panel {
-  margin-top: 20px;
-  pointer-events: auto;
-}
-
-.discipline-list {
-  display: grid;
-  gap: 14px;
-}
-
-.discipline-card {
-  background: var(--panel);
-  border: 2px solid var(--line-dim);
-  box-shadow:
-    0 0 20px rgba(140, 247, 255, 0.12),
-    inset 0 0 20px rgba(140, 247, 255, 0.04);
-  backdrop-filter: blur(4px);
-  padding: 18px;
-}
-
-.discipline-code {
-  color: var(--accent);
-  letter-spacing: 0.16em;
-  font-size: 0.72rem;
-  margin-bottom: 8px;
-}
-
-.discipline-card h2 {
-  margin-bottom: 8px;
-  font-size: 1.35rem;
-  line-height: 1;
-  color: var(--text);
-}
-
-.discipline-card p {
-  margin-bottom: 14px;
-  max-width: 42ch;
-}
-
-.discipline-card .btn {
-  width: auto;
-}
-
-@media (max-width: 980px) {
-  .discipline-panel {
-    margin-top: 14px;
-  }
-
-  .discipline-card .btn {
-    width: 100%;
-  }
-}
-
+/* Discipline cards */
 .discipline-list {
   display: grid;
   gap: 14px;
@@ -236,9 +149,8 @@ body.scanlines {
 
 .discipline-card p {
   margin-bottom: 10px;
+  max-width: 42ch;
 }
-
-/* Discipline-specific borders */
 
 .discipline-card.engineering {
   border-color: var(--line);
@@ -250,4 +162,37 @@ body.scanlines {
 
 .discipline-card.forge {
   border-color: var(--border-strong);
+}
+
+/* Mobile */
+@media (max-width: 980px) {
+  body.site-index,
+  body.scanlines {
+    overflow: auto;
+  }
+
+  .hud {
+    position: relative;
+    inset: auto;
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+
+  .panel {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .right {
+    display: none;
+  }
+
+  .links {
+    flex-direction: column;
+  }
+
+  .btn,
+  .discipline-card .btn {
+    width: 100%;
+  }
 }
