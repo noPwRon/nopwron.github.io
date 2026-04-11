@@ -29,9 +29,18 @@
     return window.matchMedia(query);
   }
 
+  function initStars() {
+    if (!window.SiteStars || typeof window.SiteStars.init !== 'function') {
+      return null;
+    }
+
+    return window.SiteStars.init();
+  }
+
   window.Site = window.Site || {};
   window.Site.onReady = onReady;
   window.Site.qs = qs;
   window.Site.qsa = qsa;
   window.Site.media = media;
+  window.Site.initStars = initStars;
 })();
