@@ -5,59 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jeremy Guido | Retro Resume Arcade</title>
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <!-- CSS -->
   <link rel="stylesheet" href="./assets/css/tokens.css" />
   <link rel="stylesheet" href="./assets/css/base.css" />
   <link rel="stylesheet" href="./assets/css/page-index.css" />
 </head>
 
 <body class="scanlines site-index">
-  <!-- GAME CANVAS -->
   <canvas id="game"></canvas>
 
-  <!-- HUD -->
   <div class="hud">
     <section class="panel">
       <div class="eyebrow">INSERT CREDENTIALS</div>
       <h1>JEREMY GUIDO</h1>
 
       <p>
-        Hospitality first, backed by engineering discipline and stage presence.
+        Engineer, hospitality professional, and builder of live-event objects.
+        Use the splash page as the arcade attract mode, then choose the lane you actually want.
       </p>
 
       <ul>
-        <li>Hospitality</li>
-        <li>Service</li>
-        <li>Performance</li>
+        <li>Mechanical engineering and applied research</li>
+        <li>Hospitality, service, and floor presence</li>
+        <li>Fabrication, props, wearables, and commissions</li>
       </ul>
 
       <div class="links">
-        <a class="btn alt" href="assets/resume.pdf" target="_blank" rel="noopener noreferrer">
-          Open Resume PDF
-        </a>
-
-        <a class="btn" href="#" id="togglePause">
-          Pause Game
-        </a>
-
-        <a class="btn" href="https://www.instagram.com/nopwron" target="_blank" rel="noopener noreferrer">
-          Instagram
-        </a>
-
-        <a class="btn" href="https://github.com/nopwron" target="_blank" rel="noopener noreferrer">
-          GitHub
-        </a>
-
-        <a class="btn" href="https://www.linkedin.com/in/jeremy-guido" target="_blank" rel="noopener noreferrer">
-          LinkedIn
-        </a>
-
-        <a class="btn" href="mailto:jeremy.a.guido@gmail.com">
-          Email
-        </a>
+        <a class="btn" href="#" id="togglePause">Pause Game</a>
+        <a class="btn" href="https://www.instagram.com/nopwron" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a class="btn" href="https://github.com/nopwron" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/jeremy-guido" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="btn alt" href="mailto:jeremy.a.guido@gmail.com">Email</a>
       </div>
     </section>
 
@@ -68,15 +47,47 @@
         <div>WAVE<br><span id="wave">1</span></div>
         <div>HI<br><span id="highScore">0</span></div>
       </div>
+
+      <section class="discipline-panel">
+        <div class="discipline-list">
+          <article class="discipline-card">
+            <div class="discipline-code">DISCIPLINE_01</div>
+            <h2>ENGINEERING</h2>
+            <p>
+              Mechanical engineering, applied research, controls, embedded work,
+              technical systems, and project history.
+            </p>
+            <a class="btn" href="./engineering/engineering.html">Open Engineering</a>
+          </article>
+
+          <article class="discipline-card">
+            <div class="discipline-code">DISCIPLINE_02</div>
+            <h2>HOSPITALITY</h2>
+            <p>
+              Front and back of house experience, event service, kitchen depth,
+              speed under pressure, and guest-facing work.
+            </p>
+            <a class="btn" href="./hospitality/hospitality.html">Open Hospitality</a>
+          </article>
+
+          <article class="discipline-card">
+            <div class="discipline-code">DISCIPLINE_03</div>
+            <h2>THE FORGE</h2>
+            <p>
+              Fabrication, props, wearables, custom builds, commissions, and the
+              future product and sales side of the portfolio.
+            </p>
+            <a class="btn" href="./forge/forge.html">Open The Forge</a>
+          </article>
+        </div>
+      </section>
     </div>
   </div>
 
-  <!-- CENTER MESSAGE -->
   <div id="centerMessage" class="center-message">
     <div>Press Space</div>
   </div>
 
-  <!-- JS -->
   <script src="./assets/js/asteroids.js"></script>
 </body>
 </html>

@@ -153,3 +153,56 @@ body.scanlines {
     width: 100%;
   }
 }
+
+.discipline-panel {
+  margin-top: 20px;
+  pointer-events: auto;
+}
+
+.discipline-list {
+  display: grid;
+  gap: 14px;
+}
+
+.discipline-card {
+  background: var(--panel);
+  border: 2px solid var(--line-dim);
+  box-shadow:
+    0 0 20px rgba(140, 247, 255, 0.12),
+    inset 0 0 20px rgba(140, 247, 255, 0.04);
+  backdrop-filter: blur(4px);
+  padding: 18px;
+}
+
+.discipline-code {
+  color: var(--accent);
+  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  margin-bottom: 8px;
+}
+
+.discipline-card h2 {
+  margin-bottom: 8px;
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--text);
+}
+
+.discipline-card p {
+  margin-bottom: 14px;
+  max-width: 42ch;
+}
+
+.discipline-card .btn {
+  width: auto;
+}
+
+@media (max-width: 980px) {
+  .discipline-panel {
+    margin-top: 14px;
+  }
+
+  .discipline-card .btn {
+    width: 100%;
+  }
+}
