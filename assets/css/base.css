@@ -17,12 +17,9 @@ html {
 
 body {
   min-height: 100%;
-  background:
-    radial-gradient(circle at top, var(--bg-glow-top), transparent 40%),
-    radial-gradient(circle at bottom, var(--bg-glow-bottom), transparent 30%),
-    var(--bg);
-  color: var(--text);
-  font-family: var(--mono);
+  background: var(--bg-gradient);
+  color: var(--color-text);
+  font-family: var(--font-mono);
   overflow-x: hidden;
 }
 
@@ -48,13 +45,7 @@ canvas {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.03) 0px,
-    rgba(255, 255, 255, 0.03) 1px,
-    transparent 2px,
-    transparent 4px
-  );
+  background: var(--scanline-overlay);
   mix-blend-mode: soft-light;
   opacity: 0.4;
   z-index: 3;
@@ -64,14 +55,16 @@ canvas {
    TYPOGRAPHY
 ───────────────────────────── */
 
-h1, h2, h3 {
-  font-family: var(--sans);
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
   letter-spacing: 0.05em;
 }
 
 p {
   line-height: 1.6;
-  color: var(--text-dim);
+  color: var(--color-text-dim);
 }
 
 ul {
@@ -85,29 +78,33 @@ ul {
 .btn {
   display: inline-block;
   padding: 10px 14px;
-  border: 2px solid var(--line);
-  color: var(--text);
+  border: 2px solid var(--color-cyan);
+  color: var(--color-text);
   text-decoration: none;
-  background: rgba(140, 247, 255, 0.08);
-  font-family: var(--mono);
+  background: var(--color-cyan-soft);
+  font-family: var(--font-mono);
   letter-spacing: 0.08em;
-  transition: background var(--transition-fast),
-              color var(--transition-fast),
-              border-color var(--transition-fast);
+  transition:
+    background var(--transition-ui),
+    color var(--transition-ui),
+    border-color var(--transition-ui),
+    transform var(--transition-ui);
 }
 
 .btn:hover {
-  background: var(--line);
-  color: var(--bg);
+  background: var(--color-cyan);
+  color: var(--color-bg);
+  transform: translateY(-1px);
 }
 
 .btn.alt {
-  border-color: var(--accent);
+  border-color: var(--color-amber);
+  background: transparent;
 }
 
 .btn.alt:hover {
-  background: var(--accent);
-  color: var(--bg);
+  background: var(--color-amber);
+  color: var(--color-bg);
 }
 
 /* ─────────────────────────────
@@ -115,17 +112,15 @@ ul {
 ───────────────────────────── */
 
 .panel {
-  background: var(--panel);
-  border: 2px solid var(--line-dim);
-  box-shadow:
-    0 0 20px rgba(140, 247, 255, 0.12),
-    inset 0 0 20px rgba(140, 247, 255, 0.04);
+  background: var(--color-bg-panel-glass);
+  border: 1px solid var(--color-border-panel);
+  box-shadow: var(--panel-glow);
   backdrop-filter: blur(4px);
 }
 
 .surface {
-  background: var(--bg-panel);
-  border: 1px solid var(--border-soft);
+  background: var(--color-bg-panel);
+  border: 1px solid var(--color-border-soft);
 }
 
 /* ─────────────────────────────
@@ -133,7 +128,7 @@ ul {
 ───────────────────────────── */
 
 .glow-text {
-  text-shadow: 0 0 8px rgba(140, 247, 255, 0.28);
+  text-shadow: 0 0 8px rgba(111, 151, 179, 0.22);
 }
 
 /* ─────────────────────────────
@@ -171,9 +166,9 @@ ul {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--space-7);
-  background: var(--bg-panel);
-  border-bottom: 1px solid var(--border-soft);
+  padding: 0 var(--space-xl);
+  background: var(--color-bg-panel-glass);
+  border-bottom: 1px solid var(--color-border-soft);
   backdrop-filter: blur(4px);
   font-size: 11px;
   letter-spacing: 0.15em;
