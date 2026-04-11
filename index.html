@@ -7,10 +7,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/tokens.css" />
-  <link rel="stylesheet" href="assets/css/base.css" />
-  <link rel="stylesheet" href="assets/css/components.css" />
-  <link rel="stylesheet" href="assets/css/page-index.css" />
+  <link rel="stylesheet" href="./assets/css/tokens.css" />
+  <link rel="stylesheet" href="./assets/css/base.css" />
+  <link rel="stylesheet" href="./assets/css/components.css" />
+  <link rel="stylesheet" href="./assets/css/page-index.css" />
 </head>
 <body class="site-index">
   <nav class="hud">
@@ -34,7 +34,7 @@
     </div>
   </nav>
 
-  <div class="score-bar" aria-hidden="true">
+  <div class="score-bar">
     <div>
       <span class="label">SCORE</span>
       <span class="value" id="score">0</span>
@@ -53,75 +53,70 @@
     </div>
   </div>
 
-  <canvas id="game" aria-label="Asteroids game canvas"></canvas>
+  <canvas id="game"></canvas>
 
-  <main class="site-main">
-    <section class="index-panel">
-      <span class="eyebrow">// PRIMARY ENTRY</span>
-      <h1 class="panel-title">JEREMY<br /><span>GUIDO</span></h1>
-      <p class="panel-copy">
-        Engineer, service professional, and builder of strange useful things. Explore technical work, hospitality experience, and fabrication projects through their own dedicated channels.
-      </p>
-
-      <ul>
-        <li>Mechanical engineering and applied research</li>
-        <li>Hospitality, service, and stage presence</li>
-        <li>Fabrication, wearables, props, and product builds</li>
-      </ul>
-
-      <div class="links">
-        <a class="btn btn--amber" href="#" id="togglePause">PAUSE GAME</a>
-        <a class="btn" href="https://www.instagram.com/nopwron" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
-        <a class="btn" href="https://github.com/nopwron" target="_blank" rel="noopener noreferrer">GITHUB</a>
-        <a class="btn" href="https://www.linkedin.com/in/jeremy-guido" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
-        <a class="btn" href="mailto:jeremy.a.guido@gmail.com">EMAIL</a>
-      </div>
-    </section>
-
-    <section class="index-nav-panel">
-      <span class="eyebrow">// SELECT A PATH</span>
-      <h2 class="nav-title-main">THREE PAGES,<br />THREE MODES</h2>
-      <p class="nav-copy">
-        Three disciplines, three perspectives. Technical systems, hospitality under pressure, and fabrication work for live culture and performance.
-      </p>
-
-      <div class="nav-grid">
-        <article class="nav-card engineering">
-          <div class="nav-card-body">
-            <div class="nav-code">DISCIPLINE_01</div>
-            <div class="nav-title">ENGINEERING</div>
-            <div class="nav-text">Projects, systems, technical work, energy studies, controls, and embedded builds.</div>
-          </div>
-          <a class="btn btn--cyan" href="engineering/engineering.html">OPEN</a>
-        </article>
-
-        <article class="nav-card hospitality">
-          <div class="nav-card-body">
-            <div class="nav-code">DISCIPLINE_02</div>
-            <div class="nav-title">HOSPITALITY</div>
-            <div class="nav-text">Guest-facing work, service instinct, restaurant history, and floor presence.</div>
-          </div>
-          <a class="btn btn--amber" href="hospitality/hospitality.html">OPEN</a>
-        </article>
-
-        <article class="nav-card forge">
-          <div class="nav-card-body">
-            <div class="nav-code">DISCIPLINE_03</div>
-            <div class="nav-title">THE FORGE</div>
-            <div class="nav-text">Fabrication, wearables, props, prototypes, and the business-facing build lane.</div>
-          </div>
-          <a class="btn" href="forge/forge.html">OPEN</a>
-        </article>
-      </div>
-    </section>
-
-    <div id="centerMessage" class="center-message">
-      <div class="big">PRESS <span>SPACE</span></div>
-      <div class="small">Launch the ship, dodge the rocks,<br />or pick a direction and dive deeper.</div>
+  <section class="index-panel">
+    <span class="eyebrow">// PRIMARY ENTRY</span>
+    <h1 class="panel-title">JEREMY<br><span>GUIDO</span></h1>
+    <p class="panel-copy">
+      Engineer, service professional, and builder of strange useful things. Explore technical work, hospitality experience, and fabrication projects through their own dedicated channels.
+    </p>
+    <ul>
+      <li>Mechanical engineering and applied research</li>
+      <li>Hospitality, service, and stage presence</li>
+      <li>Fabrication, wearables, props, and product builds</li>
+    </ul>
+    <div class="links">
+      <a class="btn btn--amber" href="#" id="togglePause">PAUSE GAME</a>
+      <a class="btn" href="https://www.instagram.com/nopwron" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
+      <a class="btn" href="https://github.com/nopwron" target="_blank" rel="noopener noreferrer">GITHUB</a>
+      <a class="btn" href="https://www.linkedin.com/in/jeremy-guido" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
+      <a class="btn" href="mailto:jeremy.a.guido@gmail.com">EMAIL</a>
     </div>
-  </main>
+  </section>
 
-  <script src="assets/js/asteroids.js"></script>
-  <script src="assets/js/site.js"></script>
+  <section class="index-nav-panel">
+    <span class="eyebrow">// SELECT A PATH</span>
+    <h2 class="nav-title-main">THREE PAGES,<br>THREE MODES</h2>
+    <p class="nav-copy">
+      Three disciplines, three perspectives. Technical systems, hospitality under pressure, and fabrication work for live culture and performance.
+    </p>
+    <div class="nav-grid">
+      <article class="nav-card engineering">
+        <div class="nav-card-body">
+          <div class="nav-code">DISCIPLINE_01</div>
+          <div class="nav-title">ENGINEERING</div>
+          <div class="nav-text">Projects, systems, technical work, energy studies, controls, and embedded builds.</div>
+        </div>
+        <a class="btn btn--cyan" href="./engineering/engineering.html">OPEN</a>
+      </article>
+
+      <article class="nav-card hospitality">
+        <div class="nav-card-body">
+          <div class="nav-code">DISCIPLINE_02</div>
+          <div class="nav-title">HOSPITALITY</div>
+          <div class="nav-text">Guest-facing work, service instinct, restaurant history, and floor presence.</div>
+        </div>
+        <a class="btn btn--amber" href="./hospitality/hospitality.html">OPEN</a>
+      </article>
+
+      <article class="nav-card forge">
+        <div class="nav-card-body">
+          <div class="nav-code">DISCIPLINE_03</div>
+          <div class="nav-title">THE FORGE</div>
+          <div class="nav-text">Fabrication, wearables, props, prototypes, and the business-facing build lane.</div>
+        </div>
+        <a class="btn" href="./forge/forge.html">OPEN</a>
+      </article>
+    </div>
+  </section>
+
+  <div id="centerMessage" class="center-message">
+    <div class="big">PRESS <span>SPACE</span></div>
+    <div class="small">Launch the ship, dodge the rocks,<br>or pick a direction and dive deeper.</div>
+  </div>
+
+  <script src="./assets/js/asteroids.js"></script>
+  <script src="./assets/js/site.js"></script>
 </body>
 </html>
