@@ -1,0 +1,72 @@
+:root {
+  --color-bg: #08131a;
+  --color-bg-alt: #0d1f2d;
+  --color-bg-panel: #0a1a24;
+  --color-bg-glass: rgba(8, 19, 26, 0.92);
+  --color-bg-glass-strong: rgba(8, 19, 26, 0.95);
+  --color-bg-soft: rgba(255, 255, 255, 0.02);
+
+  --color-text: #ffffff;
+  --color-text-dim: #4a6a7a;
+  --color-text-soft: rgba(255, 255, 255, 0.74);
+  --color-text-muted: rgba(255, 255, 255, 0.65);
+
+  --color-amber: #f0a500;
+  --color-amber-dim: #7a5200;
+  --color-cyan: #00d4ff;
+  --color-cyan-dim: #004d5e;
+
+  --color-border: rgba(255, 255, 255, 0.12);
+  --color-border-soft: rgba(255, 255, 255, 0.08);
+  --color-border-faint: rgba(255, 255, 255, 0.05);
+  --color-border-panel: rgba(255, 255, 255, 0.14);
+
+  --font-mono: 'Share Tech Mono', 'Courier New', monospace;
+  --font-heading: 'Rajdhani', sans-serif;
+
+  --hud-height: 56px;
+  --scorebar-height: 40px;
+
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 20px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+  --space-3xl: 40px;
+  --space-4xl: 48px;
+  --space-5xl: 64px;
+
+  --page-max: 1100px;
+  --page-pad: 24px;
+  --shell-pad: 20px;
+  --shell-gap: 16px;
+  --index-left-width: 340px;
+  --index-right-width: 400px;
+
+  --line-thin: 1px;
+  --line-strong: 2px;
+
+  --tracking-xs: 0.03em;
+  --tracking-sm: 0.05em;
+  --tracking-md: 0.1em;
+  --tracking-lg: 0.15em;
+  --tracking-xl: 0.2em;
+  --tracking-2xl: 0.28em;
+  --tracking-3xl: 0.32em;
+
+  --scanline-overlay: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+
+  --bg-gradient: linear-gradient(180deg, var(--color-bg), var(--color-bg-alt));
+  --panel-glow: inset 0 0 20px rgba(0, 212, 255, 0.04);
+
+  --transition-fast: 0.18s;
+  --transition-ui: 0.2s;
+}
