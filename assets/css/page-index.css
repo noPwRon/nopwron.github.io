@@ -221,6 +221,10 @@ body.scanlines {
     border-color var(--transition-ui);
 }
 
+#TODO
+
+/* implement thehospitality and engineering .css files */
+
 .discipline-card:hover .btn.alt {
   background: var(--color-amber);
   color: var(--color-bg);
