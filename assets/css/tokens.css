@@ -1,0 +1,42 @@
+:root {
+  /* Core palette, driven by the current index */
+  --bg: #06070a;
+  --panel: rgba(8, 14, 22, 0.88);
+  --line: #8cf7ff;
+  --line-dim: rgba(140, 247, 255, 0.35);
+  --text: #d8fbff;
+  --accent: #ffe169;
+  --danger: #ff7a7a;
+
+  /* Extended palette for deeper pages, derived from the index mood */
+  --bg-alt: #0b1118;
+  --bg-panel: rgba(11, 17, 24, 0.94);
+  --bg-panel-soft: rgba(140, 247, 255, 0.04);
+  --text-dim: rgba(216, 251, 255, 0.62);
+  --text-faint: rgba(216, 251, 255, 0.42);
+  --border-soft: rgba(140, 247, 255, 0.16);
+  --border-strong: rgba(140, 247, 255, 0.28);
+  --accent-dim: rgba(255, 225, 105, 0.42);
+  --accent-soft: rgba(255, 225, 105, 0.08);
+
+  /* Atmospheric gradients */
+  --bg-glow-top: rgba(31, 66, 95, 0.35);
+  --bg-glow-bottom: rgba(0, 128, 128, 0.18);
+
+  /* Typography */
+  --mono: "Share Tech Mono", "Courier New", Courier, monospace;
+  --sans: "Rajdhani", sans-serif;
+
+  /* Common spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 10px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 20px;
+  --space-7: 24px;
+  --space-8: 32px;
+
+  /* Common motion */
+  --transition-fast: 0.2s;
+}

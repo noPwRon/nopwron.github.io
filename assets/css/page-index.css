@@ -1,0 +1,155 @@
+/* ─────────────────────────────
+   INDEX PAGE LAYOUT
+───────────────────────────── */
+
+body.site-index,
+body.scanlines {
+  overflow: hidden;
+}
+
+/* Full-page HUD grid used by the landing page */
+.hud {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(280px, 440px) minmax(280px, 1fr);
+  gap: 20px;
+  padding: 20px;
+  pointer-events: none;
+}
+
+/* Left credential panel */
+.panel {
+  align-self: start;
+  padding: 20px;
+  pointer-events: auto;
+}
+
+.panel h1,
+.panel h2,
+.panel p,
+.panel li,
+.panel a {
+  text-shadow: 0 0 8px rgba(140, 247, 255, 0.28);
+}
+
+.panel h1 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.panel p {
+  max-width: 34ch;
+}
+
+.panel ul {
+  margin-top: 16px;
+  padding-left: 18px;
+}
+
+.panel li {
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+/* Accent eyebrow */
+.eyebrow {
+  color: var(--accent);
+  letter-spacing: 0.18em;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
+
+/* Link cluster */
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+/* Right score area */
+.right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.topbar {
+  min-width: min(520px, 100%);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+  padding: 12px;
+  pointer-events: auto;
+}
+
+.topbar div {
+  color: var(--text);
+  line-height: 1.35;
+  letter-spacing: 0.08em;
+}
+
+.topbar span {
+  display: inline-block;
+  margin-top: 2px;
+  color: var(--accent);
+}
+
+/* Center launch prompt */
+.center-message {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+  color: var(--text);
+  text-shadow: 0 0 10px rgba(140, 247, 255, 0.22);
+}
+
+.center-message .big,
+.center-message > div:first-child {
+  font-family: var(--sans);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  letter-spacing: 0.08em;
+}
+
+.center-message .small {
+  margin-top: 8px;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Mobile: keep the panel, lose the game chrome */
+@media (max-width: 980px) {
+  body.site-index,
+  body.scanlines {
+    overflow: auto;
+  }
+
+  .hud {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+
+  .panel {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .right {
+    display: block;
+  }
+
+  .links {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
