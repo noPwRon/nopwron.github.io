@@ -153,35 +153,58 @@ body.scanlines {
     inset 0 0 18px rgba(111, 151, 179, 0.04);
   backdrop-filter: blur(4px);
   position: relative;
+  transition:
+    border-color var(--transition-ui),
+    box-shadow var(--transition-ui),
+    transform var(--transition-ui);
 }
 
+/* Corner indicator */
 .discipline-card::after {
   content: "";
   position: absolute;
   top: 0;
   right: 0;
-  width: 28px;
-  height: 28px;
-  border-top: 1px solid currentColor;
-  border-right: 1px solid currentColor;
-  opacity: 0.8;
+  width: 30px;
+  height: 30px;
+  border-top: 2px solid var(--color-amber);
+  border-right: 2px solid var(--color-amber);
+  opacity: 0.9;
+  transition:
+    transform var(--transition-ui),
+    opacity var(--transition-ui);
 }
 
-.discipline-code {
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  margin-bottom: 8px;
-  color: var(--color-text-faint);
+/* Hover state, unified */
+.discipline-card:hover {
+  border-color: var(--color-amber-border);
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 28px rgba(224, 154, 22, 0.18),
+    inset 0 0 18px rgba(224, 154, 22, 0.05);
 }
 
+/* Corner animates with hover */
+.discipline-card:hover::after {
+  transform: translate(3px, -3px);
+  opacity: 1;
+}
+
+/* Title becomes the highlight */
 .discipline-card h2 {
   font-size: 1.35rem;
   margin-bottom: 10px;
   line-height: 1;
   letter-spacing: 0.06em;
   color: var(--color-text);
+  transition: color var(--transition-ui);
 }
 
+.discipline-card:hover h2 {
+  color: var(--color-amber);
+}
+
+/* Description */
 .discipline-card p {
   margin-bottom: 14px;
   max-width: 42ch;
@@ -189,29 +212,20 @@ body.scanlines {
   line-height: 1.7;
 }
 
-.discipline-card .btn {
-  margin-top: 2px;
-}
-
+/* ENTER button syncs with card */
 .discipline-card .btn.alt {
   margin-top: 6px;
+  transition:
+    background var(--transition-ui),
+    color var(--transition-ui),
+    border-color var(--transition-ui);
 }
 
-.discipline-card.engineering,
-.discipline-card.hospitality,
-.discipline-card.forge {
-  border-color: var(--color-border-panel);
-  color: var(--color-cyan);
+.discipline-card:hover .btn.alt {
+  background: var(--color-amber);
+  color: var(--color-bg);
+  border-color: var(--color-amber);
 }
-
-.discipline-card:hover {
-  border-color: var(--color-amber-border);
-}
-
-.discipline-card:hover .discipline-code {
-  color: var(--color-amber);
-}
-
 /* Contact / social panel */
 .contact-panel {
   width: min(100%, 160px);
