@@ -3,125 +3,225 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jeremy Guido | Retro Resume Arcade</title>
+  <title>ENGINEERING - Jeremy Guido</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/tokens.css" />
-  <link rel="stylesheet" href="assets/css/base.css" />
-  <link rel="stylesheet" href="assets/css/components.css" />
-  <link rel="stylesheet" href="assets/css/page-index.css" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/components.css" />
+  <link rel="stylesheet" href="../assets/css/page-discipline.css" />
 </head>
-<body class="site-index">
+<body class="site-discipline">
+  <canvas class="site-stars" id="stars" aria-hidden="true"></canvas>
+
   <nav class="hud">
     <div class="hud-left">
-      <span class="hud-mark">JG//INDEX</span>
-      <span class="hud-title">Portfolio</span>
+      <a href="../index.html" class="hud-back">← BACK</a>
+      <span class="hud-title">ENGINEERING</span>
     </div>
     <div class="hud-right">
       <div class="hud-stat">
-        <span class="hud-stat-label">PAGES</span>
-        <span class="hud-stat-value">03</span>
+        <span class="hud-stat-label">CREDENTIAL</span>
+        <span class="hud-stat-value">B.ENG</span>
       </div>
       <div class="hud-stat">
-        <span class="hud-stat-label">MODE</span>
-        <span class="hud-stat-value">ASTEROIDS</span>
+        <span class="hud-stat-label">FIELD</span>
+        <span class="hud-stat-value">MECHANICAL</span>
       </div>
       <div class="hud-stat">
-        <span class="hud-stat-label">STATUS</span>
-        <span class="hud-stat-value">LIVE</span>
+        <span class="hud-stat-label">EXPERIENCE</span>
+        <span class="hud-stat-value">9+ YRS</span>
       </div>
     </div>
   </nav>
 
-  <div class="score-bar" aria-hidden="true">
-    <div>
-      <span class="label">SCORE</span>
-      <span class="value" id="score">0</span>
-    </div>
-    <div>
-      <span class="label">LIVES</span>
-      <span class="value" id="lives">3</span>
-    </div>
-    <div>
-      <span class="label">WAVE</span>
-      <span class="value" id="wave">1</span>
-    </div>
-    <div>
-      <span class="label">HI</span>
-      <span class="value" id="highScore">0</span>
-    </div>
-  </div>
-
-  <canvas id="game" aria-label="Asteroids game canvas"></canvas>
-
   <main class="site-main">
-    <section class="index-panel">
-      <span class="eyebrow">// PRIMARY ENTRY</span>
-      <h1 class="panel-title">JEREMY<br /><span>GUIDO</span></h1>
-      <p class="panel-copy">
-        The front page keeps the game. The deeper pages do the real talking. Engineering, hospitality, and the forge each get their own proper terminal-grade dossier.
+    <header class="section-header">
+      <span class="section-prefix">// DISCIPLINE_01</span>
+      <h1 class="section-title">MECHANICAL<br /><span>ENGINEERING</span></h1>
+      <p class="section-sub">
+        Hands-on mechanical engineer with experience building, testing, and commissioning electro-mechanical and automated systems. Background spans applied research, industrial refrigeration, and embedded sensing.
       </p>
+    </header>
 
-      <ul>
-        <li>Mechanical engineering and applied research</li>
-        <li>Hospitality, service, and stage presence</li>
-        <li>Fabrication, wearables, props, and product builds</li>
+    <div class="divider-label">
+      <span>SELECTED PROJECT</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <section class="featured-card" data-label="FEATURED PROJECT">
+      <div class="card-kicker">CAMOSUN INNOVATES - APPLIED RESEARCH</div>
+      <h2 class="card-title">Distributed Backflow Preventer Monitoring System</h2>
+      <div class="card-meta">Embedded sensing / LoRa mesh networking / Field deployment</div>
+
+      <ul class="feature-list">
+        <li>Designed, tested, and deployed a remote monitoring system to detect leaks and failure modes in backflow preventers operating in live installations</li>
+        <li>Developed firmware on ESP32 microcontrollers with LoRa mesh networking to support battery-powered operation in remote locations</li>
+        <li>Implemented sensing strategies, fault detection logic, data acquisition, and gateway communication to a web-based monitoring platform</li>
+        <li>Performed field deployment, commissioning, reliability testing, and power optimisation, supported client demonstrations and technical documentation</li>
       </ul>
 
-      <div class="links">
-        <a class="btn btn--amber" href="#" id="togglePause">PAUSE GAME</a>
-        <a class="btn" href="https://www.instagram.com/nopwron" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
-        <a class="btn" href="https://github.com/nopwron" target="_blank" rel="noopener noreferrer">GITHUB</a>
-        <a class="btn" href="https://www.linkedin.com/in/jeremy-guido" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
-        <a class="btn" href="mailto:jeremy.a.guido@gmail.com">EMAIL</a>
+      <div class="tech-tags">
+        <span class="tag">ESP32</span>
+        <span class="tag">LORA MESH</span>
+        <span class="tag">FIRMWARE</span>
+        <span class="tag">SENSOR INTEGRATION</span>
+        <span class="tag">DATA ACQUISITION</span>
+        <span class="tag">FIELD DEPLOYMENT</span>
+        <span class="tag">BATTERY OPTIMISATION</span>
       </div>
     </section>
 
-    <section class="index-nav-panel">
-      <span class="eyebrow">// SELECT A PATH</span>
-      <h2 class="nav-title-main">THREE PAGES,<br />THREE MODES</h2>
-      <p class="nav-copy">
-        Direct links are still the best way in. But if someone lands on index first, they can choose the right door instead of wandering around the asteroid field forever.
-      </p>
-
-      <div class="nav-grid">
-        <article class="nav-card engineering">
-          <div class="nav-card-body">
-            <div class="nav-code">DISCIPLINE_01</div>
-            <div class="nav-title">ENGINEERING</div>
-            <div class="nav-text">Projects, systems, technical work, energy studies, controls, and embedded builds.</div>
-          </div>
-          <a class="btn btn--cyan" href="engineering.html">OPEN</a>
-        </article>
-
-        <article class="nav-card hospitality">
-          <div class="nav-card-body">
-            <div class="nav-code">DISCIPLINE_02</div>
-            <div class="nav-title">HOSPITALITY</div>
-            <div class="nav-text">Guest-facing work, service instinct, restaurant history, and floor presence.</div>
-          </div>
-          <a class="btn btn--amber" href="hospitality.html">OPEN</a>
-        </article>
-
-        <article class="nav-card forge">
-          <div class="nav-card-body">
-            <div class="nav-code">DISCIPLINE_03</div>
-            <div class="nav-title">THE FORGE</div>
-            <div class="nav-text">Fabrication, wearables, props, prototypes, and the business-facing build lane.</div>
-          </div>
-          <a class="btn" href="forge.html">OPEN</a>
-        </article>
-      </div>
-    </section>
-
-    <div id="centerMessage" class="center-message">
-      <div class="big">PRESS <span>SPACE</span></div>
-      <div class="small">Launch the ship, dodge the rocks,<br />or ignore the arcade bait and pick a page.</div>
+    <div class="divider-label">
+      <span>WORK HISTORY</span>
+      <div class="divider-line"></div>
     </div>
+
+    <section class="timeline">
+      <article class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-role">Project Engineer</span>
+          <span class="timeline-date">AUG 2023 - JAN 2026</span>
+        </div>
+        <div class="timeline-org">POLAR ENGINEERING - Victoria, BC</div>
+        <ul class="timeline-bullets">
+          <li>Delivered energy audits and feasibility studies for buildings and industrial facilities</li>
+          <li>Developed retrofit concepts involving refrigeration, heat recovery, and low-carbon systems</li>
+          <li>Conducted site investigations to assess system operation, controls, and performance gaps</li>
+          <li>Produced technical reports, grant documentation, and coordinated vendor inputs</li>
+        </ul>
+      </article>
+
+      <article class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-role">Mechanical Engineer</span>
+          <span class="timeline-date">JUN 2022 - JUL 2023</span>
+        </div>
+        <div class="timeline-org">FOCAL ENGINEERING - Victoria, BC</div>
+        <ul class="timeline-bullets">
+          <li>Supported development and calibration of building energy models from design drawings</li>
+          <li>Assisted with mechanical system design, calculations, and drawing production</li>
+          <li>Prepared technical summaries documenting assumptions, methods, and results</li>
+        </ul>
+      </article>
+
+      <article class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-role">Applied Research Technologist II</span>
+          <span class="timeline-date">JAN 2016 - JUN 2022</span>
+        </div>
+        <div class="timeline-org">CAMOSUN INNOVATES - Victoria, BC</div>
+        <ul class="timeline-bullets">
+          <li>Led applied research projects involving mechanical systems, automation, sensing, and embedded control</li>
+          <li>Designed and built instrumented prototypes using CAD/CAM, CNC machining, and rapid prototyping tools</li>
+          <li>Supported automation and control systems through development, testing, and validation in live environments</li>
+          <li>Worked with industry partners and students on project scoping, technical execution, and documentation</li>
+        </ul>
+      </article>
+
+      <article class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-role">Design Technologist</span>
+          <span class="timeline-date">JUN 2016 - JUL 2018</span>
+        </div>
+        <div class="timeline-org">ACCENT REFRIGERATION - Victoria, BC</div>
+        <ul class="timeline-bullets">
+          <li>Designed packaged industrial refrigeration and heat pump systems for manufacture</li>
+          <li>Produced P&amp;IDs and detailed 3D CAD models for fabrication and assembly</li>
+          <li>Developed mechanical layouts and full-system 3D models for ice rinks and ice plants</li>
+          <li>Supported installation, commissioning, and coordination with fabricators and technicians</li>
+        </ul>
+      </article>
+    </section>
+
+    <div class="divider-label">
+      <span>TECHNICAL SKILLS</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <section class="skills-grid">
+      <div class="skill-cell">
+        <span class="skill-cell-label">PROGRAMMING</span>
+        <div class="skill-items">
+          <span class="skill-item">Python</span>
+          <span class="skill-item">C / C++</span>
+          <span class="skill-item">MATLAB</span>
+        </div>
+      </div>
+
+      <div class="skill-cell">
+        <span class="skill-cell-label">CONTROLS + EMBEDDED</span>
+        <div class="skill-items">
+          <span class="skill-item">ESP32</span>
+          <span class="skill-item">Sensor integration</span>
+          <span class="skill-item">Control logic</span>
+          <span class="skill-item">Data logging</span>
+        </div>
+      </div>
+
+      <div class="skill-cell">
+        <span class="skill-cell-label">CAD + DOCUMENTATION</span>
+        <div class="skill-items">
+          <span class="skill-item">SolidWorks</span>
+          <span class="skill-item">AutoCAD / Inventor</span>
+          <span class="skill-item">P&amp;IDs</span>
+          <span class="skill-item">Technical reporting</span>
+        </div>
+      </div>
+
+      <div class="skill-cell">
+        <span class="skill-cell-label">MANUFACTURING</span>
+        <div class="skill-items">
+          <span class="skill-item">CNC machining</span>
+          <span class="skill-item">Laser cutting</span>
+          <span class="skill-item">Waterjet cutting</span>
+          <span class="skill-item">Rapid prototyping</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-label">
+      <span>EDUCATION</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <section class="edu-grid">
+      <article class="edu-card">
+        <span class="edu-year">2018 - 2021</span>
+        <div class="edu-degree">Bachelor of Engineering</div>
+        <div class="edu-school">UNIVERSITY OF VICTORIA - Victoria, BC</div>
+      </article>
+
+      <article class="edu-card">
+        <span class="edu-year">2015 - 2017</span>
+        <div class="edu-degree">Mechanical Engineering Technologist</div>
+        <div class="edu-school">CAMOSUN COLLEGE - Victoria, BC</div>
+      </article>
+
+      <article class="edu-card">
+        <span class="edu-year">2008 - 2012</span>
+        <div class="edu-degree">Red Seal Chef</div>
+        <div class="edu-school">OKANAGAN COLLEGE - Kelowna, BC</div>
+      </article>
+    </section>
+
+    <div class="divider-label">
+      <span>EXPLORE</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <nav class="footer-nav">
+      <a href="../index.html" class="nav-btn">← MAIN</a>
+      <a href="../hospitality/hospitality.html" class="nav-btn amber">HOSPITALITY →</a>
+      <a href="../forge/forge.html" class="nav-btn">THE FORGE →</a>
+      <a href="mailto:jeremy.a.guido@gmail.com" class="nav-btn">EMAIL</a>
+      <a href="https://www.linkedin.com/in/jeremy-guido" target="_blank" rel="noopener noreferrer" class="nav-btn">LINKEDIN</a>
+      <a href="https://github.com/nopwron" target="_blank" rel="noopener noreferrer" class="nav-btn">GITHUB</a>
+    </nav>
   </main>
 
-  <script src="assets/js/asteroids.js"></script>
-  <script src="assets/js/site.js"></script>
+  <script src="../assets/js/stars.js"></script>
+  <script src="../assets/js/site.js"></script>
 </body>
 </html>
