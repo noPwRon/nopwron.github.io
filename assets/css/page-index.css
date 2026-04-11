@@ -73,12 +73,16 @@ body.scanlines {
 }
 
 .topbar {
-  min-width: min(520px, 100%);
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  text-align: center;
+  grid-template-columns: repeat(4, 1fr) auto;
+  align-items: center;
   padding: 12px;
-  pointer-events: auto;
+}
+
+.hud-btn {
+  margin-left: 10px;
+  font-size: 0.7rem;
+  padding: 6px 10px;
 }
 
 .topbar div {
@@ -157,11 +161,11 @@ body.scanlines {
 }
 
 .discipline-card.hospitality {
-  border-color: var(--accent);
+  border-color: var(--line);
 }
 
 .discipline-card.forge {
-  border-color: var(--border-strong);
+  border-color: var(--line);
 }
 
 /* Mobile */
@@ -194,5 +198,59 @@ body.scanlines {
   .btn,
   .discipline-card .btn {
     width: 100%;
+  }
+}
+
+.contact-panel {
+  margin-top: 16px;
+  pointer-events: auto;
+}
+
+.contact-label {
+  color: var(--accent);
+  letter-spacing: 0.18em;
+  font-size: 0.78rem;
+  margin-bottom: 12px;
+}
+
+.contact-list {
+  display: grid;
+  gap: 12px;
+}
+
+.contact-card {
+  display: block;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--panel);
+  border: 2px solid var(--line-dim);
+  box-shadow:
+    0 0 20px rgba(140, 247, 255, 0.12),
+    inset 0 0 20px rgba(140, 247, 255, 0.04);
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.contact-card:hover {
+  border-color: var(--accent);
+}
+
+.contact-code {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.contact-name {
+  display: block;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 980px) {
+  .contact-panel {
+    display: none;
   }
 }
