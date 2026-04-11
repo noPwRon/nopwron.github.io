@@ -4,12 +4,11 @@
 
 body.site-index {
   min-height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 body.scanlines {
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 /* Full-page HUD grid used by the landing page */
@@ -29,6 +28,12 @@ body.scanlines {
   align-self: start;
   padding: 20px;
   pointer-events: auto;
+}
+
+/* Left credential panel, this is where scrolling should happen */
+.hud > .panel {
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
 }
 
 /* Left credential panel */
@@ -60,22 +65,26 @@ body.scanlines {
   margin-bottom: 10px;
 }
 
-/* Right score area */
+/* Right side wrapper */
 .right {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: flex-end;
+  justify-content: flex-start;
+  gap: 16px;
+  width: 100%;
 }
 
+/* Score area */
 .topbar {
-  min-width: min(520px, 100%);
+  width: min(100%, 520px);
   display: grid;
   grid-template-columns: repeat(4, 1fr) auto;
   align-items: center;
   text-align: center;
   padding: 12px;
   pointer-events: auto;
+  margin-left: auto;
 }
 
 .topbar div {
@@ -147,6 +156,10 @@ body.scanlines {
 }
 
 .discipline-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
   width: 28px;
   height: 28px;
   border-top: 1px solid currentColor;
@@ -164,7 +177,9 @@ body.scanlines {
 .discipline-card h2 {
   font-size: 1.35rem;
   margin-bottom: 10px;
+  line-height: 1;
   letter-spacing: 0.06em;
+  color: var(--color-text);
 }
 
 .discipline-card p {
@@ -180,33 +195,27 @@ body.scanlines {
 
 .discipline-card .btn.alt {
   margin-top: 6px;
-  border-color: var(--color-amber);
 }
 
-.discipline-card .btn.alt:hover {
-  background: var(--color-amber);
-  color: var(--color-bg);
-}
-
-/* Keep all three cards cohesive, let the button be the stronger action */
-.discipline-card.engineering {
-  border-color: var(--color-border-panel);
-  color: var(--color-cyan);
-}
-
-.discipline-card.hospitality {
-  border-color: var(--color-border-panel);
-  color: var(--color-cyan);
-}
-
+.discipline-card.engineering,
+.discipline-card.hospitality,
 .discipline-card.forge {
   border-color: var(--color-border-panel);
   color: var(--color-cyan);
 }
 
+.discipline-card:hover {
+  border-color: var(--color-amber-border);
+}
+
+.discipline-card:hover .discipline-code {
+  color: var(--color-amber);
+}
+
 /* Contact / social panel */
 .contact-panel {
-  margin-top: 16px;
+  width: min(100%, 160px);
+  margin-left: auto;
   pointer-events: auto;
 }
 
@@ -284,6 +293,11 @@ body.scanlines {
     padding: 12px;
   }
 
+  .hud > .panel {
+    max-height: none;
+    overflow: visible;
+  }
+
   .panel {
     max-width: 680px;
     margin: 0 auto;
@@ -301,12 +315,4 @@ body.scanlines {
   .contact-panel {
     display: none;
   }
-}
-
-.discipline-card:hover {
-  border-color: var(--color-amber-border);
-}
-
-.discipline-card:hover .discipline-code {
-  color: var(--color-amber);
 }
