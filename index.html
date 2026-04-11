@@ -4,275 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jeremy Guido | Retro Resume Arcade</title>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #08131a;
-      --bg2: #0d1f2d;
-      --panel: rgba(8, 19, 26, 0.88);
-      --line: #00d4ff;
-      --text: #ffffff;
-      --text-dim: #4a6a7a;
-      --accent: #f0a500;
-      --mono: 'Share Tech Mono', 'Courier New', monospace;
-      --sans: 'Rajdhani', sans-serif;
-
-      --hud-h:   56px;
-      --score-h: 40px;
-      --pad:     20px;
-      --gap:     16px;
-      --left-w:  340px;
-      --right-w: 400px;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html, body {
-      height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--mono);
-      overflow: hidden;
-    }
-
-    /* scan line */
-    body::after {
-      content: '';
-      position: fixed; inset: 0;
-      background: repeating-linear-gradient(
-        0deg, transparent, transparent 2px,
-        rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px
-      );
-      pointer-events: none;
-      z-index: 10;
-    }
-
-    /* ── HUD ── */
-    .hud {
-      position: fixed; top: 0; left: 0; right: 0;
-      height: var(--hud-h);
-      border-bottom: 1px solid rgba(255,255,255,0.15);
-      background: rgba(8,19,26,0.95);
-      backdrop-filter: blur(4px);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 var(--pad);
-      z-index: 200;
-      font-size: 11px; letter-spacing: 0.15em;
-      pointer-events: none;
-    }
-    .hud-left, .hud-right { display: flex; align-items: center; gap: 20px; }
-    .hud-mark {
-      color: var(--accent); border: 1px solid var(--accent);
-      padding: 5px 12px; letter-spacing: 0.12em;
-    }
-    .hud-title { color: var(--text); font-size: 12px; letter-spacing: 0.2em; }
-    .hud-stat { text-align: center; }
-    .hud-stat-label { color: var(--text-dim); font-size: 9px; letter-spacing: 0.15em; display: block; }
-    .hud-stat-value { color: var(--text); font-size: 12px; display: block; margin-top: 1px; }
-
-    /* ── SCORE BAR — spans the game gap ── */
-    .score-bar {
-      position: fixed;
-      top: var(--hud-h);
-      left: calc(var(--left-w) + var(--pad) + var(--gap));
-      right: calc(var(--right-w) + var(--pad) + var(--gap));
-      height: var(--score-h);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      border-left:  1px solid rgba(255,255,255,0.07);
-      border-right: 1px solid rgba(255,255,255,0.07);
-      background: rgba(8,19,26,0.9);
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      text-align: center; align-items: center;
-      z-index: 6;
-      pointer-events: none;
-    }
-    .score-bar .label { color: var(--text-dim); font-size: 8px; letter-spacing: 0.18em; display: block; }
-    .score-bar .value { color: var(--text); font-size: 14px; letter-spacing: 0.08em; display: block; line-height: 1.2; }
-
-    /* ── CANVAS — fills the centre gap ── */
-    #game {
-      position: fixed;
-      top:    calc(var(--hud-h) + var(--score-h));
-      left:   calc(var(--left-w) + var(--pad) + var(--gap));
-      right:  calc(var(--right-w) + var(--pad) + var(--gap));
-      bottom: var(--pad);
-      z-index: 1;
-      border-left:   1px solid rgba(255,255,255,0.07);
-      border-right:  1px solid rgba(255,255,255,0.07);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-
-    /* ── LEFT PANEL ── */
-    .panel {
-      position: fixed;
-      top:    calc(var(--hud-h) + var(--gap));
-      left:   var(--pad);
-      bottom: var(--pad);
-      width:  var(--left-w);
-      background: var(--panel);
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: inset 0 0 20px rgba(0,212,255,0.04);
-      backdrop-filter: blur(4px);
-      padding: 22px;
-      z-index: 5;
-      overflow-y: auto;
-    }
-    .panel::after {
-      content: ''; position: absolute; bottom: 0; right: 0;
-      width: 24px; height: 24px;
-      border-right: 1px solid rgba(255,255,255,0.14);
-      border-bottom: 1px solid rgba(255,255,255,0.14);
-    }
-
-    /* ── RIGHT PANEL ── */
-    .nav-panel {
-      position: fixed;
-      top:    calc(var(--hud-h) + var(--gap));
-      right:  var(--pad);
-      bottom: var(--pad);
-      width:  var(--right-w);
-      background: var(--panel);
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: inset 0 0 20px rgba(0,212,255,0.04);
-      backdrop-filter: blur(4px);
-      padding: 22px;
-      z-index: 5;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      overflow-y: auto;
-    }
-    .nav-panel::after {
-      content: ''; position: absolute; bottom: 0; right: 0;
-      width: 24px; height: 24px;
-      border-right: 1px solid rgba(255,255,255,0.14);
-      border-bottom: 1px solid rgba(255,255,255,0.14);
-    }
-
-    /* ── shared text ── */
-    .eyebrow { color: var(--line); font-size: 10px; letter-spacing: 0.28em; margin-bottom: 10px; display: block; }
-
-    .panel h1 {
-      font-family: var(--sans); font-size: clamp(30px, 3.5vw, 50px);
-      font-weight: 300; letter-spacing: 0.05em; line-height: 1; margin-bottom: 14px;
-    }
-    .panel h1 span { color: var(--accent); font-weight: 600; }
-
-    .panel p { color: rgba(255,255,255,0.74); font-size: 12px; line-height: 1.75; letter-spacing: 0.03em; }
-
-    .panel ul { list-style: none; margin-top: 16px; display: grid; gap: 6px; }
-    .panel li {
-      color: rgba(255,255,255,0.7); font-size: 11px; letter-spacing: 0.12em;
-      padding-left: 14px; position: relative;
-    }
-    .panel li::before { content: '›'; position: absolute; left: 0; color: var(--line); }
-
-    .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-
-    /* ── nav panel content ── */
-    .nav-panel h2 {
-      font-family: var(--sans); font-size: 22px; font-weight: 600;
-      letter-spacing: 0.05em; line-height: 1.1; margin-bottom: 10px;
-    }
-    .nav-copy { color: rgba(255,255,255,0.7); font-size: 11px; line-height: 1.7; letter-spacing: 0.03em; }
-
-    .nav-grid { display: grid; gap: 10px; margin-top: 16px; }
-
-    .nav-card {
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.02);
-      padding: 14px 16px;
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      position: relative;
-    }
-    .nav-card::after {
-      content: ''; position: absolute; top: 0; right: 0;
-      width: 14px; height: 14px;
-      border-top: 1px solid rgba(255,255,255,0.13);
-      border-right: 1px solid rgba(255,255,255,0.13);
-    }
-    .nav-card-body { flex: 1; min-width: 0; }
-    .nav-code { font-size: 9px; letter-spacing: 0.22em; margin-bottom: 4px; }
-    .nav-card.engineering .nav-code { color: var(--line); }
-    .nav-card.hospitality .nav-code { color: var(--accent); }
-    .nav-card.forge        .nav-code { color: rgba(255,255,255,0.7); }
-    .nav-title { font-family: var(--sans); font-size: 18px; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 4px; }
-    .nav-text  { color: rgba(255,255,255,0.58); font-size: 10px; line-height: 1.6; letter-spacing: 0.03em; }
-
-    /* ── BUTTONS ── */
-    .btn {
-      padding: 9px 14px;
-      border: 1px solid rgba(255,255,255,0.2);
-      color: rgba(255,255,255,0.74);
-      text-decoration: none; background: transparent;
-      font-size: 10px; letter-spacing: 0.12em;
-      transition: all 0.2s; cursor: pointer;
-      font-family: var(--mono); white-space: nowrap; flex-shrink: 0;
-    }
-    .btn:hover { border-color: var(--text); color: var(--text); }
-    .btn.accent { border-color: var(--accent); color: var(--accent); }
-    .btn.accent:hover { background: var(--accent); color: var(--bg); }
-    .btn.cyan   { border-color: var(--line);   color: var(--line); }
-    .btn.cyan:hover   { background: var(--line);   color: var(--bg); }
-
-    /* ── CENTER MESSAGE ── */
-    .center-message {
-      position: fixed;
-      left:  calc(var(--left-w) + var(--pad) + var(--gap));
-      right: calc(var(--right-w) + var(--pad) + var(--gap));
-      top: 50%; transform: translateY(-50%);
-      text-align: center; z-index: 4; pointer-events: none;
-    }
-    .center-message .big {
-      font-family: var(--sans); font-size: clamp(26px, 2.8vw, 42px);
-      letter-spacing: 0.08em; color: var(--text); font-weight: 300;
-    }
-    .center-message .big span { color: var(--accent); font-weight: 600; }
-    .center-message .small {
-      margin-top: 8px; color: rgba(255,255,255,0.58);
-      font-size: 10px; letter-spacing: 0.1em; line-height: 1.8;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    @media (max-width: 980px) {
-      body { overflow: auto; }
-
-      .hud {
-        grid-template-columns: 1fr;
-        padding: 12px;
-      }
-
-      .panel {
-        max-width: 680px;
-        margin: 0 auto;
-      }
-
-    /* ── MOBILE ── */
-    @media (max-width: 980px) {
-      html, body { overflow: auto; height: auto; }
-      .score-bar, #game, .center-message { display: none; }
-      .hud { pointer-events: auto; }
-      .hud-right .hud-stat:nth-child(2),
-      .hud-right .hud-stat:nth-child(3) { display: none; }
-
-      .panel, .nav-panel {
-        position: relative; top: auto; left: auto; right: auto; bottom: auto;
-        width: 100%; max-width: 100%;
-      }
-      body {
-        display: flex; flex-direction: column; gap: 14px;
-        padding: calc(var(--hud-h) + 14px) 14px 20px;
-      }
-      .nav-card { flex-direction: column; align-items: flex-start; gap: 10px; }
-      .links { flex-direction: column; }
-      .btn { width: 100%; text-align: center; }
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/page-index.css" />
 </head>
-<body>
-
-  <!-- HUD -->
+<body class="site-index">
   <nav class="hud">
     <div class="hud-left">
       <span class="hud-mark">JG//INDEX</span>
@@ -294,374 +34,94 @@
     </div>
   </nav>
 
-  <!-- SCORE BAR -->
-  <div class="score-bar">
-    <div><span class="label">SCORE</span><span class="value" id="score">0</span></div>
-    <div><span class="label">LIVES</span><span class="value" id="lives">3</span></div>
-    <div><span class="label">WAVE</span> <span class="value" id="wave">1</span></div>
-    <div><span class="label">HI</span>   <span class="value" id="highScore">0</span></div>
+  <div class="score-bar" aria-hidden="true">
+    <div>
+      <span class="label">SCORE</span>
+      <span class="value" id="score">0</span>
+    </div>
+    <div>
+      <span class="label">LIVES</span>
+      <span class="value" id="lives">3</span>
+    </div>
+    <div>
+      <span class="label">WAVE</span>
+      <span class="value" id="wave">1</span>
+    </div>
+    <div>
+      <span class="label">HI</span>
+      <span class="value" id="highScore">0</span>
+    </div>
   </div>
 
-  <!-- GAME CANVAS -->
-  <canvas id="game"></canvas>
+  <canvas id="game" aria-label="Asteroids game canvas"></canvas>
 
-  <!-- LEFT PANEL -->
-  <section class="panel">
-    <span class="eyebrow">// PRIMARY ENTRY</span>
-    <h1>JEREMY<br><span>GUIDO</span></h1>
-    <p>
-      The front page keeps the game. The deeper pages do the real talking. Engineering, hospitality, and the forge each get their own proper terminal-grade dossier.
-    </p>
-    <ul>
-      <li>Mechanical engineering and applied research</li>
-      <li>Hospitality, service, and stage presence</li>
-      <li>Fabrication, wearables, props, and product builds</li>
-    </ul>
-    <div class="links">
-      <a class="btn accent" href="#" id="togglePause">PAUSE GAME</a>
-      <a class="btn" href="https://www.instagram.com/nopwron" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
-      <a class="btn" href="https://github.com/nopwron" target="_blank" rel="noopener noreferrer">GITHUB</a>
-      <a class="btn" href="https://www.linkedin.com/in/jeremy-guido" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
-      <a class="btn" href="mailto:jeremy.a.guido@gmail.com">EMAIL</a>
+  <main class="site-main">
+    <section class="index-panel">
+      <span class="eyebrow">// PRIMARY ENTRY</span>
+      <h1 class="panel-title">JEREMY<br /><span>GUIDO</span></h1>
+      <p class="panel-copy">
+Engineer, service professional, and builder of strange useful things. Explore technical work, hospitality experience, and fabrication projects through their own dedicated channels.
+      </p>
+
+      <ul>
+        <li>Mechanical engineering and applied research</li>
+        <li>Hospitality, service, and stage presence</li>
+        <li>Fabrication, wearables, props, and product builds</li>
+      </ul>
+
+      <div class="links">
+        <a class="btn btn--amber" href="#" id="togglePause">PAUSE GAME</a>
+        <a class="btn" href="https://www.instagram.com/nopwron" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
+        <a class="btn" href="https://github.com/nopwron" target="_blank" rel="noopener noreferrer">GITHUB</a>
+        <a class="btn" href="https://www.linkedin.com/in/jeremy-guido" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
+        <a class="btn" href="mailto:jeremy.a.guido@gmail.com">EMAIL</a>
+      </div>
+    </section>
+
+    <section class="index-nav-panel">
+      <span class="eyebrow">// SELECT A PATH</span>
+      <h2 class="nav-title-main">THREE PAGES,<br />THREE MODES</h2>
+      <p class="nav-copy">
+        Three disciplines, three perspectives. Technical systems, hospitality under pressure, and fabrication work for live culture and performance..
+      </p>
+
+      <div class="nav-grid">
+        <article class="nav-card engineering">
+          <div class="nav-card-body">
+            <div class="nav-code">DISCIPLINE_01</div>
+            <div class="nav-title">ENGINEERING</div>
+            <div class="nav-text">Projects, systems, technical work, energy studies, controls, and embedded builds.</div>
+          </div>
+          <a class="btn btn--cyan" href="engineering.html">OPEN</a>
+        </article>
+
+        <article class="nav-card hospitality">
+          <div class="nav-card-body">
+            <div class="nav-code">DISCIPLINE_02</div>
+            <div class="nav-title">HOSPITALITY</div>
+            <div class="nav-text">Guest-facing work, service instinct, restaurant history, and floor presence.</div>
+          </div>
+          <a class="btn btn--amber" href="hospitality.html">OPEN</a>
+        </article>
+
+        <article class="nav-card forge">
+          <div class="nav-card-body">
+            <div class="nav-code">DISCIPLINE_03</div>
+            <div class="nav-title">THE FORGE</div>
+            <div class="nav-text">Fabrication, wearables, props, prototypes, and the business-facing build lane.</div>
+          </div>
+          <a class="btn" href="forge.html">OPEN</a>
+        </article>
+      </div>
+    </section>
+
+    <div id="centerMessage" class="center-message">
+      <div class="big">PRESS <span>SPACE</span></div>
+      <div class="small">Launch the ship, dodge the rocks,<br />or ignore the arcade bait and pick a page.</div>
     </div>
-  </section>
+  </main>
 
-  <!-- RIGHT NAV PANEL -->
-  <section class="nav-panel">
-    <span class="eyebrow">// SELECT A PATH</span>
-    <h2>THREE PAGES,<br>THREE MODES</h2>
-    <p class="nav-copy">
-      Direct links are still the best way in. But if someone crashes onto index first, they can choose the right door instead of wandering around the asteroid field forever.
-    </p>
-    <div class="nav-grid">
-      <article class="nav-card engineering">
-        <div class="nav-card-body">
-          <div class="nav-code">DISCIPLINE_01</div>
-          <div class="nav-title">ENGINEERING</div>
-          <div class="nav-text">Projects, systems, technical work, energy studies, controls, and embedded builds.</div>
-        </div>
-        <a class="btn cyan" href="engineering/engineering.html">OPEN</a>
-      </article>
-      <article class="nav-card hospitality">
-        <div class="nav-card-body">
-          <div class="nav-code">DISCIPLINE_02</div>
-          <div class="nav-title">HOSPITALITY</div>
-          <div class="nav-text">Guest-facing work, service instinct, restaurant history, and floor presence.</div>
-        </div>
-        <a class="btn accent" href="hospitality/hospitality.html">OPEN</a>
-      </article>
-      <article class="nav-card forge">
-        <div class="nav-card-body">
-          <div class="nav-code">DISCIPLINE_03</div>
-          <div class="nav-title">THE FORGE</div>
-          <div class="nav-text">Fabrication, wearables, props, prototypes, and the business-facing build lane.</div>
-        </div>
-        <a class="btn" href="forge/forge.html">OPEN</a>
-      </article>
-    </div>
-  </section>
-
-  <!-- CENTER MESSAGE -->
-  <div id="centerMessage" class="center-message">
-    <div class="big">PRESS <span>SPACE</span></div>
-    <div class="small">Launch the ship, dodge the rocks,<br>or ignore the arcade bait and pick a page.</div>
-  </div>
-
-  <script>
-    const isMobile = window.matchMedia('(max-width: 980px)').matches;
-
-    if (isMobile) {
-      document.getElementById('game')?.remove();
-      document.querySelector('.score-bar')?.remove();
-      document.getElementById('togglePause')?.remove();
-      document.getElementById('centerMessage')?.remove();
-    } else {
-      const canvas = document.getElementById('game');
-      const ctx    = canvas.getContext('2d');
-
-      const ui = {
-        score:         document.getElementById('score'),
-        lives:         document.getElementById('lives'),
-        wave:          document.getElementById('wave'),
-        highScore:     document.getElementById('highScore'),
-        centerMessage: document.getElementById('centerMessage'),
-        pauseBtn:      document.getElementById('togglePause'),
-      };
-
-      let width = 0, height = 0;
-      const DPR = Math.max(1, window.devicePixelRatio || 1);
-
-      function resize() {
-        const rect = canvas.getBoundingClientRect();
-        width  = rect.width;
-        height = rect.height;
-        canvas.width  = Math.floor(width  * DPR);
-        canvas.height = Math.floor(height * DPR);
-        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      }
-
-      const keys = new Set();
-      let started = false, paused = false, gameOver = false;
-      let score = 0, lives = 3, wave = 1;
-      let highScore = Number(localStorage.getItem('retroResumeHighScore') || 0);
-      ui.highScore.textContent = highScore;
-
-      const ship = { x: 0, y: 0, vx: 0, vy: 0, angle: -Math.PI / 2, radius: 14, invulnerable: 0, cooldown: 0 };
-      let bullets = [], asteroids = [], particles = [];
-
-      function resetShip() {
-        ship.x = width / 2; ship.y = height / 2;
-        ship.vx = 0; ship.vy = 0;
-        ship.angle = -Math.PI / 2;
-        ship.invulnerable = 2.5; ship.cooldown = 0;
-      }
-
-      function rng(min, max) { return Math.random() * (max - min) + min; }
-
-      function wrap(obj) {
-        if (obj.x < -30) obj.x = width + 30;
-        if (obj.x > width + 30) obj.x = -30;
-        if (obj.y < -30) obj.y = height + 30;
-        if (obj.y > height + 30) obj.y = -30;
-      }
-
-      function dist(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
-
-      function spawnAsteroid(size = 3, x, y) {
-        let ax = x, ay = y;
-        if (ax == null) {
-          const e = Math.floor(Math.random() * 4);
-          if      (e === 0) { ax = Math.random() * width;  ay = -20; }
-          else if (e === 1) { ax = width + 20;              ay = Math.random() * height; }
-          else if (e === 2) { ax = Math.random() * width;  ay = height + 20; }
-          else              { ax = -20;                     ay = Math.random() * height; }
-        }
-        const ang = Math.random() * Math.PI * 2;
-        const spd = 25 + wave * 6;
-        const sc  = size === 3 ? 1 : size === 2 ? 1.35 : 1.8;
-        const rad = size === 3 ? 46 : size === 2 ? 28 : 16;
-        const pts = [];
-        const n   = 9 + Math.floor(Math.random() * 4);
-        for (let i = 0; i < n; i++) {
-          const t = (i / n) * Math.PI * 2;
-          const r = rad * rng(0.72, 1.15);
-          pts.push({ x: Math.cos(t) * r, y: Math.sin(t) * r });
-        }
-        asteroids.push({
-          x: ax, y: ay,
-          vx: Math.cos(ang) * rng(spd * 0.55, spd * 0.95) * sc,
-          vy: Math.sin(ang) * rng(spd * 0.55, spd * 0.95) * sc,
-          angle: Math.random() * Math.PI * 2, spin: rng(-1.2, 1.2),
-          size, radius: rad, points: pts,
-        });
-      }
-
-      function spawnWave() {
-        const count = Math.min(4 + wave, 11);
-        let spawned = 0;
-        while (spawned < count) {
-          spawnAsteroid(3);
-          if (dist(asteroids[asteroids.length - 1], ship) < 220) { asteroids.pop(); continue; }
-          spawned++;
-        }
-        ui.wave.textContent = wave;
-      }
-
-      function explosion(x, y, n = 18) {
-        for (let i = 0; i < n; i++) {
-          const a = Math.random() * Math.PI * 2, spd = rng(20, 150);
-          particles.push({ x, y, vx: Math.cos(a) * spd, vy: Math.sin(a) * spd, life: rng(0.35, 0.9), maxLife: rng(0.35, 0.9) });
-        }
-      }
-
-      function fireBullet() {
-        if (ship.cooldown > 0 || gameOver) return;
-        bullets.push({
-          x: ship.x + Math.cos(ship.angle) * ship.radius,
-          y: ship.y + Math.sin(ship.angle) * ship.radius,
-          vx: ship.vx + Math.cos(ship.angle) * 420,
-          vy: ship.vy + Math.sin(ship.angle) * 420,
-          life: 1.05,
-        });
-        ship.cooldown = 0.18;
-        if (!started) { started = true; ui.centerMessage.classList.add('hidden'); }
-      }
-
-      function splitAsteroid(i) {
-        const a = asteroids[i];
-        score += a.size === 3 ? 20 : a.size === 2 ? 50 : 100;
-        ui.score.textContent = score;
-        if (score > highScore) {
-          highScore = score;
-          localStorage.setItem('retroResumeHighScore', String(highScore));
-          ui.highScore.textContent = highScore;
-        }
-        explosion(a.x, a.y, a.size === 3 ? 14 : 10);
-        if (a.size > 1) { spawnAsteroid(a.size - 1, a.x, a.y); spawnAsteroid(a.size - 1, a.x, a.y); }
-        asteroids.splice(i, 1);
-        if (asteroids.length === 0) { wave++; spawnWave(); }
-      }
-
-      function loseLife() {
-        if (ship.invulnerable > 0) return;
-        explosion(ship.x, ship.y, 22);
-        lives--; ui.lives.textContent = lives;
-        if (lives <= 0) {
-          gameOver = true; started = false;
-          ui.centerMessage.classList.remove('hidden');
-          ui.centerMessage.innerHTML = '<div class="big">GAME <span>OVER</span></div><div class="small">Press R to restart, or pick a page.</div>';
-        } else { resetShip(); }
-      }
-
-      function resetGame() {
-        score = 0; lives = 3; wave = 1;
-        started = false; paused = false; gameOver = false;
-        bullets = []; asteroids = []; particles = [];
-        ui.score.textContent = 0; ui.lives.textContent = 3; ui.wave.textContent = 1;
-        if (ui.pauseBtn) ui.pauseBtn.textContent = 'PAUSE GAME';
-        ui.centerMessage.classList.remove('hidden');
-        ui.centerMessage.innerHTML = '<div class="big">PRESS <span>SPACE</span></div><div class="small">Launch the ship, dodge the rocks,<br>or ignore the arcade bait and pick a page.</div>';
-        resetShip(); spawnWave();
-      }
-
-      function update(dt) {
-        if (paused || gameOver) return;
-        if (ship.cooldown > 0) ship.cooldown -= dt;
-        if (ship.invulnerable > 0) ship.invulnerable -= dt;
-        if (keys.has('ArrowLeft'))  ship.angle -= 3.9 * dt;
-        if (keys.has('ArrowRight')) ship.angle += 3.9 * dt;
-        if (keys.has('ArrowUp')) {
-          ship.vx += Math.cos(ship.angle) * 220 * dt;
-          ship.vy += Math.sin(ship.angle) * 220 * dt;
-          if (!started) { started = true; ui.centerMessage.classList.add('hidden'); }
-        }
-        ship.vx *= 0.993; ship.vy *= 0.993;
-        ship.x += ship.vx * dt; ship.y += ship.vy * dt;
-        wrap(ship);
-
-        for (let i = bullets.length - 1; i >= 0; i--) {
-          const b = bullets[i];
-          b.x += b.vx * dt; b.y += b.vy * dt; b.life -= dt;
-          wrap(b); if (b.life <= 0) bullets.splice(i, 1);
-        }
-        for (const a of asteroids) { a.x += a.vx * dt; a.y += a.vy * dt; a.angle += a.spin * dt; wrap(a); }
-        for (let i = particles.length - 1; i >= 0; i--) {
-          const p = particles[i];
-          p.x += p.vx * dt; p.y += p.vy * dt;
-          p.vx *= 0.985; p.vy *= 0.985; p.life -= dt;
-          if (p.life <= 0) particles.splice(i, 1);
-        }
-        for (let i = asteroids.length - 1; i >= 0; i--) {
-          const a = asteroids[i];
-          for (let j = bullets.length - 1; j >= 0; j--) {
-            if (dist(a, bullets[j]) < a.radius) { bullets.splice(j, 1); splitAsteroid(i); break; }
-          }
-        }
-        for (const a of asteroids) {
-          if (dist(a, ship) < a.radius + ship.radius * 0.85) { loseLife(); break; }
-        }
-      }
-
-      function drawBg() {
-        ctx.clearRect(0, 0, width, height);
-        const g = ctx.createLinearGradient(0, 0, 0, height);
-        g.addColorStop(0, '#08131a'); g.addColorStop(1, '#0d1f2d');
-        ctx.fillStyle = g; ctx.fillRect(0, 0, width, height);
-        const n = Math.floor((width * height) / 10000);
-        for (let i = 0; i < n; i++) {
-          ctx.globalAlpha = 0.35 + ((i * 17) % 10) / 22;
-          ctx.fillStyle = '#fff';
-          ctx.fillRect((i * 137.5) % width, (i * 83.3) % height, 1.2, 1.2);
-        }
-        ctx.globalAlpha = 1;
-      }
-
-      function drawShip() {
-        ctx.save();
-        ctx.translate(ship.x, ship.y);
-        ctx.rotate(ship.angle + Math.PI / 2);
-        if (ship.invulnerable > 0 && Math.floor(ship.invulnerable * 12) % 2 === 0) ctx.globalAlpha = 0.3;
-        ctx.strokeStyle = '#00d4ff'; ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.moveTo(0, -16); ctx.lineTo(11, 12); ctx.lineTo(0, 7); ctx.lineTo(-11, 12); ctx.closePath(); ctx.stroke();
-        if (keys.has('ArrowUp') && !paused && !gameOver) {
-          ctx.strokeStyle = '#f0a500';
-          ctx.beginPath(); ctx.moveTo(-5, 12); ctx.lineTo(0, 22 + Math.random() * 8); ctx.lineTo(5, 12); ctx.stroke();
-        }
-        ctx.restore();
-      }
-
-      function drawAsteroids() {
-        ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
-        for (const a of asteroids) {
-          ctx.save(); ctx.translate(a.x, a.y); ctx.rotate(a.angle);
-          ctx.beginPath();
-          a.points.forEach((p, i) => { if (i === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y); });
-          ctx.closePath(); ctx.stroke(); ctx.restore();
-        }
-      }
-
-      function drawBullets() {
-        ctx.fillStyle = '#f0a500';
-        for (const b of bullets) { ctx.beginPath(); ctx.arc(b.x, b.y, 2.2, 0, Math.PI * 2); ctx.fill(); }
-      }
-
-      function drawParticles() {
-        for (const p of particles) {
-          const a = Math.max(0, p.life / p.maxLife);
-          ctx.globalAlpha = a; ctx.lineWidth = 1.5;
-          ctx.strokeStyle = a > 0.55 ? '#f0a500' : '#00d4ff';
-          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x - p.vx * 0.02, p.y - p.vy * 0.02); ctx.stroke();
-        }
-        ctx.globalAlpha = 1;
-      }
-
-      function drawPaused() {
-        if (!paused || gameOver) return;
-        ctx.fillStyle = 'rgba(8,19,26,0.45)'; ctx.fillRect(0, 0, width, height);
-        ctx.strokeStyle = '#00d4ff'; ctx.lineWidth = 1;
-        const bw = 200, bh = 64;
-        ctx.strokeRect(width / 2 - bw / 2, height / 2 - bh / 2, bw, bh);
-        ctx.fillStyle = '#fff'; ctx.font = '22px Share Tech Mono';
-        ctx.textAlign = 'center'; ctx.fillText('PAUSED', width / 2, height / 2 + 7);
-      }
-
-      let last = performance.now();
-      function loop(now) {
-        const dt = Math.min(0.033, (now - last) / 1000); last = now;
-        update(dt);
-        drawBg(); drawParticles(); drawAsteroids(); drawBullets();
-        if (!gameOver) drawShip();
-        drawPaused();
-        requestAnimationFrame(loop);
-      }
-
-      function togglePause() {
-        if (gameOver) return;
-        paused = !paused;
-        if (ui.pauseBtn) ui.pauseBtn.textContent = paused ? 'RESUME GAME' : 'PAUSE GAME';
-      }
-
-      document.addEventListener('keydown', (e) => {
-        if (['ArrowLeft','ArrowRight','ArrowUp','Space'].includes(e.code)) e.preventDefault();
-        if (e.code === 'KeyP') { togglePause(); return; }
-        if (e.code === 'KeyR' && gameOver) { resetGame(); return; }
-        if (e.code === 'Space' && !gameOver) fireBullet();
-        keys.add(e.code === 'Space' ? 'Space' : e.key);
-      });
-      document.addEventListener('keyup', (e) => { keys.delete(e.code === 'Space' ? 'Space' : e.key); });
-
-      if (ui.pauseBtn) {
-        ui.pauseBtn.addEventListener('click', (e) => { e.preventDefault(); togglePause(); });
-      }
-
-      // Initialise after layout is painted
-      requestAnimationFrame(() => {
-        resize();
-        window.addEventListener('resize', resize);
-        resetGame();
-        requestAnimationFrame(loop);
-      });
-    }
-  </script>
+  <script src="assets/js/asteroids.js"></script>
+  <script src="assets/js/site.js"></script>
 </body>
 </html>
