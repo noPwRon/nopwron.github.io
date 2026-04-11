@@ -206,3 +206,48 @@ body.scanlines {
     width: 100%;
   }
 }
+
+.discipline-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.discipline-card {
+  padding: 16px;
+  background: var(--panel);
+  border: 2px solid var(--line-dim);
+  box-shadow:
+    0 0 20px rgba(140, 247, 255, 0.12),
+    inset 0 0 20px rgba(140, 247, 255, 0.04);
+}
+
+.discipline-code {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  margin-bottom: 6px;
+  color: var(--text-dim);
+}
+
+.discipline-card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 6px;
+}
+
+.discipline-card p {
+  margin-bottom: 10px;
+}
+
+/* Discipline-specific borders */
+
+.discipline-card.engineering {
+  border-color: var(--line);
+}
+
+.discipline-card.hospitality {
+  border-color: var(--accent);
+}
+
+.discipline-card.forge {
+  border-color: var(--border-strong);
+}
