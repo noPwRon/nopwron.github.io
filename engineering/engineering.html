@@ -32,7 +32,6 @@
     overflow-x: hidden;
   }
 
-  /* ── STAR FIELD ── */
   #stars {
     position: fixed;
     inset: 0;
@@ -40,7 +39,6 @@
     z-index: 0;
   }
 
-  /* ── SCAN LINE OVERLAY ── */
   body::after {
     content: '';
     position: fixed;
@@ -56,7 +54,6 @@
     z-index: 1;
   }
 
-  /* ── HUD BAR ── */
   .hud {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -118,7 +115,6 @@
     margin-top: 1px;
   }
 
-  /* ── MAIN LAYOUT ── */
   .main {
     position: relative;
     z-index: 2;
@@ -129,7 +125,6 @@
     padding-right: 24px;
   }
 
-  /* ── SECTION HEADER ── */
   .section-header {
     margin-bottom: 48px;
     position: relative;
@@ -168,7 +163,10 @@
     line-height: 1.7;
   }
 
-  /* ── GRID RULE ── */
+  .header-actions {
+    margin-top: 16px;
+  }
+
   .rule {
     width: 100%;
     height: 1px;
@@ -176,7 +174,6 @@
     margin: 40px 0;
   }
 
-  /* ── FEATURED PROJECT ── */
   .featured-project {
     border: 1px solid rgba(0, 212, 255, 0.3);
     background: rgba(0,212,255,0.03);
@@ -272,7 +269,6 @@
     background: rgba(0,212,255,0.05);
   }
 
-  /* ── EXPERIENCE TIMELINE ── */
   .timeline {
     position: relative;
   }
@@ -354,7 +350,6 @@
     color: var(--amber-dim);
   }
 
-  /* ── SKILLS GRID ── */
   .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -390,7 +385,6 @@
     line-height: 1.5;
   }
 
-  /* ── EDUCATION STRIP ── */
   .edu-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -437,7 +431,6 @@
     letter-spacing: 0.1em;
   }
 
-  /* ── SECTION DIVIDER LABEL ── */
   .divider-label {
     display: flex;
     align-items: center;
@@ -458,7 +451,6 @@
     background: linear-gradient(90deg, var(--amber-dim), transparent);
   }
 
-  /* ── FOOTER NAV ── */
   .footer-nav {
     display: flex;
     gap: 12px;
@@ -497,7 +489,6 @@
 
 <canvas id="stars"></canvas>
 
-<!-- HUD -->
 <nav class="hud">
   <div class="hud-left">
     <a href="../" class="hud-back">← BACK</a>
@@ -519,19 +510,21 @@
   </div>
 </nav>
 
-<!-- MAIN -->
 <main class="main">
 
-  <!-- HEADER -->
   <header class="section-header">
     <span class="section-prefix">// DISCIPLINE_01</span>
     <h1 class="section-title">MECHANICAL<br><span>ENGINEERING</span></h1>
     <p class="section-sub">
       Hands-on mechanical engineer with experience building, testing, and commissioning electro-mechanical and automated systems. Background spans applied research, industrial refrigeration, and embedded sensing.
     </p>
+    <div class="header-actions">
+      <a class="nav-btn amber" href="./resume.pdf" target="_blank" rel="noopener noreferrer" download>
+        GET PDF VERSION
+      </a>
+    </div>
   </header>
 
-  <!-- FEATURED PROJECT -->
   <div class="divider-label">
     <span>SELECTED PROJECT</span>
     <div class="divider-line"></div>
@@ -558,7 +551,6 @@
     </div>
   </div>
 
-  <!-- EXPERIENCE -->
   <div class="divider-label">
     <span>WORK HISTORY</span>
     <div class="divider-line"></div>
@@ -615,7 +607,7 @@
       <div class="timeline-org">ACCENT REFRIGERATION — Victoria, BC</div>
       <ul class="timeline-bullets">
         <li>Designed packaged industrial refrigeration and heat pump systems for manufacture</li>
-        <li>Produced P&IDs and detailed 3D CAD models for fabrication and assembly</li>
+        <li>Produced P&amp;IDs and detailed 3D CAD models for fabrication and assembly</li>
         <li>Developed mechanical layouts and full-system 3D models for ice rinks and ice plants</li>
         <li>Supported installation, commissioning, and coordination with fabricators and technicians</li>
       </ul>
@@ -623,7 +615,6 @@
 
   </div>
 
-  <!-- SKILLS -->
   <div class="divider-label">
     <span>TECHNICAL SKILLS</span>
     <div class="divider-line"></div>
@@ -652,7 +643,7 @@
       <div class="skill-items">
         <span class="skill-item">SolidWorks</span>
         <span class="skill-item">AutoCAD / Inventor</span>
-        <span class="skill-item">P&IDs</span>
+        <span class="skill-item">P&amp;IDs</span>
         <span class="skill-item">Technical reporting</span>
       </div>
     </div>
@@ -667,7 +658,6 @@
     </div>
   </div>
 
-  <!-- EDUCATION -->
   <div class="divider-label">
     <span>EDUCATION</span>
     <div class="divider-line"></div>
@@ -691,13 +681,15 @@
     </div>
   </div>
 
-  <!-- FOOTER NAV -->
   <div class="divider-label">
     <span>EXPLORE</span>
     <div class="divider-line"></div>
   </div>
 
   <nav class="footer-nav">
+    <a class="nav-btn amber" href="./resume.pdf" target="_blank" rel="noopener noreferrer" download>
+      GET PDF VERSION
+    </a>
     <a href="../" class="nav-btn">← MAIN</a>
     <a href="../hospitality" class="nav-btn amber">HOSPITALITY →</a>
     <a href="../forge" class="nav-btn">THE FORGE →</a>

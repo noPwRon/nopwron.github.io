@@ -166,6 +166,10 @@
     line-height: 1.7;
   }
 
+  .header-actions {
+    margin-top: 16px;
+  }
+
   .featured-project {
     border: 1px solid rgba(240, 165, 0, 0.3);
     background: rgba(240,165,0,0.03);
@@ -513,6 +517,11 @@
     <p class="section-sub">
       Hospitality professional with fifteen years of experience across kitchens, events, and bar service. Fast, organized, calm under pressure, and comfortable wherever the floor gets loud and the timing gets tight.
     </p>
+    <div class="header-actions">
+      <a class="nav-btn amber" href="./resume.pdf" target="_blank" rel="noopener noreferrer" download>
+        GET PDF VERSION
+      </a>
+    </div>
   </header>
 
   <div class="divider-label">
@@ -662,6 +671,9 @@
   </div>
 
   <nav class="footer-nav">
+    <a class="nav-btn amber" href="./resume.pdf" target="_blank" rel="noopener noreferrer" download>
+      GET PDF VERSION
+    </a>
     <a href="../" class="nav-btn">← MAIN</a>
     <a href="../engineering" class="nav-btn">ENGINEERING →</a>
     <a href="../forge" class="nav-btn amber">THE FORGE →</a>
@@ -697,4 +709,29 @@ function initStars() {
 }
 
 function drawStars() {
-  ctx.clearRect(0, 0,
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  grad.addColorStop(0, '#08131a');
+  grad.addColorStop(1, '#0d1f2d');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  stars.forEach(s => {
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,255,255,${s.a})`;
+    ctx.fill();
+    s.y -= s.speed;
+    if (s.y < 0) { s.y = canvas.height; s.x = Math.random() * canvas.width; }
+  });
+
+  requestAnimationFrame(drawStars);
+}
+
+resize();
+initStars();
+drawStars();
+window.addEventListener('resize', () => { resize(); initStars(); });
+</script>
+</body>
+</html>
