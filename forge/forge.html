@@ -7,20 +7,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:        #08131a;
-    --bg2:       #0d1f2d;
-    --bg3:       #0a1a24;
+    --bg:        #0f0b08;
+    --bg2:       #1c1208;
+    --bg3:       #130e09;
     --amber:     #f0a500;
     --amber-dim: #7a5200;
-    --cyan:      #00d4ff;
-    --cyan-dim:  #004d5e;
-    --white:     #ffffff;
-    --dim:       #4a6a7a;
-    --mono:      'Share Tech Mono', 'Courier New', monospace;
-    --sans:      'Rajdhani', sans-serif;
     --ember:     #c4501a;
     --ember-dim: #5a2008;
     --leather:   #8b5c3a;
+    --white:     #f5ede4;
+    --dim:       #6b5040;
+    --mono:      'Share Tech Mono', 'Courier New', monospace;
+    --sans:      'Rajdhani', sans-serif;
   }
  
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -65,7 +63,7 @@
     top: 0; left: 0; right: 0;
     height: 56px;
     border-bottom: 1px solid rgba(255,255,255,0.15);
-    background: rgba(8,19,26,0.92);
+    background: rgba(15,11,8,0.94);
     backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
@@ -136,7 +134,7 @@
   }
  
   .section-eyebrow {
-    color: var(--cyan);
+    color: var(--ember);
     font-size: 10px;
     letter-spacing: 0.32em;
     display: block;
@@ -159,7 +157,7 @@
   }
  
   .section-title .cyan-accent {
-    color: var(--cyan);
+    color: var(--ember);
     font-weight: 600;
   }
  
@@ -256,9 +254,9 @@
     font-size: 9px;
     letter-spacing: 0.2em;
     padding: 4px 10px;
-    border: 1px solid var(--cyan-dim);
-    color: var(--cyan);
-    background: rgba(0,212,255,0.04);
+    border: 1px solid var(--ember-dim);
+    color: var(--ember);
+    background: rgba(196,80,26,0.06);
   }
  
   .tag.amber {
@@ -392,9 +390,9 @@
   }
  
   .cap-item.strong {
-    border-color: var(--cyan-dim);
-    color: var(--cyan);
-    background: rgba(0,212,255,0.04);
+    border-color: var(--ember-dim);
+    color: var(--ember);
+    background: rgba(196,80,26,0.06);
   }
  
   /* ── EQUIPMENT TABLE ── */
@@ -428,7 +426,7 @@
   }
  
   .equip-table td:first-child { color: var(--white); }
-  .equip-table td:last-child { text-align: right; color: var(--cyan); }
+  .equip-table td:last-child { text-align: right; color: var(--ember); }
  
   .equip-table .note {
     color: var(--dim);
@@ -612,11 +610,7 @@
   }
   .btn.amber:hover { background: var(--amber); color: var(--bg); }
  
-  .btn.cyan {
-    border-color: var(--cyan);
-    color: var(--cyan);
-  }
-  .btn.cyan:hover { background: var(--cyan); color: var(--bg); }
+
  
   /* ── STATUS BADGE ── */
   .status {
@@ -638,7 +632,7 @@
   }
 
   .tag {
-    text-shadow: 0 0 8px rgba(0,212,255,0.5);
+    text-shadow: 0 0 8px rgba(196,80,26,0.6);
   }
 
   .tag.amber {
@@ -646,7 +640,7 @@
   }
 
   .cap-item.strong {
-    box-shadow: 0 0 10px rgba(0,212,255,0.08);
+    box-shadow: 0 0 10px rgba(196,80,26,0.1);
   }
 
   .tag.ember {
@@ -1033,19 +1027,19 @@
     <div class="market-grid">
 
       <div class="market-card">
-        <span class="market-priority" style="color: var(--cyan); font-size: 9px; letter-spacing: 0.2em; display: block; margin-bottom: 6px;">◆ FESTIVAL</span>
+        <span class="market-priority" style="color: var(--ember); font-size: 9px; letter-spacing: 0.2em; display: block; margin-bottom: 6px;">◆ FESTIVAL</span>
         <div class="market-name">SHAMBHALA</div>
         <div class="market-loc">SALMO, BC</div>
       </div>
 
       <div class="market-card">
-        <span class="market-priority" style="color: var(--cyan); font-size: 9px; letter-spacing: 0.2em; display: block; margin-bottom: 6px;">◆ FESTIVAL</span>
+        <span class="market-priority" style="color: var(--ember); font-size: 9px; letter-spacing: 0.2em; display: block; margin-bottom: 6px;">◆ FESTIVAL</span>
         <div class="market-name">BASS COAST</div>
         <div class="market-loc">MERRITT, BC</div>
       </div>
 
       <div class="market-card">
-        <span class="market-priority" style="color: var(--cyan); font-size: 9px; letter-spacing: 0.2em; display: block; margin-bottom: 6px;">◆ FESTIVAL</span>
+        <span class="market-priority" style="color: var(--ember); font-size: 9px; letter-spacing: 0.2em; display: block; margin-bottom: 6px;">◆ FESTIVAL</span>
         <div class="market-name">RIFFLANDIA</div>
         <div class="market-loc">VICTORIA, BC</div>
       </div>
@@ -1089,7 +1083,7 @@
     <div class="footer-links">
       <a class="btn" href="../engineering/engineering.html">ENGINEERING</a>
       <a class="btn" href="../hospitality/hospitality.html">HOSPITALITY</a>
-      <a class="btn cyan" href="forge.html">THE FORGE</a>
+      <a class="btn amber" href="forge.html">THE FORGE</a>
     </div>
     <div class="footer-links">
       <a class="btn" href="https://github.com/nopwron" target="_blank" rel="noopener noreferrer">GITHUB</a>
@@ -1128,14 +1122,14 @@
   function drawStars() {
     ctx.clearRect(0, 0, W, H);
     const grad = ctx.createLinearGradient(0, 0, 0, H);
-    grad.addColorStop(0, '#08131a');
-    grad.addColorStop(1, '#0d1f2d');
+    grad.addColorStop(0, '#0f0b08');
+    grad.addColorStop(1, '#1c1208');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, W, H);
  
     for (const s of stars) {
       ctx.globalAlpha = s.alpha;
-      ctx.fillStyle = '#ffffff';
+      ctx.fillStyle = '#e8c090';
       ctx.fillRect(s.x, s.y, s.size, s.size);
       s.y -= s.speed;
       if (s.y < -2) { s.y = H + 2; s.x = Math.random() * W; }
