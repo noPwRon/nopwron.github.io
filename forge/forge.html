@@ -130,45 +130,68 @@
  
   /* ── SECTION HEADER ── */
   .section-header {
-    margin-bottom: 52px;
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 40px;
+    align-items: center;
   }
- 
+
   .section-eyebrow {
     color: var(--ember);
     font-size: 10px;
     letter-spacing: 0.32em;
     display: block;
-    margin-bottom: 14px;
+    margin-bottom: 8px;
+    grid-column: 1;
+    grid-row: 1;
   }
- 
+
   .section-title {
     font-family: var(--sans);
-    font-size: clamp(42px, 6vw, 72px);
+    font-size: clamp(26px, 3.5vw, 42px);
     font-weight: 300;
     letter-spacing: 0.04em;
-    line-height: 0.95;
+    line-height: 1;
     border-left: 3px solid var(--amber);
-    padding-left: 22px;
+    padding-left: 18px;
+    grid-column: 1;
+    grid-row: 2;
   }
- 
+
   .section-title span {
     color: var(--amber);
     font-weight: 600;
   }
- 
+
   .section-title .cyan-accent {
     color: var(--ember);
     font-weight: 600;
   }
- 
+
   .section-sub {
-    color: rgba(255,255,255,0.55);
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    margin-top: 18px;
-    padding-left: 25px;
-    line-height: 1.8;
-    max-width: 600px;
+    color: rgba(245,237,228,0.5);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding-left: 24px;
+    line-height: 1.75;
+    max-width: 520px;
+    grid-column: 2;
+    grid-row: 1 / 3;
+    border-left: 1px solid rgba(255,255,255,0.07);
+  }
+
+  @media (max-width: 640px) {
+    .section-header {
+      display: block;
+      margin-bottom: 20px;
+    }
+    .section-sub {
+      border-left: none;
+      padding-left: 25px;
+      margin-top: 12px;
+    }
   }
  
   /* ── BLOCK DIVIDER ── */
@@ -811,31 +834,9 @@
     </p>
   </header>
  
-  <!-- HERO PRODUCT -->
+  <!-- GALLERY — first visible content -->
   <div class="block">
-    <div class="block-label">// HERO PRODUCT</div>
- 
-    <div class="product-hero">
-      <span class="product-hero-eyebrow">FLAGSHIP — PRODUCTION READY</span>
-      <div class="product-hero-title">LED REACTIVE LEATHER HIP BAG SYSTEM <span class="status wip">IN BUILD</span></div>
-      <p class="product-hero-desc">
-        A hand-stitched leather hip bag with removable LED electronics module. Laser-cut decorative panels with translucent acrylic inserts diffuse light when the module is installed — and look exceptional without it. Controlled via a custom-branded mobile app over Bluetooth LE. Built for festivals, raves, circus, and live performance culture. Modular by design — the electronics slide out for washing, water exposure, or days you want the leather alone.
-      </p>
-      <div class="tag-row">
-        <span class="tag ember">HAND-STITCHED LEATHER</span>
-        <span class="tag ember">LASER-CUT PANELS</span>
-        <span class="tag ember">PATTERN MADE BY HAND</span>
-        <span class="tag">ESP32 / BLE</span>
-        <span class="tag">WS2812B LED</span>
-        <span class="tag">3D PRINTED ENCLOSURE</span>
-        <span class="tag">REACT NATIVE APP</span>
-        <span class="tag">USB-C CHARGING</span>
-        <span class="tag amber">FESTIVAL-RATED</span>
-      </div>
-    </div>
- 
-    <!-- GALLERY -->
-    <div class="gallery-grid" style="margin-bottom: 16px;">
+    <div class="gallery-grid">
 
       <div class="gallery-card">
         <div class="gallery-img">
@@ -903,6 +904,30 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- HERO PRODUCT -->
+  <div class="block">
+    <div class="block-label">// HERO PRODUCT</div>
+
+    <div class="product-hero">
+      <span class="product-hero-eyebrow">FLAGSHIP — PRODUCTION READY</span>
+      <div class="product-hero-title">LED REACTIVE LEATHER HIP BAG SYSTEM <span class="status wip">IN BUILD</span></div>
+      <p class="product-hero-desc">
+        A hand-stitched leather hip bag with removable LED electronics module. Laser-cut decorative panels with translucent acrylic inserts diffuse light when the module is installed — and look exceptional without it. Controlled via a custom-branded mobile app over Bluetooth LE. Built for festivals, raves, circus, and live performance culture. Modular by design — the electronics slide out for washing, water exposure, or days you want the leather alone.
+      </p>
+      <div class="tag-row">
+        <span class="tag ember">HAND-STITCHED LEATHER</span>
+        <span class="tag ember">LASER-CUT PANELS</span>
+        <span class="tag ember">PATTERN MADE BY HAND</span>
+        <span class="tag">ESP32 / BLE</span>
+        <span class="tag">WS2812B LED</span>
+        <span class="tag">3D PRINTED ENCLOSURE</span>
+        <span class="tag">REACT NATIVE APP</span>
+        <span class="tag">USB-C CHARGING</span>
+        <span class="tag amber">FESTIVAL-RATED</span>
+      </div>
     </div>
 
     <!-- SKU GRID -->
