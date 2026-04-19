@@ -1,117 +1,3 @@
-
-Business Building
-/
-
-hospitality.html
-html
-
-
-index.html
-html
-
-
-engineering.html
-html
-
-
-forge.html
-1 line
-
-html
-
-I have done some work on the website. See the files attached. I need some changes to be made. 
-
-I want the asteroids game I had from a previous iteration to be added to the index splash page.
-
-additionally create some filler for the forge.hmtl
-
-19:17
-Let me read all the uploaded files first to understand what's there.
-
-
-Viewed 2 files
-Viewed 2 files
-Good — the index.html already has the full Asteroids game. Now let me read forge.html:
-
-
-Reading forge.html
-Reading forge.html
-forge.html is empty. Let me also check the end of index.html to understand the full game implementation, then read the engineering page for style reference:
-
-
-Reading end of index.html
-Reading end of index.html
-The file got cut off — but that's fine, the game is clearly already fully implemented in index.html (I can see all the game logic). The index already has the Asteroids game. The issue must be that the current live version doesn't include it. Let me check what's actually needed — read the engineering page briefly for style reference, then build the forge page.
-
-
-Reading engineering.html for style reference
-Reading engineering.html for style reference
-I have everything I need. The index.html already contains the full Asteroids game — so the task is really just to make sure that file is output correctly as-is, and to build forge.html from scratch. Let me now read the frontend-design skill and then build the forge page.
-
-
-Reading frontend design skill
-Reading frontend design skill
-Now I have everything. The index already has the full game baked in — I just need to output it as-is. And I need to build forge.html. Let me do both.
-
-The index.html is truncated in my view at line 1001 — let me grab the tail so I output the complete file.
-
-
-Get the full index.html
-Get the full index.html
-The file is cut off — the last line is incomplete. Let me check what's happening and get the actual byte count:
-
-
-Check if file is truncated
-Check if file is truncated
-The file is genuinely truncated — it's cut off mid-sentence. The game code is incomplete. I'll need to complete it and close the file properly. I have enough of the structure to reconstruct the missing tail. Let me now copy index.html, complete the missing closing code, and build forge.html.
-
-
-Ran 2 commands
-Ran 2 commands
-Good. Now let me build the forge.html — the most expressive page, amber + cyan both active, craft energy, LED warmth. This is the fabrication/business brand page.
-
-
-Creating forge.html — fabrication studio page with filler content matching site aesthetic
-Creating forge.html — fabrication studio page with filler content matching site aesthetic
-Now copy both to outputs:
-
-
-Ran a command, read a file
-Ran a command, read a file
-Two files delivered:
-
-forge.html — Full filler page built from scratch, matching the site aesthetic precisely. It includes:
-
-HUD bar with DISCIPLINE / MEDIUM / STATUS stats
-Animated star field (same drifting-upward implementation as other pages)
-Hero product callout with corner-bracket styling and tag row
-SKU grid — all three products with features and pricing
-Fabrication capabilities grid (production-ready vs. developing vs. engineering overlap)
-Studio inventory/equipment table
-Four-phase build roadmap on the amber diamond timeline
-Target events/markets grid with priority colour coding
-Contact CTA strip
-Footer nav linking to all three sections
-index.html — Your uploaded version was getting cut off at line 1000 (the file was truncated mid-sentence). I completed the missing closing code (pauseBtn click handler, resetGame(), requestAnimationFrame(loop), and closing tags) so the Asteroids game runs properly end-to-end.
-
-One note on the index: the game was already fully implemented in your uploaded file — the star field, physics, HUD, everything. The only thing missing was the very tail end of the script. That's now fixed.
-
-
-Forge
-Code · HTML 
-
-Index
-Code · HTML 
-
-Want to be notified when Claude responds?
-
-
-
-
-Claude is AI and can make mistakes. Please double-check responses.
-Forge · HTML
-Copy
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -132,6 +18,9 @@ Copy
     --dim:       #4a6a7a;
     --mono:      'Share Tech Mono', 'Courier New', monospace;
     --sans:      'Rajdhani', sans-serif;
+    --ember:     #c4501a;
+    --ember-dim: #5a2008;
+    --leather:   #8b5c3a;
   }
  
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -743,19 +632,148 @@ Copy
   .status.soon  { border-color: var(--dim); color: var(--dim); }
   .status.live  { border-color: #44cc44; color: #44cc44; }
  
+  /* ── PRODUCT GLOW — evoke LED light on leather ── */
+  .product-hero {
+    box-shadow: 0 0 60px rgba(240,165,0,0.07), inset 0 0 80px rgba(240,165,0,0.025);
+  }
+
+  .tag {
+    text-shadow: 0 0 8px rgba(0,212,255,0.5);
+  }
+
+  .tag.amber {
+    text-shadow: 0 0 8px rgba(240,165,0,0.5);
+  }
+
+  .cap-item.strong {
+    box-shadow: 0 0 10px rgba(0,212,255,0.08);
+  }
+
+  .tag.ember {
+    border-color: var(--ember-dim);
+    color: var(--ember);
+    background: rgba(196,80,26,0.06);
+    text-shadow: 0 0 8px rgba(196,80,26,0.5);
+  }
+
+  /* ── GALLERY ── */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .gallery-card {
+    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(255,255,255,0.015);
+    position: relative;
+  }
+
+  .gallery-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 14px; height: 14px;
+    border-top: 1px solid var(--ember);
+    border-left: 1px solid var(--ember);
+  }
+
+  .gallery-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 14px; height: 14px;
+    border-bottom: 1px solid var(--ember);
+    border-right: 1px solid var(--ember);
+  }
+
+  .gallery-img {
+    aspect-ratio: 4 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 8px,
+      rgba(255,255,255,0.018) 8px,
+      rgba(255,255,255,0.018) 9px
+    );
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gallery-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    position: absolute;
+    inset: 0;
+  }
+
+  .gallery-placeholder-icon {
+    font-size: 28px;
+    opacity: 0.18;
+    line-height: 1;
+  }
+
+  .gallery-placeholder-text {
+    color: var(--dim);
+    font-size: 9px;
+    letter-spacing: 0.24em;
+  }
+
+  .gallery-caption {
+    padding: 10px 14px 12px;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: rgba(255,255,255,0.6);
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .gallery-caption strong {
+    display: block;
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+  }
+
+  /* ── SHOP BUTTON GLOW ── */
+  .btn.shop {
+    border-color: var(--amber);
+    color: var(--amber);
+    box-shadow: 0 0 14px rgba(240,165,0,0.2);
+    letter-spacing: 0.2em;
+    font-size: 11px;
+    padding: 10px 20px;
+  }
+  .btn.shop:hover {
+    background: var(--amber);
+    color: var(--bg);
+    box-shadow: 0 0 28px rgba(240,165,0,0.4);
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 860px) {
     .sku-grid { grid-template-columns: 1fr; }
     .capabilities-grid { grid-template-columns: 1fr; }
     .market-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
     .cta-strip { flex-direction: column; align-items: flex-start; }
     main { padding-left: 18px; padding-right: 18px; }
     .hud-right .hud-stat:nth-child(2),
     .hud-right .hud-stat:nth-child(3) { display: none; }
   }
- 
+
   @media (max-width: 560px) {
     .market-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr; }
     .footer-nav { flex-direction: column; align-items: flex-start; }
   }
 </style>
@@ -783,6 +801,7 @@ Copy
       <span class="hud-stat-label">STATUS</span>
       <span class="hud-stat-value">IN BUILD</span>
     </div>
+    <a class="btn shop" href="https://www.etsy.com/shop/TheForge" target="_blank" rel="noopener noreferrer">SHOP ↗</a>
   </div>
 </nav>
  
@@ -809,8 +828,9 @@ Copy
         A hand-stitched leather hip bag with removable LED electronics module. Laser-cut decorative panels with translucent acrylic inserts diffuse light when the module is installed — and look exceptional without it. Controlled via a custom-branded mobile app over Bluetooth LE. Built for festivals, raves, circus, and live performance culture. Modular by design — the electronics slide out for washing, water exposure, or days you want the leather alone.
       </p>
       <div class="tag-row">
-        <span class="tag amber">HAND-STITCHED LEATHER</span>
-        <span class="tag amber">LASER-CUT PANELS</span>
+        <span class="tag ember">HAND-STITCHED LEATHER</span>
+        <span class="tag ember">LASER-CUT PANELS</span>
+        <span class="tag ember">PATTERN MADE BY HAND</span>
         <span class="tag">ESP32 / BLE</span>
         <span class="tag">WS2812B LED</span>
         <span class="tag">3D PRINTED ENCLOSURE</span>
@@ -820,6 +840,77 @@ Copy
       </div>
     </div>
  
+    <!-- GALLERY -->
+    <div class="gallery-grid" style="margin-bottom: 16px;">
+
+      <div class="gallery-card">
+        <div class="gallery-img">
+          <span class="gallery-placeholder-icon">◈</span>
+          <span class="gallery-placeholder-text">PHOTO PENDING</span>
+        </div>
+        <div class="gallery-caption">
+          <strong>HIP BAG — FULL SYSTEM</strong>
+          LEATHER + LED MODULE INSTALLED
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <div class="gallery-img">
+          <span class="gallery-placeholder-icon">◈</span>
+          <span class="gallery-placeholder-text">PHOTO PENDING</span>
+        </div>
+        <div class="gallery-caption">
+          <strong>LASER-CUT PANELS</strong>
+          ACRYLIC INSERT DETAIL
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <div class="gallery-img">
+          <span class="gallery-placeholder-icon">◈</span>
+          <span class="gallery-placeholder-text">PHOTO PENDING</span>
+        </div>
+        <div class="gallery-caption">
+          <strong>LED MODULE — LIT</strong>
+          WS2812B · ESP32 · USB-C
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <div class="gallery-img">
+          <span class="gallery-placeholder-icon">◈</span>
+          <span class="gallery-placeholder-text">PHOTO PENDING</span>
+        </div>
+        <div class="gallery-caption">
+          <strong>HAND STITCHING DETAIL</strong>
+          BOOT-GRADE LEATHER EXTERIOR
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <div class="gallery-img">
+          <span class="gallery-placeholder-icon">◈</span>
+          <span class="gallery-placeholder-text">PHOTO PENDING</span>
+        </div>
+        <div class="gallery-caption">
+          <strong>WORN — HIP / WAIST</strong>
+          DUAL DETACHABLE STRAP SYSTEM
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <div class="gallery-img">
+          <span class="gallery-placeholder-icon">◈</span>
+          <span class="gallery-placeholder-text">PHOTO PENDING</span>
+        </div>
+        <div class="gallery-caption">
+          <strong>3D PRINTED ENCLOSURE</strong>
+          ASA/CF — UV + HEAT RESISTANT
+        </div>
+      </div>
+
+    </div>
+
     <!-- SKU GRID -->
     <div class="sku-grid">
  
@@ -1097,7 +1188,8 @@ Copy
       The Forge is currently in active development. First production units coming soon. Reach out directly to discuss commissions, custom builds, or wholesale inquiry.
     </div>
     <div class="cta-buttons">
-      <a class="btn amber" href="mailto:jeremy.a.guido@gmail.com">CONTACT JEREMY</a>
+      <a class="btn shop" href="https://www.etsy.com/shop/TheForge" target="_blank" rel="noopener noreferrer">VISIT THE SHOP ↗</a>
+      <a class="btn amber" href="mailto:jeremy.a.guido@gmail.com">COMMISSION / CUSTOM</a>
       <a class="btn" href="https://www.instagram.com/nopwron" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
     </div>
   </div>
