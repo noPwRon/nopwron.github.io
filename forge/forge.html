@@ -8,11 +8,232 @@
 <link rel="stylesheet" href="../assets/css/tokens.css">
 <link rel="stylesheet" href="../assets/css/base.css">
 <link rel="stylesheet" href="../assets/css/page-forge.css">
+<style>
+/* ── HERO ───────────────────────────────────────────────────── */
+.hero {
+  padding: 56px 0 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  border-bottom: 1px solid var(--forge-border-dim);
+  margin-bottom: 60px;
+}
+.hero-eyebrow {
+  color: var(--ember);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  display: block;
+  margin-bottom: 14px;
+}
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(36px, 5vw, 62px);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  border-left: 3px solid var(--amber);
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+.hero-title span { color: var(--amber); font-weight: 600; }
+.hero-desc {
+  color: var(--forge-text-dim);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  line-height: 1.8;
+  margin-bottom: 28px;
+  max-width: 440px;
+}
+.hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-visual {
+  border: 1px solid var(--forge-border-soft);
+  aspect-ratio: 4 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 8px,
+    var(--forge-bg-stripe) 8px,
+    var(--forge-bg-stripe) 9px
+  );
+  overflow: hidden;
+}
+.hero-visual::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 20px; height: 20px;
+  border-top: 2px solid var(--amber);
+  border-left: 2px solid var(--amber);
+}
+.hero-visual::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 20px; height: 20px;
+  border-bottom: 2px solid var(--amber);
+  border-right: 2px solid var(--amber);
+}
+.hero-visual-icon { font-size: 48px; opacity: 0.12; line-height: 1; }
+.hero-visual-label { color: var(--dim); font-size: 9px; letter-spacing: 0.24em; text-align: center; }
+.hero-visual-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 10px 14px;
+  background: rgba(15,11,8,0.72);
+  border-top: 1px solid var(--forge-border-micro);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--forge-text-list);
+  font-family: var(--font-mono);
+}
+.hero-visual-caption strong {
+  display: block;
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+/* ── HOW TO ORDER ───────────────────────────────────────────── */
+.order-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.order-step {
+  border: 1px solid var(--forge-border-soft);
+  background: var(--forge-bg-stripe);
+  padding: 24px 22px;
+  position: relative;
+}
+.order-step-num {
+  font-family: var(--font-heading);
+  font-size: 42px;
+  font-weight: 600;
+  color: var(--amber);
+  opacity: 0.18;
+  line-height: 1;
+  position: absolute;
+  top: 16px; right: 18px;
+}
+.order-step-title {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.order-step-desc {
+  color: var(--forge-text-dim);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  line-height: 1.7;
+  font-family: var(--font-mono);
+}
+.order-step-time {
+  color: var(--amber);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  margin-top: 12px;
+  display: block;
+  font-family: var(--font-mono);
+}
+
+/* ── SKU ORDER BUTTON ───────────────────────────────────────── */
+.sku-card {
+  display: flex;
+  flex-direction: column;
+}
+.sku-order-btn {
+  display: block;
+  text-align: center;
+  padding: 9px 16px;
+  border: 1px solid var(--forge-border-btn);
+  color: var(--forge-text-soft);
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  background: transparent;
+  transition: all 0.18s;
+  font-family: var(--font-mono);
+  margin-top: auto;
+}
+.sku-order-btn:hover { border-color: var(--amber); color: var(--amber); }
+
+/* ── GALLERY — 1:1 ASPECT RATIO ─────────────────────────────── */
+.gallery-img {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 8px,
+    var(--forge-bg-stripe) 8px,
+    var(--forge-bg-stripe) 9px
+  );
+  position: relative;
+  overflow: hidden;
+}
+.gallery-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+.gallery-note {
+  color: var(--forge-text-dim);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-align: center;
+  margin-top: 14px;
+  font-style: italic;
+  font-family: var(--font-mono);
+}
+
+/* ── PRIMARY BUTTON ─────────────────────────────────────────── */
+.btn.primary {
+  border-color: var(--amber);
+  color: var(--bg);
+  background: var(--amber);
+  letter-spacing: 0.2em;
+  font-size: 11px;
+  padding: 12px 24px;
+  box-shadow: 0 0 20px var(--forge-glow-amber-btn);
+}
+.btn.primary:hover { box-shadow: 0 0 36px var(--forge-glow-amber-hover); opacity: 0.9; }
+
+/* ── RESPONSIVE ─────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .order-steps { grid-template-columns: 1fr; }
+}
+</style>
 </head>
 <body class="scanlines site-forge">
- 
+
 <canvas id="stars"></canvas>
- 
+
+<!-- ── FULL-PAGE WATERMARK ── -->
+<div style="position:fixed;top:0;left:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:50;overflow:hidden;">
+  <span style="font-family:'Share Tech Mono',monospace;font-size:clamp(80px,12vw,140px);letter-spacing:0.2em;color:rgba(240,165,0,0.13);background:rgba(240,165,0,0.07);transform:rotate(-35deg);white-space:nowrap;user-select:none;padding:0.15em 0.4em;">LAUNCHING SOON</span>
+</div>
+
 <!-- ── HUD ── -->
 <nav class="hud">
   <div class="hud-left">
@@ -21,40 +242,137 @@
   </div>
   <div class="hud-right">
     <div class="hud-stat">
-      <span class="hud-stat-label">DISCIPLINE</span>
-      <span class="hud-stat-value">FABRICATION</span>
-    </div>
-    <div class="hud-stat">
       <span class="hud-stat-label">MEDIUM</span>
-      <span class="hud-stat-value">LEATHER / LED / 3D</span>
+      <span class="hud-stat-value">STAINLESS / BRASS</span>
     </div>
     <div class="hud-stat">
       <span class="hud-stat-label">STATUS</span>
-      <span class="hud-stat-value">IN BUILD</span>
+      <span class="hud-stat-value">COMMISSIONS OPEN</span>
     </div>
-    <a class="btn shop" href="https://www.etsy.com/shop/TheForge" target="_blank" rel="noopener noreferrer">SHOP ↗</a>
+    <a class="btn shop" href="mailto:jeremy.a.guido@gmail.com">ORDER ↗</a>
   </div>
 </nav>
 
-<!-- ── UNDER CONSTRUCTION BANNER ── -->
-<div style="width:100%;background:#130e09;border-bottom:1px solid #f0a500;border-top:1px solid rgba(240,165,0,0.25);padding:11px 24px;text-align:center;position:relative;z-index:99;font-family:'Share Tech Mono',monospace;color:#f0a500;font-size:11px;letter-spacing:0.22em;line-height:1.5;">
-  ◆&nbsp;&nbsp;SHOP NOT YET LAUNCHED — COMMISSIONS AVAILABLE BY EMAIL&nbsp;&nbsp;◆&nbsp;&nbsp;<a href="mailto:jeremy.a.guido@gmail.com" style="color:#f0a500;text-decoration:underline;font-family:'Share Tech Mono',monospace;letter-spacing:0.18em;">JEREMY.A.GUIDO@GMAIL.COM</a>
-</div>
-
 <!-- ── MAIN ── -->
 <main>
- 
-  <!-- HEADER -->
-  <header class="section-header">
-    <span class="section-eyebrow">// HANDMADE IN VICTORIA, BC</span>
-    <h1 class="section-title">THE<br><span>FORGE</span></h1>
-    <p class="section-sub">
-      Hand-woven chainmail jewellery and custom fabrication built for performers, festival culture, and anyone who wants something made right. Stainless steel and brass — every piece made to order in Victoria, BC.
-    </p>
-  </header>
- 
-  <!-- GALLERY — first visible content -->
+
+  <!-- HERO — two-column: left text + CTAs, right visual -->
+  <div class="hero">
+    <div class="hero-text">
+      <span class="hero-eyebrow">// HANDMADE IN VICTORIA, BC</span>
+      <h1 class="hero-title">THE<br><span>FORGE</span></h1>
+      <p class="hero-desc">
+        Hand-woven chainmail jewellery built for performers, festival culture, and anyone who wants something made right. Stainless steel and brass — woven one ring at a time, sized to you, shipped from Victoria, BC.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn primary" href="mailto:jeremy.a.guido@gmail.com">ORDER A PIECE</a>
+        <a class="btn" href="https://www.instagram.com/nopwron" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <span class="hero-visual-icon">◈</span>
+      <span class="hero-visual-label">PRODUCT PHOTO COMING</span>
+      <div class="hero-visual-caption">
+        <strong>FEATURED PIECE</strong>
+        STAINLESS STEEL — PERSIAN 4-IN-1 CHOKER
+      </div>
+    </div>
+  </div>
+
+  <!-- SKU GRID — pricing first, directly after hero -->
   <div class="block">
+    <div class="block-label">// THE COLLECTION — AVAILABLE NOW</div>
+
+    <div class="sku-grid">
+
+      <div class="sku-card">
+        <div class="sku-name">CHOKER</div>
+        <p class="sku-desc">Sits at the throat, catches the light, commands the room. Built to your exact neck measurement in stainless, brass, or woven in both.</p>
+        <div class="sku-price">
+          <span class="sku-price-value">$150</span>
+          <span class="sku-price-label">CAD</span>
+        </div>
+        <ul class="sku-feature-list">
+          <li>Stainless steel, brass, or mixed</li>
+          <li>Built to your neck measurement</li>
+          <li>Choice of weave pattern</li>
+          <li>Clasp closure</li>
+          <li>Allow 1–2 weeks</li>
+        </ul>
+        <a class="sku-order-btn" href="mailto:jeremy.a.guido@gmail.com?subject=Commission%20Enquiry%20%E2%80%94%20Choker">ORDER THIS PIECE →</a>
+      </div>
+
+      <div class="sku-card">
+        <div class="sku-name">NECKLACE</div>
+        <p class="sku-desc">Full-length chainmail with real weight and drape. Wears as well at a festival as it does anywhere else. Specify your length and metal.</p>
+        <div class="sku-price">
+          <span class="sku-price-value">$120</span>
+          <span class="sku-price-label">CAD</span>
+        </div>
+        <ul class="sku-feature-list">
+          <li>Stainless steel, brass, or mixed</li>
+          <li>Custom length</li>
+          <li>Choice of weave pattern</li>
+          <li>Clasp closure</li>
+          <li>Allow 1–2 weeks</li>
+        </ul>
+        <a class="sku-order-btn" href="mailto:jeremy.a.guido@gmail.com?subject=Commission%20Enquiry%20%E2%80%94%20Necklace">ORDER THIS PIECE →</a>
+      </div>
+
+      <div class="sku-card">
+        <div class="sku-name">BRACELET / ANKLET</div>
+        <p class="sku-desc">Wrist or ankle — specify when you order. Built to your measurement because a piece made for you should actually fit. Mix metals for something that gets noticed.</p>
+        <div class="sku-price">
+          <span class="sku-price-value">$60</span>
+          <span class="sku-price-label">CAD</span>
+        </div>
+        <ul class="sku-feature-list">
+          <li>Stainless steel, brass, or mixed</li>
+          <li>Sized to wrist or ankle</li>
+          <li>Choice of weave pattern</li>
+          <li>Clasp closure</li>
+          <li>Allow 1–2 weeks</li>
+        </ul>
+        <a class="sku-order-btn" href="mailto:jeremy.a.guido@gmail.com?subject=Commission%20Enquiry%20%E2%80%94%20Bracelet">ORDER THIS PIECE →</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HOW TO ORDER — three-step section -->
+  <div class="block">
+    <div class="block-label">// HOW TO ORDER</div>
+
+    <div class="order-steps">
+
+      <div class="order-step">
+        <span class="order-step-num">01</span>
+        <div class="order-step-title">CHOOSE YOUR PIECE</div>
+        <p class="order-step-desc">Pick from the catalogue above or describe something specific. Mix metals, combine weave patterns, or specify exact sizing — the process starts with your vision.</p>
+        <span class="order-step-time">▸ 5 MINUTES</span>
+      </div>
+
+      <div class="order-step">
+        <span class="order-step-num">02</span>
+        <div class="order-step-title">SEND AN EMAIL</div>
+        <p class="order-step-desc">Email with your piece, metal choice, weave preference, and measurements. Not sure what you want? Describe the vibe and we'll work it out together.</p>
+        <span class="order-step-time">▸ JEREMY.A.GUIDO@GMAIL.COM</span>
+      </div>
+
+      <div class="order-step">
+        <span class="order-step-num">03</span>
+        <div class="order-step-title">I BUILD IT</div>
+        <p class="order-step-desc">Every piece is woven by hand in Victoria, BC. Allow 1–2 weeks from confirmed order to ship. Payment by e-transfer or PayPal on confirmation.</p>
+        <span class="order-step-time">▸ 1–2 WEEKS BUILD TIME</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GALLERY — // WORKS IN PROGRESS, 1:1 aspect ratio -->
+  <div class="block">
+    <div class="block-label">// WORKS IN PROGRESS</div>
+
     <div class="gallery-grid">
 
       <div class="gallery-card">
@@ -124,84 +442,7 @@
       </div>
 
     </div>
-  </div>
-
-  <!-- HERO PRODUCT -->
-  <div class="block">
-    <div class="block-label">// THE COLLECTION</div>
-
-    <div class="product-hero">
-      <span class="product-hero-eyebrow">JEWELLERY — AVAILABLE NOW</span>
-      <div class="product-hero-title">HAND-WOVEN CHAINMAIL JEWELLERY</div>
-      <p class="product-hero-desc">
-        There's a weight to real chainmail that you feel the moment you put it on. Each piece is woven by hand, one ring at a time — stainless steel for a bright, enduring finish, brass for warmth that deepens over time. Built to your sizing, in your choice of pattern. Made for people who wear things that mean something.
-      </p>
-      <div class="tag-row">
-        <span class="tag ember">STAINLESS STEEL</span>
-        <span class="tag ember">BRASS</span>
-        <span class="tag ember">HAND-WOVEN</span>
-        <span class="tag">PERSIAN 4-IN-1</span>
-        <span class="tag">PERSIAN 3-IN-1</span>
-        <span class="tag">BOX WEAVE</span>
-        <span class="tag">RHONDA'S BRAID</span>
-        <span class="tag">QUEEN'S BRAID</span>
-        <span class="tag amber">MADE TO ORDER</span>
-        <span class="tag amber">CUSTOM SIZING</span>
-      </div>
-    </div>
-
-    <!-- SKU GRID -->
-    <div class="sku-grid">
-
-      <div class="sku-card">
-        <div class="sku-name">CHOKER</div>
-        <p class="sku-desc">Sits at the throat, catches the light, commands the room. Built to your exact neck measurement in stainless, brass, or woven in both.</p>
-        <div class="sku-price">
-          <span class="sku-price-value">$150</span>
-          <span class="sku-price-label">CAD</span>
-        </div>
-        <ul class="sku-feature-list">
-          <li>Stainless steel, brass, or mixed</li>
-          <li>Built to your neck measurement</li>
-          <li>Choice of weave pattern</li>
-          <li>Clasp closure</li>
-          <li>Allow 1–2 weeks</li>
-        </ul>
-      </div>
-
-      <div class="sku-card">
-        <div class="sku-name">NECKLACE</div>
-        <p class="sku-desc">Full-length chainmail with real weight and drape. Wears as well at a festival as it does anywhere else. Specify your length and metal.</p>
-        <div class="sku-price">
-          <span class="sku-price-value">$120</span>
-          <span class="sku-price-label">CAD</span>
-        </div>
-        <ul class="sku-feature-list">
-          <li>Stainless steel, brass, or mixed</li>
-          <li>Custom length</li>
-          <li>Choice of weave pattern</li>
-          <li>Clasp closure</li>
-          <li>Allow 1–2 weeks</li>
-        </ul>
-      </div>
-
-      <div class="sku-card">
-        <div class="sku-name">BRACELET / ANKLET</div>
-        <p class="sku-desc">Wrist or ankle — specify when you order. Built to your measurement because a piece made for you should actually fit. Mix metals for something that gets noticed.</p>
-        <div class="sku-price">
-          <span class="sku-price-value">$60</span>
-          <span class="sku-price-label">CAD</span>
-        </div>
-        <ul class="sku-feature-list">
-          <li>Stainless steel, brass, or mixed</li>
-          <li>Sized to wrist or ankle</li>
-          <li>Choice of weave pattern</li>
-          <li>Clasp closure</li>
-          <li>Allow 1–2 weeks</li>
-        </ul>
-      </div>
-
-    </div>
+    <p class="gallery-note">Photography in progress — follow on Instagram to see pieces as they're made.</p>
   </div>
 
   <!-- MATERIALS + WEAVES -->
@@ -234,7 +475,7 @@
       </div>
     </div>
 
-    <div class="product-hero">
+    <div class="product-hero" style="margin-top: 24px;">
       <span class="product-hero-eyebrow">CUSTOM COMMISSIONS</span>
       <div class="product-hero-title">BUILD YOUR OWN COMBINATION</div>
       <p class="product-hero-desc">
@@ -249,81 +490,6 @@
     </div>
   </div>
 
-  <!-- UPCOMING APPEARANCES -->
-  <div class="block">
-    <div class="block-label">// UPCOMING APPEARANCES</div>
-    <div class="market-grid">
-
-      <div class="market-card">
-        <span class="market-priority">◆ PLANNED</span>
-        <div class="market-name">MOSS STREET MARKET</div>
-        <div class="market-loc">VICTORIA, BC</div>
-      </div>
-
-      <div class="market-card">
-        <span class="market-priority">◆ PLANNED</span>
-        <div class="market-name">VANCOUVER MAKER FAIRS</div>
-        <div class="market-loc">VANCOUVER, BC</div>
-      </div>
-
-    </div>
-    <p style="color:var(--forge-text-dim);font-style:italic;text-align:center;font-size:10px;letter-spacing:0.12em;margin-top:14px;">More events being scheduled — follow on Instagram for updates.</p>
-  </div>
- 
-  <!-- ABOUT THE MAKER -->
-  <div class="block">
-    <div class="block-label">// ABOUT THE MAKER</div>
-    <div class="capabilities-grid">
-
-      <div class="cap-card">
-        <span class="cap-category">CRAFT</span>
-        <div class="cap-items">
-          <span class="cap-item strong">CHAINMAIL WEAVING</span>
-          <span class="cap-item strong">LEATHER WORK</span>
-          <span class="cap-item strong">HAND STITCHING</span>
-          <span class="cap-item strong">PATTERN MAKING</span>
-          <span class="cap-item strong">LASER CUTTING</span>
-          <span class="cap-item strong">3D PRINTING — FDM</span>
-        </div>
-      </div>
-
-      <div class="cap-card">
-        <span class="cap-category">ENGINEERING</span>
-        <div class="cap-items">
-          <span class="cap-item strong">BLE FIRMWARE</span>
-          <span class="cap-item strong">ESP32 / ARDUINO</span>
-          <span class="cap-item strong">CAD — FUSION 360</span>
-          <span class="cap-item strong">CNC MACHINING</span>
-          <span class="cap-item strong">EMBEDDED CONTROL</span>
-          <span class="cap-item strong">REACT NATIVE</span>
-        </div>
-      </div>
-
-      <div class="cap-card">
-        <span class="cap-category">EXPANDING</span>
-        <div class="cap-items">
-          <span class="cap-item">WOODWORKING</span>
-          <span class="cap-item">MANUAL LATHE</span>
-          <span class="cap-item">WELDING</span>
-          <span class="cap-item">WATERJET CUTTING</span>
-          <span class="cap-item">METALWORK</span>
-        </div>
-      </div>
-
-      <div class="cap-card">
-        <span class="cap-category">STUDIO</span>
-        <div class="cap-items">
-          <span class="cap-item strong">ELEGOO CENTAURI CARBON</span>
-          <span class="cap-item strong">ELEGOO NEPTUNE 3</span>
-          <span class="cap-item">LEATHER HAND TOOLS</span>
-          <span class="cap-item">SOLDERING STATION</span>
-          <span class="cap-item">LASER — SEND-OUT ACCESS</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
   <!-- CTA STRIP -->
   <div class="cta-strip">
     <div class="cta-strip-text">
@@ -331,12 +497,11 @@
       Every piece is built to your sizing and woven to order in Victoria, BC. Send your piece, metal, weave, and measurements — or just describe what you're after and we'll figure it out together. Allow 1–2 weeks from order to ship.
     </div>
     <div class="cta-buttons">
-      <a class="btn shop" href="https://www.etsy.com/shop/TheForge" target="_blank" rel="noopener noreferrer">VISIT THE SHOP ↗</a>
-      <a class="btn amber" href="mailto:jeremy.a.guido@gmail.com">ORDER A PIECE</a>
+      <a class="btn primary" href="mailto:jeremy.a.guido@gmail.com">ORDER A PIECE</a>
       <a class="btn" href="https://www.instagram.com/nopwron" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
     </div>
   </div>
- 
+
   <!-- FOOTER NAV -->
   <footer class="footer-nav">
     <div class="footer-links">
@@ -350,20 +515,20 @@
       <a class="btn" href="mailto:jeremy.a.guido@gmail.com">EMAIL</a>
     </div>
   </footer>
- 
+
 </main>
- 
+
 <!-- ── STAR FIELD SCRIPT ── -->
 <script>
   const canvas = document.getElementById('stars');
   const ctx = canvas.getContext('2d');
   let W, H, stars = [];
- 
+
   function resize() {
     W = canvas.width  = window.innerWidth;
     H = canvas.height = window.innerHeight;
   }
- 
+
   function initStars() {
     stars = [];
     const count = Math.floor((W * H) / 8000);
@@ -377,7 +542,7 @@
       });
     }
   }
- 
+
   function drawStars() {
     ctx.clearRect(0, 0, W, H);
     const grad = ctx.createLinearGradient(0, 0, 0, H);
@@ -385,7 +550,7 @@
     grad.addColorStop(1, '#1c1208');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, W, H);
- 
+
     for (const s of stars) {
       ctx.globalAlpha = s.alpha;
       ctx.fillStyle = '#e8c090';
@@ -396,16 +561,12 @@
     ctx.globalAlpha = 1;
     requestAnimationFrame(drawStars);
   }
- 
+
   resize();
   initStars();
   drawStars();
   window.addEventListener('resize', () => { resize(); initStars(); });
 </script>
- 
+
 </body>
 </html>
- 
-
-
-
