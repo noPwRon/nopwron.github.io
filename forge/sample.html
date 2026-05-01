@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THE FORGE — Sample Revision</title>
+<title>THE FORGE — Sample Layout (Revised)</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   DESIGN TOKENS — copied from tokens.css + page-forge.css
-   Self-contained so this file works standalone.
-   ============================================================ */
+/* ── RESET ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { height: 100%; scroll-behavior: smooth; }
+ul { list-style: none; }
+
+/* ── COLOUR TOKENS (from page-forge.css) ────────────────────── */
 :root {
   --font-mono:    "Share Tech Mono", "Courier New", Courier, monospace;
   --font-heading: "Rajdhani", "Arial Narrow", Arial, sans-serif;
-}
 
-body.site-forge {
   --bg:        #0f0b08;
   --bg2:       #1c1208;
   --bg3:       #130e09;
@@ -30,12 +30,10 @@ body.site-forge {
   --forge-hud-bg:           rgba(15,  11,  8,  0.94);
   --forge-text-soft:        rgba(245, 237, 228, 0.70);
   --forge-text-dim:         rgba(245, 237, 228, 0.50);
-  --forge-text-muted:       rgba(245, 237, 228, 0.62);
   --forge-text-faint:       rgba(245, 237, 228, 0.58);
   --forge-text-list:        rgba(245, 237, 228, 0.60);
   --forge-text-cap:         rgba(245, 237, 228, 0.72);
   --forge-text-cta:         rgba(245, 237, 228, 0.65);
-
   --forge-border-strong:    rgba(255, 255, 255, 0.15);
   --forge-border:           rgba(255, 255, 255, 0.10);
   --forge-border-soft:      rgba(255, 255, 255, 0.09);
@@ -43,14 +41,12 @@ body.site-forge {
   --forge-border-faint:     rgba(255, 255, 255, 0.07);
   --forge-border-micro:     rgba(255, 255, 255, 0.06);
   --forge-border-btn:       rgba(255, 255, 255, 0.18);
-
   --forge-bg-card:          rgba(255, 255, 255, 0.020);
   --forge-bg-card-soft:     rgba(255, 255, 255, 0.015);
   --forge-bg-stripe:        rgba(255, 255, 255, 0.018);
   --forge-bg-micro:         rgba(255, 255, 255, 0.010);
   --forge-bg-amber:         rgba(240, 165, 0,  0.04);
   --forge-bg-ember:         rgba(196, 80,  26, 0.06);
-
   --forge-glow-amber:       rgba(240, 165, 0,  0.07);
   --forge-glow-amber-inner: rgba(240, 165, 0,  0.025);
   --forge-glow-amber-text:  rgba(240, 165, 0,  0.50);
@@ -59,7 +55,10 @@ body.site-forge {
   --forge-glow-ember:       rgba(196, 80,  26, 0.60);
   --forge-glow-ember-text:  rgba(196, 80,  26, 0.50);
   --forge-glow-ember-soft:  rgba(196, 80,  26, 0.10);
+}
 
+/* ── BASE ───────────────────────────────────────────────────── */
+body {
   background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
   color: var(--white);
   font-family: var(--font-mono);
@@ -67,68 +66,35 @@ body.site-forge {
   overflow-x: hidden;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { height: 100%; }
-body { min-height: 100%; }
-ul { list-style: none; }
-a { color: inherit; text-decoration: none; }
-h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; }
-
-/* scanlines */
-body.scanlines::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.03) 0px,
-    rgba(255,255,255,0.03) 1px,
-    transparent 2px,
-    transparent 4px
-  );
-  mix-blend-mode: soft-light;
-  opacity: 0.4;
-  z-index: 3;
-}
-
-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  display: block;
-  z-index: 0;
-}
-
-/* ── CHANGE NOTICE BANNER ── */
-.change-banner {
+/* ── DIFF BANNER ────────────────────────────────────────────── */
+.diff-banner {
+  background: #0d1f0d;
+  border-bottom: 2px solid #44cc44;
+  padding: 18px 32px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: #a0e8a0;
   position: relative;
   z-index: 200;
-  background: rgba(196, 80, 26, 0.18);
-  border-bottom: 2px solid var(--ember);
-  padding: 14px 32px;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--white);
-  line-height: 1.7;
 }
-.change-banner strong {
-  color: var(--amber);
-  letter-spacing: 0.2em;
+.diff-banner strong {
+  color: #44cc44;
   display: block;
-  margin-bottom: 6px;
-  font-size: 12px;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  margin-bottom: 10px;
 }
-.change-banner ol {
+.diff-banner ol {
   list-style: decimal;
-  padding-left: 18px;
-  color: var(--forge-text-soft);
+  padding-left: 20px;
+  display: grid;
+  gap: 5px;
 }
-.change-banner ol li { margin-bottom: 3px; }
+.diff-banner li { color: #88d888; line-height: 1.6; }
 
-/* ── HUD BAR ── */
-.site-forge .hud {
+/* ── HUD ────────────────────────────────────────────────────── */
+.hud {
   position: sticky;
   top: 0;
   left: 0;
@@ -144,56 +110,50 @@ canvas {
   z-index: 100;
   font-size: 11px;
   letter-spacing: 0.15em;
+  font-family: var(--font-mono);
 }
-.site-forge .hud-left { display: flex; align-items: center; gap: 24px; }
-.site-forge .hud-right { display: flex; align-items: center; gap: 28px; }
-.site-forge .hud-back {
+.hud-left { display: flex; align-items: center; gap: 24px; }
+.hud-right { display: flex; align-items: center; gap: 28px; }
+.hud-back {
   color: var(--amber);
+  text-decoration: none;
   letter-spacing: 0.1em;
   font-size: 11px;
   border: 1px solid var(--amber);
   padding: 5px 12px;
   transition: background 0.2s, color 0.2s;
 }
-.site-forge .hud-back:hover { background: var(--amber); color: var(--bg); }
-.site-forge .hud-title { color: var(--white); letter-spacing: 0.2em; font-size: 12px; }
-.site-forge .hud-stat { text-align: right; }
-.site-forge .hud-stat-label { color: var(--dim); font-size: 9px; letter-spacing: 0.18em; display: block; }
-.site-forge .hud-stat-value { color: var(--white); font-size: 12px; display: block; margin-top: 1px; }
+.hud-back:hover { background: var(--amber); color: var(--bg); }
+.hud-title { color: var(--white); letter-spacing: 0.2em; font-size: 12px; }
+.hud-stat { text-align: right; }
+.hud-stat-label { color: var(--dim); font-size: 9px; letter-spacing: 0.18em; display: block; }
+.hud-stat-value { color: var(--white); font-size: 12px; display: block; margin-top: 1px; }
 
-/* ── BTN ── */
-.site-forge .btn {
-  display: inline-block;
-  padding: 9px 16px;
-  border: 1px solid var(--forge-border-btn);
-  color: var(--forge-text-soft);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  background: transparent;
-  transition: all 0.18s;
-  cursor: pointer;
+/* ── COMMISSION BANNER ──────────────────────────────────────── */
+.commission-banner {
+  width: 100%;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--amber);
+  border-top: 1px solid rgba(240,165,0,0.25);
+  padding: 11px 24px;
+  text-align: center;
+  position: relative;
+  z-index: 99;
   font-family: var(--font-mono);
-}
-.site-forge .btn:hover { border-color: var(--white); color: var(--white); }
-.site-forge .btn.amber { border-color: var(--amber); color: var(--amber); }
-.site-forge .btn.amber:hover { background: var(--amber); color: var(--bg); }
-.site-forge .btn.shop {
-  border-color: var(--amber);
   color: var(--amber);
-  box-shadow: 0 0 14px var(--forge-glow-amber-btn);
-  letter-spacing: 0.2em;
   font-size: 11px;
-  padding: 10px 20px;
+  letter-spacing: 0.22em;
+  line-height: 1.5;
 }
-.site-forge .btn.shop:hover { background: var(--amber); color: var(--bg); box-shadow: 0 0 28px var(--forge-glow-amber-hover); }
-.site-forge .btn.lg {
-  padding: 13px 28px;
-  font-size: 12px;
-  letter-spacing: 0.2em;
+.commission-banner a {
+  color: var(--amber);
+  text-decoration: underline;
+  font-family: var(--font-mono);
+  letter-spacing: 0.18em;
 }
 
-/* ── MAIN ── */
-.site-forge main {
+/* ── MAIN ───────────────────────────────────────────────────── */
+main {
   position: relative;
   z-index: 2;
   padding: 0 32px 60px;
@@ -201,9 +161,102 @@ canvas {
   margin: 0 auto;
 }
 
-/* ── BLOCK ── */
-.site-forge .block { margin-bottom: 64px; padding-top: 48px; }
-.site-forge .block-label {
+/* ── HERO ───────────────────────────────────────────────────── */
+.hero {
+  padding: 56px 0 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  border-bottom: 1px solid var(--forge-border-dim);
+  margin-bottom: 60px;
+}
+.hero-eyebrow {
+  color: var(--ember);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  display: block;
+  margin-bottom: 14px;
+}
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(36px, 5vw, 62px);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  border-left: 3px solid var(--amber);
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+.hero-title span { color: var(--amber); font-weight: 600; }
+.hero-desc {
+  color: var(--forge-text-dim);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  line-height: 1.8;
+  margin-bottom: 28px;
+  max-width: 440px;
+}
+.hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-visual {
+  border: 1px solid var(--forge-border-soft);
+  aspect-ratio: 4 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 8px,
+    var(--forge-bg-stripe) 8px,
+    var(--forge-bg-stripe) 9px
+  );
+  overflow: hidden;
+}
+.hero-visual::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 20px; height: 20px;
+  border-top: 2px solid var(--amber);
+  border-left: 2px solid var(--amber);
+}
+.hero-visual::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 20px; height: 20px;
+  border-bottom: 2px solid var(--amber);
+  border-right: 2px solid var(--amber);
+}
+.hero-visual-icon { font-size: 48px; opacity: 0.12; line-height: 1; }
+.hero-visual-label { color: var(--dim); font-size: 9px; letter-spacing: 0.24em; text-align: center; }
+.hero-visual-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 10px 14px;
+  background: rgba(15,11,8,0.72);
+  border-top: 1px solid var(--forge-border-micro);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--forge-text-list);
+  font-family: var(--font-mono);
+}
+.hero-visual-caption strong {
+  display: block;
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+/* ── BLOCK SYSTEM ───────────────────────────────────────────── */
+.block { margin-bottom: 64px; }
+.block-label {
   color: var(--amber);
   font-size: 9px;
   letter-spacing: 0.32em;
@@ -211,224 +264,66 @@ canvas {
   display: flex;
   align-items: center;
   gap: 12px;
+  font-family: var(--font-mono);
 }
-.site-forge .block-label::after {
+.block-label::after {
   content: '';
   flex: 1;
   height: 1px;
   background: linear-gradient(to right, var(--amber-dim), transparent);
 }
 
-/* ── TAGS ── */
-.site-forge .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
-.site-forge .tag {
-  font-size: 9px;
+/* ── BUTTONS ────────────────────────────────────────────────── */
+.btn {
+  display: inline-block;
+  padding: 9px 16px;
+  border: 1px solid var(--forge-border-btn);
+  color: var(--forge-text-soft);
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  background: transparent;
+  transition: all 0.18s;
+  cursor: pointer;
+  font-family: var(--font-mono);
+}
+.btn:hover { border-color: var(--white); color: var(--white); }
+.btn.amber { border-color: var(--amber); color: var(--amber); }
+.btn.amber:hover { background: var(--amber); color: var(--bg); }
+.btn.shop {
+  border-color: var(--amber);
+  color: var(--amber);
+  box-shadow: 0 0 14px var(--forge-glow-amber-btn);
   letter-spacing: 0.2em;
-  padding: 4px 10px;
-  border: 1px solid var(--ember-dim);
-  color: var(--ember);
-  background: var(--forge-bg-ember);
-}
-.site-forge .tag.amber {
-  border-color: var(--amber-dim);
-  color: var(--amber);
-  background: var(--forge-bg-amber);
-}
-.site-forge .tag.ember {
-  border-color: var(--ember-dim);
-  color: var(--ember);
-  background: var(--forge-bg-ember);
-}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   CHANGE 1 — FULL-WIDTH BRAND HERO (replaces compact text header)
-   Original: 2-column grid header (title left, sub text right)
-   New: cinematic full-width hero with title, sub, and CTAs
-   Why: rave/viking jewelry brands lead with visual impact.
-        The original header felt like a spec document intro.
-        A full-width hero establishes brand identity first.
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-
-.hero-full {
-  position: relative;
-  z-index: 2;
-  padding: 72px 32px 64px;
-  max-width: 1100px;
-  margin: 0 auto;
-  border-bottom: 1px solid var(--forge-border-dim);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0 60px;
-  align-items: center;
-}
-
-.hero-left { }
-
-.hero-eyebrow {
-  color: var(--ember);
-  font-size: 10px;
-  letter-spacing: 0.38em;
-  display: block;
-  margin-bottom: 14px;
-  font-family: var(--font-mono);
-}
-
-.hero-title {
-  font-size: clamp(52px, 8vw, 96px);
-  font-weight: 300;
-  letter-spacing: 0.02em;
-  line-height: 0.9;
-  border-left: 4px solid var(--amber);
-  padding-left: 22px;
-  margin-bottom: 28px;
-}
-.hero-title span {
-  color: var(--amber);
-  font-weight: 600;
-}
-
-.hero-sub {
-  color: var(--forge-text-dim);
   font-size: 11px;
-  letter-spacing: 0.1em;
-  line-height: 1.8;
-  max-width: 400px;
-  padding-left: 26px;
-  margin-bottom: 32px;
+  padding: 10px 20px;
 }
-
-.hero-ctas {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  padding-left: 26px;
+.btn.shop:hover { background: var(--amber); color: var(--bg); box-shadow: 0 0 28px var(--forge-glow-amber-hover); }
+.btn.primary {
+  border-color: var(--amber);
+  color: var(--bg);
+  background: var(--amber);
+  letter-spacing: 0.2em;
+  font-size: 11px;
+  padding: 12px 24px;
+  box-shadow: 0 0 20px var(--forge-glow-amber-btn);
 }
+.btn.primary:hover { box-shadow: 0 0 36px var(--forge-glow-amber-hover); opacity: 0.9; }
 
-/* Hero right — visual product mosaic */
-.hero-right {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 240px 140px;
-  gap: 8px;
-}
-
-.hero-img {
-  background: var(--forge-bg-card-soft);
-  border: 1px solid var(--forge-border-soft);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-img::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 16px; height: 16px;
-  border-top: 1px solid var(--ember);
-  border-left: 1px solid var(--ember);
-}
-
-.hero-img.featured {
-  grid-row: 1 / 3;
-  background: repeating-linear-gradient(
-    -45deg,
-    transparent, transparent 9px,
-    var(--forge-bg-stripe) 9px, var(--forge-bg-stripe) 10px
-  );
-}
-
-.hero-img-icon { font-size: 32px; opacity: 0.15; }
-.hero-img-label {
-  color: var(--dim);
-  font-size: 8px;
-  letter-spacing: 0.28em;
-  margin-top: 8px;
-  font-family: var(--font-mono);
-}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   CHANGE 2 — ORDER FLOW (new section, didn't exist before)
-   Original: commission info was buried inside product-hero text
-   New: explicit numbered 3-step process before price cards
-   Why: competitive sites make the custom-order path obvious.
-        Customers need to know HOW to buy before WHAT to buy.
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-
-.order-flow {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--forge-border-dim);
-  border: 1px solid var(--forge-border-dim);
-  margin-bottom: 0;
-}
-
-.order-step {
-  background: var(--bg);
-  padding: 28px 24px;
-  position: relative;
-}
-
-.order-step-num {
-  font-size: 52px;
-  font-weight: 600;
-  color: var(--amber);
-  opacity: 0.12;
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  line-height: 1;
-  font-family: var(--font-heading);
-}
-
-.order-step-label {
-  color: var(--amber);
-  font-size: 9px;
-  letter-spacing: 0.3em;
-  display: block;
-  margin-bottom: 10px;
-}
-
-.order-step-title {
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  margin-bottom: 10px;
-  font-family: var(--font-heading);
-}
-
-.order-step-desc {
-  color: var(--forge-text-dim);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  line-height: 1.7;
-}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   CHANGE 3 — SKU CARDS ELEVATED + MOVED EARLIER
-   Original: SKU grid was below a large text product-hero block
-   New: SKU cards appear directly after the order flow, with
-        imagery slots that carry more visual weight
-   Why: price + product is conversion-critical content.
-        Burying it after prose loses customers.
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-
+/* ── SKU GRID ───────────────────────────────────────────────── */
 .sku-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
-
 .sku-card {
   border: 1px solid var(--forge-border);
   background: var(--forge-bg-card);
+  padding: 22px;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
-
 .sku-card::before {
   content: '';
   position: absolute;
@@ -437,66 +332,31 @@ canvas {
   border-top: 1px solid var(--amber);
   border-left: 1px solid var(--amber);
 }
-
-.sku-img {
-  aspect-ratio: 3 / 2;
-  background: repeating-linear-gradient(
-    -45deg,
-    transparent, transparent 8px,
-    var(--forge-bg-stripe) 8px, var(--forge-bg-stripe) 9px
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 8px;
-  border-bottom: 1px solid var(--forge-border-micro);
-  position: relative;
-  overflow: hidden;
-}
-
-.sku-img::after {
-  content: '';
-  position: absolute;
-  bottom: 0; right: 0;
-  width: 12px; height: 12px;
-  border-bottom: 1px solid var(--ember);
-  border-right: 1px solid var(--ember);
-}
-
-.sku-img-icon { font-size: 22px; opacity: 0.14; }
-.sku-img-label { font-size: 8px; letter-spacing: 0.22em; color: var(--dim); }
-
-.sku-body { padding: 20px; }
-
 .sku-name {
-  font-size: 18px;
+  font-family: var(--font-heading);
+  font-size: 20px;
   font-weight: 600;
   letter-spacing: 0.05em;
   margin-bottom: 10px;
   color: var(--white);
-  font-family: var(--font-heading);
 }
-
 .sku-desc {
   color: var(--forge-text-faint);
   font-size: 11px;
   line-height: 1.7;
   letter-spacing: 0.03em;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
+  flex: 1;
 }
-
 .sku-price {
   display: flex;
   align-items: baseline;
   gap: 6px;
   margin-bottom: 14px;
 }
-
-.sku-price-value { font-size: 24px; font-weight: 600; color: var(--amber); font-family: var(--font-heading); }
+.sku-price-value { font-size: 26px; font-weight: 600; color: var(--amber); font-family: var(--font-heading); }
 .sku-price-label { color: var(--dim); font-size: 9px; letter-spacing: 0.16em; }
-
-.sku-feature-list { display: grid; gap: 5px; }
+.sku-feature-list { list-style: none; display: grid; gap: 5px; margin-bottom: 18px; }
 .sku-feature-list li {
   font-size: 10px;
   letter-spacing: 0.1em;
@@ -504,40 +364,82 @@ canvas {
   padding-left: 14px;
   position: relative;
 }
-.sku-feature-list li::before {
-  content: '›';
-  position: absolute;
-  left: 0;
-  color: var(--amber);
+.sku-feature-list li::before { content: '›'; position: absolute; left: 0; color: var(--amber); }
+.sku-order-btn {
+  display: block;
+  text-align: center;
+  padding: 9px 16px;
+  border: 1px solid var(--forge-border-btn);
+  color: var(--forge-text-soft);
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  background: transparent;
+  transition: all 0.18s;
+  font-family: var(--font-mono);
+  margin-top: auto;
 }
+.sku-order-btn:hover { border-color: var(--amber); color: var(--amber); }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   CHANGE 4 — GALLERY BECOMES A DEDICATED CRAFT/MATERIALS SHOWCASE
-   Original: 6 identical placeholder cards with no hierarchy
-   New: asymmetric gallery — 1 featured wide card + 4 cards,
-        each labelled with specific weave context
-   Why: placeholder cards must signal aspiration, not absence.
-        Visual hierarchy makes the grid feel intentional.
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-
-.gallery-mosaic {
+/* ── HOW TO ORDER ───────────────────────────────────────────── */
+.order-steps {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  grid-template-rows: 260px 200px;
-  gap: 8px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.order-step {
+  border: 1px solid var(--forge-border-soft);
+  background: var(--forge-bg-stripe);
+  padding: 24px 22px;
+  position: relative;
+}
+.order-step-num {
+  font-family: var(--font-heading);
+  font-size: 42px;
+  font-weight: 600;
+  color: var(--amber);
+  opacity: 0.18;
+  line-height: 1;
+  position: absolute;
+  top: 16px; right: 18px;
+}
+.order-step-title {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.order-step-desc {
+  color: var(--forge-text-dim);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  line-height: 1.7;
+  font-family: var(--font-mono);
+}
+.order-step-time {
+  color: var(--amber);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  margin-top: 12px;
+  display: block;
+  font-family: var(--font-mono);
 }
 
-.gm-card {
+/* ── GALLERY ────────────────────────────────────────────────── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.gallery-card {
   border: 1px solid var(--forge-border-soft);
   background: var(--forge-bg-card-soft);
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  overflow: hidden;
 }
-
-.gm-card::before {
+.gallery-card::before {
   content: '';
   position: absolute;
   top: 0; left: 0;
@@ -545,80 +447,85 @@ canvas {
   border-top: 1px solid var(--ember);
   border-left: 1px solid var(--ember);
 }
-
-.gm-card.featured {
-  grid-row: 1 / 3;
-  background: repeating-linear-gradient(
-    -45deg,
-    rgba(196,80,26,0.03), rgba(196,80,26,0.03) 8px,
-    transparent 8px, transparent 16px
-  );
-}
-
-.gm-fill {
+.gallery-card::after {
+  content: '';
   position: absolute;
-  inset: 0;
+  bottom: 0; right: 0;
+  width: 14px; height: 14px;
+  border-bottom: 1px solid var(--ember);
+  border-right: 1px solid var(--ember);
+}
+.gallery-img {
+  aspect-ratio: 1 / 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   gap: 10px;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 8px,
+    var(--forge-bg-stripe) 8px,
+    var(--forge-bg-stripe) 9px
+  );
+  position: relative;
+  overflow: hidden;
 }
-
-.gm-icon { font-size: 36px; opacity: 0.12; }
-.gm-pending { font-size: 8px; letter-spacing: 0.26em; color: var(--dim); }
-
-.gm-caption {
+.gallery-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+.gallery-placeholder-icon { font-size: 24px; opacity: 0.14; line-height: 1; }
+.gallery-placeholder-text { color: var(--dim); font-size: 9px; letter-spacing: 0.24em; }
+.gallery-caption {
   padding: 10px 14px 12px;
   font-size: 10px;
   letter-spacing: 0.16em;
   color: var(--forge-text-list);
   border-top: 1px solid var(--forge-border-micro);
-  background: rgba(15, 11, 8, 0.5);
-  position: relative;
-  z-index: 1;
+  font-family: var(--font-mono);
 }
-.gm-caption strong {
+.gallery-caption strong {
   display: block;
   color: var(--white);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.05em;
   margin-bottom: 2px;
-  font-family: var(--font-heading);
 }
-
-/* ── WEAVE GUIDE ── */
-.weave-guide {
+.gallery-note {
   color: var(--forge-text-dim);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  line-height: 1.75;
-  margin-bottom: 20px;
-  max-width: 640px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-align: center;
+  margin-top: 14px;
+  font-style: italic;
+  font-family: var(--font-mono);
 }
 
-/* ── CAPABILITIES GRID ── */
+/* ── CAPABILITIES GRID ──────────────────────────────────────── */
 .capabilities-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
 }
-
 .cap-card {
   border: 1px solid var(--forge-border-soft);
   background: var(--forge-bg-stripe);
   padding: 20px 22px;
 }
-
 .cap-category {
   color: var(--amber);
   font-size: 9px;
   letter-spacing: 0.24em;
   margin-bottom: 14px;
   display: block;
+  font-family: var(--font-mono);
 }
-
 .cap-items { display: flex; flex-wrap: wrap; gap: 8px; }
 .cap-item {
   font-size: 10px;
@@ -626,6 +533,7 @@ canvas {
   padding: 4px 9px;
   border: 1px solid var(--forge-border);
   color: var(--forge-text-cap);
+  font-family: var(--font-mono);
 }
 .cap-item.strong {
   border-color: var(--ember-dim);
@@ -633,30 +541,26 @@ canvas {
   background: var(--forge-bg-ember);
   box-shadow: 0 0 10px var(--forge-glow-ember-soft);
 }
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   CHANGE 5 — CUSTOM COMMISSION AS BRAND STATEMENT (not buried)
-   Original: commission block was mid-page in the materials section
-   New: standalone section with clear visual weight and CTA
-   Why: for a made-to-order brand, commissions IS the product.
-        It needs to stand alone with its own CTA, not be a footnote.
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-
-.commission-hero {
-  border: 1px solid var(--amber);
-  background: var(--forge-bg-amber);
-  padding: 40px 40px 36px;
-  position: relative;
-  box-shadow:
-    0 0 60px var(--forge-glow-amber),
-    inset 0 0 80px var(--forge-glow-amber-inner);
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 40px;
-  align-items: center;
+.weave-guide {
+  color: var(--forge-text-dim);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  line-height: 1.75;
+  margin-bottom: 20px;
+  max-width: 640px;
+  font-family: var(--font-mono);
 }
 
-.commission-hero::before {
+/* ── PRODUCT HERO CALLOUT ───────────────────────────────────── */
+.product-hero {
+  border: 1px solid var(--amber);
+  background: var(--forge-bg-amber);
+  padding: 32px;
+  position: relative;
+  margin-bottom: 28px;
+  box-shadow: 0 0 60px var(--forge-glow-amber), inset 0 0 80px var(--forge-glow-amber-inner);
+}
+.product-hero::before {
   content: '';
   position: absolute;
   top: 0; left: 0;
@@ -664,8 +568,7 @@ canvas {
   border-top: 2px solid var(--amber);
   border-left: 2px solid var(--amber);
 }
-
-.commission-hero::after {
+.product-hero::after {
   content: '';
   position: absolute;
   bottom: 0; right: 0;
@@ -673,98 +576,91 @@ canvas {
   border-bottom: 2px solid var(--amber);
   border-right: 2px solid var(--amber);
 }
-
-.ch-eyebrow {
+.product-hero-eyebrow {
   color: var(--amber);
   font-size: 9px;
   letter-spacing: 0.28em;
   margin-bottom: 12px;
   display: block;
+  font-family: var(--font-mono);
 }
-
-.ch-title {
+.product-hero-title {
+  font-family: var(--font-heading);
   font-size: clamp(22px, 3vw, 32px);
   font-weight: 600;
   letter-spacing: 0.06em;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   color: var(--white);
-  font-family: var(--font-heading);
 }
-
-.ch-desc {
+.product-hero-desc {
   color: var(--forge-text-soft);
   font-size: 12px;
   line-height: 1.85;
   letter-spacing: 0.04em;
   margin-bottom: 22px;
-  max-width: 560px;
+  max-width: 680px;
+  font-family: var(--font-mono);
 }
 
-.ch-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
-
-.commission-stat {
-  text-align: right;
-  border-left: 1px solid var(--forge-border);
-  padding-left: 40px;
-}
-
-.commission-stat-num {
-  font-size: 64px;
-  font-weight: 600;
-  color: var(--amber);
-  opacity: 0.25;
-  font-family: var(--font-heading);
-  line-height: 1;
-}
-.commission-stat-label {
+/* ── TAGS ────────────────────────────────────────────────────── */
+.tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag {
   font-size: 9px;
-  letter-spacing: 0.22em;
-  color: var(--dim);
+  letter-spacing: 0.2em;
+  padding: 4px 10px;
+  border: 1px solid var(--ember-dim);
+  color: var(--ember);
+  background: var(--forge-bg-ember);
+  text-shadow: 0 0 8px var(--forge-glow-ember);
+  font-family: var(--font-mono);
+}
+.tag.amber {
+  border-color: var(--amber-dim);
+  color: var(--amber);
+  background: var(--forge-bg-amber);
+  text-shadow: 0 0 8px var(--forge-glow-amber-text);
+}
+.tag.ember {
+  border-color: var(--ember-dim);
+  color: var(--ember);
+  background: var(--forge-bg-ember);
+  text-shadow: 0 0 8px var(--forge-glow-ember-text);
 }
 
-/* ── MARKET GRID ── */
+/* ── APPEARANCES ────────────────────────────────────────────── */
 .market-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
-
 .market-card {
   border: 1px solid var(--forge-border-dim);
   padding: 16px 18px;
   background: var(--forge-bg-card-soft);
-  position: relative;
 }
-
-.market-priority { font-size: 9px; letter-spacing: 0.2em; display: block; margin-bottom: 6px; color: var(--ember); }
-.market-name { font-size: 15px; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 4px; font-family: var(--font-heading); }
-.market-loc { color: var(--dim); font-size: 9px; letter-spacing: 0.16em; }
-
-/* ── IN DEVELOPMENT ── */
-.product-hero--dim {
-  border: 1px solid var(--forge-border);
-  background: var(--forge-bg-micro);
-  padding: 32px;
-  position: relative;
-  margin-bottom: 28px;
-}
-
-.product-hero--dim .product-hero-eyebrow { color: var(--dim); font-size: 9px; letter-spacing: 0.28em; margin-bottom: 12px; display: block; }
-.product-hero--dim .product-hero-title { font-size: clamp(22px, 3vw, 32px); font-weight: 600; letter-spacing: 0.06em; margin-bottom: 16px; color: var(--white); opacity: 0.65; font-family: var(--font-heading); }
-.product-hero--dim .product-hero-desc { color: var(--forge-text-soft); font-size: 12px; line-height: 1.85; letter-spacing: 0.04em; margin-bottom: 22px; max-width: 680px; opacity: 0.60; }
-
-.status {
-  display: inline-block;
-  font-size: 8px;
+.market-priority {
+  font-size: 9px;
   letter-spacing: 0.2em;
-  padding: 3px 8px;
-  border: 1px solid;
-  vertical-align: middle;
-  margin-left: 8px;
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ember);
+  font-family: var(--font-mono);
 }
-.status.soon { border-color: var(--dim); color: var(--dim); }
+.market-name {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+.market-loc {
+  color: var(--dim);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  font-family: var(--font-mono);
+}
 
-/* ── CTA STRIP ── */
+/* ── CTA STRIP ──────────────────────────────────────────────── */
 .cta-strip {
   border: 1px solid var(--forge-border);
   background: var(--forge-bg-card-soft);
@@ -775,88 +671,73 @@ canvas {
   gap: 24px;
   flex-wrap: wrap;
 }
-
 .cta-strip-text {
   color: var(--forge-text-cta);
   font-size: 11px;
   letter-spacing: 0.1em;
   line-height: 1.7;
   max-width: 480px;
+  font-family: var(--font-mono);
 }
-
 .cta-strip-text strong {
   color: var(--white);
   display: block;
-  font-size: 18px;
+  font-family: var(--font-heading);
+  font-size: 20px;
   font-weight: 600;
   letter-spacing: 0.06em;
   margin-bottom: 4px;
-  font-family: var(--font-heading);
 }
-
 .cta-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
 
-/* ── FOOTER NAV ── */
-.site-forge .footer-nav {
+/* ── FOOTER ─────────────────────────────────────────────────── */
+.footer-nav {
   margin-top: 64px;
-  padding: 28px 32px 32px;
+  padding-top: 28px;
   border-top: 1px solid var(--forge-border-dim);
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 16px;
-  max-width: 1100px;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  z-index: 2;
 }
-
 .footer-links { display: flex; gap: 12px; flex-wrap: wrap; }
 
-/* ── RESPONSIVE ── */
+/* ── RESPONSIVE ─────────────────────────────────────────────── */
 @media (max-width: 860px) {
-  .hero-full { grid-template-columns: 1fr; }
-  .hero-right { display: none; }
-  .order-flow { grid-template-columns: 1fr; gap: 1px; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
   .sku-grid { grid-template-columns: 1fr; }
+  .order-steps { grid-template-columns: 1fr; }
   .capabilities-grid { grid-template-columns: 1fr; }
   .market-grid { grid-template-columns: repeat(2, 1fr); }
-  .gallery-mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
-  .gm-card.featured { grid-row: auto; }
-  .commission-hero { grid-template-columns: 1fr; }
-  .commission-stat { display: none; }
-  .site-forge main { padding-left: 18px; padding-right: 18px; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .cta-strip { flex-direction: column; align-items: flex-start; }
+  main { padding-left: 18px; padding-right: 18px; }
 }
-
 @media (max-width: 560px) {
   .market-grid { grid-template-columns: 1fr; }
-  .gallery-mosaic { grid-template-columns: 1fr; }
-  .hero-ctas { flex-direction: column; }
+  .gallery-grid { grid-template-columns: 1fr; }
+  .footer-nav { flex-direction: column; align-items: flex-start; }
 }
 </style>
 </head>
-<body class="scanlines site-forge">
+<body>
 
-<canvas id="stars"></canvas>
-
-<!-- ════════════════════════════════════════════════════════
-     CHANGE NOTICE — visible at page top
-     ════════════════════════════════════════════════════════ -->
-<div class="change-banner">
-  <strong>SAMPLE REVISION — LAYOUT CHANGES EXPLAINED</strong>
-  Competitive analysis of theringlord.com and alchemygothic.com against the current forge.html surfaced 5 structural gaps.
+<!-- ── DIFF BANNER ────────────────────────────────────────────────── -->
+<div class="diff-banner">
+  <strong>◆ SAMPLE LAYOUT — REVISED STRUCTURE (vs forge.html)</strong>
+  Five structural changes based on comparison with chainmaille and gothic jewellery reference sites (The Ring Lord, Alchemy Gothic):
   <ol>
-    <li><strong>FULL-WIDTH BRAND HERO</strong> — Original 2-column text header replaced with cinematic wide hero that leads with the brand name large and includes CTAs at first scroll. Viking/rave jewelry sites establish visual identity before prose.</li>
-    <li><strong>ORDER FLOW MADE EXPLICIT</strong> — New 3-step commission flow (describe → size → receive) placed before price cards. Competitive sites surface the HOW-TO-BUY path prominently because custom ordering intimidates customers.</li>
-    <li><strong>SKU CARDS ELEVATED + EARLIER</strong> — Price cards now appear directly after the order flow, before long prose sections. Product + price is conversion-critical content; burying it after text paragraphs loses customers mid-scroll.</li>
-    <li><strong>ASYMMETRIC GALLERY MOSAIC</strong> — Six identical placeholder boxes replaced with an intentional 5-card mosaic (1 featured wide + 4 standard). Each placeholder slot carries contextual weave labels so the grid reads as curated, not empty.</li>
-    <li><strong>COMMISSION AS STANDALONE BRAND STATEMENT</strong> — Custom commissions pulled out of the materials section into its own hero panel with a direct email CTA. For a made-to-order craft brand, commissions IS the product.</li>
+    <li><strong>Hero now includes an above-fold CTA (ORDER A PIECE button visible without scrolling)</strong> — the old layout opened with 6 empty placeholder boxes before any actionable element. Reference sites surface the purchase entry point immediately.</li>
+    <li><strong>Pricing (SKU grid) moved to second position</strong>, directly after the hero. Reference sites answer "what can I buy and for how much?" before imagery or material specs. The old layout buried pricing below a large gallery block.</li>
+    <li><strong>New "HOW TO ORDER" 3-step section</strong> added. The old page had no commission funnel explanation — customers had to infer that email = ordering from a single line in the bottom CTA. Craft sellers without a live checkout always surface the process.</li>
+    <li><strong>Gallery moved after pricing, reframed as "WORKS IN PROGRESS"</strong>. Aspect ratio reduced from 4:3 to 1:1 so placeholder boxes are less visually dominant. Label change sets honest expectations rather than signalling an unfinished site.</li>
+    <li><strong>"About the Maker" section removed entirely</strong>. Engineering skills (BLE firmware, ESP32, React Native, Elegoo printers) create cognitive dissonance on a jewellery page. That content lives on the engineering discipline page.</li>
   </ol>
 </div>
 
-<!-- ── HUD ── -->
+<!-- ── HUD ────────────────────────────────────────────────────────── -->
 <nav class="hud">
   <div class="hud-left">
     <a class="hud-back" href="../index.html">← BACK</a>
@@ -864,255 +745,212 @@ canvas {
   </div>
   <div class="hud-right">
     <div class="hud-stat">
-      <span class="hud-stat-label">DISCIPLINE</span>
-      <span class="hud-stat-value">FABRICATION</span>
-    </div>
-    <div class="hud-stat">
-      <span class="hud-stat-label">LOCATION</span>
-      <span class="hud-stat-value">VICTORIA, BC</span>
+      <span class="hud-stat-label">MEDIUM</span>
+      <span class="hud-stat-value">STAINLESS / BRASS</span>
     </div>
     <div class="hud-stat">
       <span class="hud-stat-label">STATUS</span>
-      <span class="hud-stat-value">TAKING ORDERS</span>
+      <span class="hud-stat-value">COMMISSIONS OPEN</span>
     </div>
-    <a class="btn shop" href="https://www.etsy.com/shop/TheForge" target="_blank" rel="noopener noreferrer">SHOP ↗</a>
+    <a class="btn shop" href="mailto:jeremy.a.guido@gmail.com">ORDER ↗</a>
   </div>
 </nav>
 
-<!-- ── HERO (CHANGE 1) ── -->
-<div class="hero-full">
-  <div class="hero-left">
-    <span class="hero-eyebrow">// HANDMADE IN VICTORIA, BC</span>
-    <h1 class="hero-title">THE<br><span>FORGE</span></h1>
-    <p class="hero-sub">
-      Hand-woven chainmail jewellery built for performers, festival culture, and anyone who wants something made right. Stainless steel and brass — every piece made to order.
-    </p>
-    <div class="hero-ctas">
-      <a class="btn shop lg" href="https://www.etsy.com/shop/TheForge" target="_blank" rel="noopener noreferrer">VISIT THE SHOP ↗</a>
-      <a class="btn amber lg" href="mailto:jeremy.a.guido@gmail.com">COMMISSION A PIECE</a>
-    </div>
-  </div>
-  <div class="hero-right">
-    <div class="hero-img featured">
-      <div class="gm-fill">
-        <span class="hero-img-icon">◈</span>
-        <span class="hero-img-label">FEATURED PIECE</span>
-      </div>
-    </div>
-    <div class="hero-img">
-      <div class="gm-fill">
-        <span class="hero-img-icon">◆</span>
-        <span class="hero-img-label">CHOKER</span>
-      </div>
-    </div>
-    <div class="hero-img">
-      <div class="gm-fill">
-        <span class="hero-img-icon">◇</span>
-        <span class="hero-img-label">BRACELET</span>
-      </div>
-    </div>
-    <div class="hero-img">
-      <div class="gm-fill">
-        <span class="hero-img-icon">◈</span>
-        <span class="hero-img-label">WEAVE DETAIL</span>
-      </div>
-    </div>
-  </div>
+<!-- ── COMMISSION BANNER ──────────────────────────────────────────── -->
+<div class="commission-banner">
+  ◆&nbsp;&nbsp;SHOP NOT YET LAUNCHED — COMMISSIONS AVAILABLE BY EMAIL&nbsp;&nbsp;◆&nbsp;&nbsp;<a href="mailto:jeremy.a.guido@gmail.com">JEREMY.A.GUIDO@GMAIL.COM</a>
 </div>
 
+<!-- ── MAIN ───────────────────────────────────────────────────────── -->
 <main>
 
-  <!-- ORDER FLOW (CHANGE 2) -->
-  <div class="block" style="padding-top: 0;">
-    <div class="block-label">// HOW TO ORDER</div>
-    <div class="order-flow">
-      <div class="order-step">
-        <span class="order-step-num">1</span>
-        <span class="order-step-label">STEP 01</span>
-        <div class="order-step-title">PICK YOUR PIECE</div>
-        <p class="order-step-desc">Choose from choker, necklace, bracelet, or anklet — or describe something custom. Select your metal (stainless, brass, or two-tone) and weave pattern.</p>
+  <!-- HERO — brand statement + above-fold CTA [CHANGE 1] -->
+  <div class="hero">
+    <div class="hero-text">
+      <span class="hero-eyebrow">// HANDMADE IN VICTORIA, BC</span>
+      <h1 class="hero-title">THE<br><span>FORGE</span></h1>
+      <p class="hero-desc">
+        Hand-woven chainmail jewellery built for performers, festival culture, and anyone who wants something made right. Stainless steel and brass — woven one ring at a time, sized to you, shipped from Victoria, BC.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn primary" href="mailto:jeremy.a.guido@gmail.com">ORDER A PIECE</a>
+        <a class="btn" href="https://www.instagram.com/nopwron" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
       </div>
-      <div class="order-step">
-        <span class="order-step-num">2</span>
-        <span class="order-step-label">STEP 02</span>
-        <div class="order-step-title">SEND YOUR SIZING</div>
-        <p class="order-step-desc">Email your measurements — neck, wrist, or ankle circumference. Not sure how to measure? Send a message and we'll walk you through it.</p>
-      </div>
-      <div class="order-step">
-        <span class="order-step-num">3</span>
-        <span class="order-step-label">STEP 03</span>
-        <div class="order-step-title">RECEIVE IN 1–2 WEEKS</div>
-        <p class="order-step-desc">Every piece is woven to order from Victoria, BC. Allow 1–2 weeks from confirmation. Shipped anywhere in Canada; ask about international.</p>
+    </div>
+    <div class="hero-visual">
+      <span class="hero-visual-icon">◈</span>
+      <span class="hero-visual-label">PRODUCT PHOTO COMING</span>
+      <div class="hero-visual-caption">
+        <strong>FEATURED PIECE</strong>
+        STAINLESS STEEL — PERSIAN 4-IN-1 CHOKER
       </div>
     </div>
   </div>
 
-  <!-- SKU GRID (CHANGE 3 — elevated + earlier) -->
+  <!-- SKU GRID — pricing first [CHANGE 2] -->
   <div class="block">
-    <div class="block-label">// THE COLLECTION</div>
+    <div class="block-label">// THE COLLECTION — AVAILABLE NOW</div>
 
     <div class="sku-grid">
 
       <div class="sku-card">
-        <div class="sku-img">
-          <span class="sku-img-icon">◈</span>
-          <span class="sku-img-label">PHOTO PENDING</span>
+        <div class="sku-name">CHOKER</div>
+        <p class="sku-desc">Sits at the throat, catches the light, commands the room. Built to your exact neck measurement in stainless, brass, or woven in both.</p>
+        <div class="sku-price">
+          <span class="sku-price-value">$150</span>
+          <span class="sku-price-label">CAD</span>
         </div>
-        <div class="sku-body">
-          <div class="sku-name">CHOKER</div>
-          <p class="sku-desc">Sits at the throat, catches the light, commands the room. Built to your exact neck measurement in stainless, brass, or woven in both.</p>
-          <div class="sku-price">
-            <span class="sku-price-value">$150</span>
-            <span class="sku-price-label">CAD</span>
-          </div>
-          <ul class="sku-feature-list">
-            <li>Stainless steel, brass, or mixed</li>
-            <li>Built to your neck measurement</li>
-            <li>Choice of weave pattern</li>
-            <li>Clasp closure</li>
-            <li>Allow 1–2 weeks</li>
-          </ul>
-        </div>
+        <ul class="sku-feature-list">
+          <li>Stainless steel, brass, or mixed</li>
+          <li>Built to your neck measurement</li>
+          <li>Choice of weave pattern</li>
+          <li>Clasp closure</li>
+          <li>Allow 1–2 weeks</li>
+        </ul>
+        <a class="sku-order-btn" href="mailto:jeremy.a.guido@gmail.com?subject=Commission%20Enquiry%20%E2%80%94%20Choker">ORDER THIS PIECE →</a>
       </div>
 
       <div class="sku-card">
-        <div class="sku-img">
-          <span class="sku-img-icon">◈</span>
-          <span class="sku-img-label">PHOTO PENDING</span>
+        <div class="sku-name">NECKLACE</div>
+        <p class="sku-desc">Full-length chainmail with real weight and drape. Wears as well at a festival as it does anywhere else. Specify your length and metal.</p>
+        <div class="sku-price">
+          <span class="sku-price-value">$120</span>
+          <span class="sku-price-label">CAD</span>
         </div>
-        <div class="sku-body">
-          <div class="sku-name">NECKLACE</div>
-          <p class="sku-desc">Full-length chainmail with real weight and drape. Wears as well at a festival as it does anywhere else. Specify your length and metal.</p>
-          <div class="sku-price">
-            <span class="sku-price-value">$120</span>
-            <span class="sku-price-label">CAD</span>
-          </div>
-          <ul class="sku-feature-list">
-            <li>Stainless steel, brass, or mixed</li>
-            <li>Custom length</li>
-            <li>Choice of weave pattern</li>
-            <li>Clasp closure</li>
-            <li>Allow 1–2 weeks</li>
-          </ul>
-        </div>
+        <ul class="sku-feature-list">
+          <li>Stainless steel, brass, or mixed</li>
+          <li>Custom length</li>
+          <li>Choice of weave pattern</li>
+          <li>Clasp closure</li>
+          <li>Allow 1–2 weeks</li>
+        </ul>
+        <a class="sku-order-btn" href="mailto:jeremy.a.guido@gmail.com?subject=Commission%20Enquiry%20%E2%80%94%20Necklace">ORDER THIS PIECE →</a>
       </div>
 
       <div class="sku-card">
-        <div class="sku-img">
-          <span class="sku-img-icon">◈</span>
-          <span class="sku-img-label">PHOTO PENDING</span>
+        <div class="sku-name">BRACELET / ANKLET</div>
+        <p class="sku-desc">Wrist or ankle — specify when you order. Built to your measurement because a piece made for you should actually fit.</p>
+        <div class="sku-price">
+          <span class="sku-price-value">$60</span>
+          <span class="sku-price-label">CAD</span>
         </div>
-        <div class="sku-body">
-          <div class="sku-name">BRACELET / ANKLET</div>
-          <p class="sku-desc">Wrist or ankle — specify when you order. Built to your measurement because a piece made for you should actually fit. Mix metals for something that gets noticed.</p>
-          <div class="sku-price">
-            <span class="sku-price-value">$60</span>
-            <span class="sku-price-label">CAD</span>
-          </div>
-          <ul class="sku-feature-list">
-            <li>Stainless steel, brass, or mixed</li>
-            <li>Sized to wrist or ankle</li>
-            <li>Choice of weave pattern</li>
-            <li>Clasp closure</li>
-            <li>Allow 1–2 weeks</li>
-          </ul>
-        </div>
+        <ul class="sku-feature-list">
+          <li>Stainless steel, brass, or mixed</li>
+          <li>Sized to wrist or ankle</li>
+          <li>Choice of weave pattern</li>
+          <li>Clasp closure</li>
+          <li>Allow 1–2 weeks</li>
+        </ul>
+        <a class="sku-order-btn" href="mailto:jeremy.a.guido@gmail.com?subject=Commission%20Enquiry%20%E2%80%94%20Bracelet">ORDER THIS PIECE →</a>
       </div>
 
     </div>
   </div>
 
-  <!-- GALLERY MOSAIC (CHANGE 4) -->
+  <!-- HOW TO ORDER — new section [CHANGE 3] -->
   <div class="block">
-    <div class="block-label">// THE WORK</div>
+    <div class="block-label">// HOW TO ORDER</div>
 
-    <div class="gallery-mosaic">
+    <div class="order-steps">
 
-      <div class="gm-card featured">
-        <div class="gm-fill">
-          <span class="gm-icon">◈</span>
-          <span class="gm-pending">PHOTO PENDING</span>
+      <div class="order-step">
+        <span class="order-step-num">01</span>
+        <div class="order-step-title">CHOOSE YOUR PIECE</div>
+        <p class="order-step-desc">Pick from the catalogue above or describe something specific. Mix metals, combine weave patterns, or specify exact sizing — the process starts with your vision.</p>
+        <span class="order-step-time">▸ 5 MINUTES</span>
+      </div>
+
+      <div class="order-step">
+        <span class="order-step-num">02</span>
+        <div class="order-step-title">SEND AN EMAIL</div>
+        <p class="order-step-desc">Email with your piece, metal choice, weave preference, and measurements. Not sure what you want? Describe the vibe and we'll work it out together.</p>
+        <span class="order-step-time">▸ JEREMY.A.GUIDO@GMAIL.COM</span>
+      </div>
+
+      <div class="order-step">
+        <span class="order-step-num">03</span>
+        <div class="order-step-title">I BUILD IT</div>
+        <p class="order-step-desc">Every piece is woven by hand in Victoria, BC. Allow 1–2 weeks from confirmed order to ship. Payment by e-transfer or PayPal on confirmation.</p>
+        <span class="order-step-time">▸ 1–2 WEEKS BUILD TIME</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GALLERY — reframed, repositioned [CHANGE 4] -->
+  <div class="block">
+    <div class="block-label">// WORKS IN PROGRESS</div>
+
+    <div class="gallery-grid">
+
+      <div class="gallery-card">
+        <div class="gallery-img">
+          <span class="gallery-placeholder-icon">◈</span>
+          <span class="gallery-placeholder-text">PHOTO PENDING</span>
         </div>
-        <div class="gm-caption">
-          <strong>PERSIAN 4-IN-1 CHOKER</strong>
+        <div class="gallery-caption">
+          <strong>CHOKER</strong>
           STAINLESS STEEL — HAND-WOVEN
         </div>
       </div>
 
-      <div class="gm-card">
-        <div class="gm-fill">
-          <span class="gm-icon">◆</span>
-          <span class="gm-pending">PHOTO PENDING</span>
+      <div class="gallery-card">
+        <div class="gallery-img">
+          <span class="gallery-placeholder-icon">◈</span>
+          <span class="gallery-placeholder-text">PHOTO PENDING</span>
         </div>
-        <div class="gm-caption">
-          <strong>BOX WEAVE NECKLACE</strong>
+        <div class="gallery-caption">
+          <strong>NECKLACE</strong>
           BRASS — FULL LENGTH
         </div>
       </div>
 
-      <div class="gm-card">
-        <div class="gm-fill">
-          <span class="gm-icon">◇</span>
-          <span class="gm-pending">PHOTO PENDING</span>
+      <div class="gallery-card">
+        <div class="gallery-img">
+          <span class="gallery-placeholder-icon">◈</span>
+          <span class="gallery-placeholder-text">PHOTO PENDING</span>
         </div>
-        <div class="gm-caption">
-          <strong>TWO-TONE BRACELET</strong>
-          STAINLESS + BRASS
-        </div>
-      </div>
-
-      <div class="gm-card">
-        <div class="gm-fill">
-          <span class="gm-icon">◈</span>
-          <span class="gm-pending">PHOTO PENDING</span>
-        </div>
-        <div class="gm-caption">
-          <strong>QUEEN'S BRAID ANKLET</strong>
-          BRASS — CLOSE-UP
+        <div class="gallery-caption">
+          <strong>BRACELET</strong>
+          STAINLESS + BRASS — TWO-TONE
         </div>
       </div>
 
-      <div class="gm-card">
-        <div class="gm-fill">
-          <span class="gm-icon">◆</span>
-          <span class="gm-pending">PHOTO PENDING</span>
+      <div class="gallery-card">
+        <div class="gallery-img">
+          <span class="gallery-placeholder-icon">◈</span>
+          <span class="gallery-placeholder-text">PHOTO PENDING</span>
         </div>
-        <div class="gm-caption">
-          <strong>RING CONSTRUCTION DETAIL</strong>
-          STAINLESS — MACRO
+        <div class="gallery-caption">
+          <strong>ANKLET</strong>
+          BRASS — HAND-WOVEN
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <div class="gallery-img">
+          <span class="gallery-placeholder-icon">◈</span>
+          <span class="gallery-placeholder-text">PHOTO PENDING</span>
+        </div>
+        <div class="gallery-caption">
+          <strong>WEAVE DETAIL</strong>
+          RING CONSTRUCTION — CLOSE-UP
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <div class="gallery-img">
+          <span class="gallery-placeholder-icon">◈</span>
+          <span class="gallery-placeholder-text">PHOTO PENDING</span>
+        </div>
+        <div class="gallery-caption">
+          <strong>CUSTOM COMMISSION</strong>
+          MIXED METALS — BESPOKE WEAVE
         </div>
       </div>
 
     </div>
-  </div>
-
-  <!-- COMMISSION HERO (CHANGE 5) -->
-  <div class="block">
-    <div class="block-label">// CUSTOM COMMISSIONS</div>
-
-    <div class="commission-hero">
-      <div>
-        <span class="ch-eyebrow">MADE TO YOUR SPECIFICATION</span>
-        <div class="ch-title">BUILD YOUR OWN PIECE</div>
-        <p class="ch-desc">
-          Mix metals, combine weave patterns, specify exact sizing — stainless and brass can be woven together in a single piece for a two-tone contrast finish. Have something specific in mind? Send a message and we'll work it out.
-        </p>
-        <div class="tag-row" style="margin-bottom: 24px;">
-          <span class="tag ember">CUSTOM SIZING</span>
-          <span class="tag ember">MIXED METALS</span>
-          <span class="tag">BESPOKE WEAVE COMBINATIONS</span>
-          <span class="tag amber">MADE TO ORDER</span>
-        </div>
-        <div class="ch-ctas">
-          <a class="btn amber lg" href="mailto:jeremy.a.guido@gmail.com">START YOUR COMMISSION</a>
-          <a class="btn lg" href="https://www.instagram.com/nopwron" target="_blank" rel="noopener noreferrer">SEE THE WORK</a>
-        </div>
-      </div>
-      <div class="commission-stat">
-        <div class="commission-stat-num">1–2<br>WKS</div>
-        <div class="commission-stat-label">TYPICAL TURNAROUND</div>
-      </div>
-    </div>
+    <p class="gallery-note">Photography in progress — follow on Instagram to see pieces as they're made.</p>
   </div>
 
   <!-- MATERIALS + WEAVES -->
@@ -1120,7 +958,7 @@ canvas {
     <div class="block-label">// MATERIALS + WEAVES</div>
 
     <p class="weave-guide">
-      Each weave has a distinct character. Persian patterns are dense and rope-like with a tight, refined look. Box weave sits flat and geometric — clean and architectural. The braids drape with more weight and movement. Not sure which is right for you? Describe what you're after and we'll work it out.
+      Each weave has a distinct character. Persian patterns are dense and rope-like with a tight, refined look. Box weave sits flat and geometric. The braids drape with more weight and movement. Not sure which is right for you? Describe what you're after and we'll work it out.
     </p>
 
     <div class="capabilities-grid">
@@ -1144,127 +982,76 @@ canvas {
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- IN DEVELOPMENT -->
-  <div class="block">
-    <div class="block-label">// IN DEVELOPMENT</div>
-    <div class="product-hero--dim">
-      <span class="product-hero-eyebrow">COMING SOON</span>
-      <div class="product-hero-title">LED REACTIVE LEATHER HIP BAG SYSTEM <span class="status soon">COMING SOON</span></div>
+    <div class="product-hero" style="margin-top: 24px;">
+      <span class="product-hero-eyebrow">CUSTOM COMMISSIONS</span>
+      <div class="product-hero-title">BUILD YOUR OWN COMBINATION</div>
       <p class="product-hero-desc">
-        A hand-stitched leather hip bag with removable LED electronics module. Laser-cut panels with translucent acrylic inserts, controlled via a custom app over Bluetooth LE. Built for festivals, raves, and live performance culture.
+        Mix metals, combine weave patterns, or specify exact sizing — stainless and brass can be woven together in a single piece for a two-tone contrast finish. Have something specific in mind? Reach out and we'll work it out.
       </p>
       <div class="tag-row">
-        <span class="tag ember">HAND-STITCHED LEATHER</span>
-        <span class="tag">ESP32 / BLE</span>
-        <span class="tag">WS2812B LED</span>
-        <span class="tag amber">FESTIVAL-RATED</span>
+        <span class="tag ember">CUSTOM SIZING</span>
+        <span class="tag ember">MIXED METALS</span>
+        <span class="tag">BESPOKE WEAVE COMBINATIONS</span>
+        <span class="tag amber">MADE TO ORDER</span>
       </div>
     </div>
   </div>
 
-  <!-- FIND THE FORGE -->
+  <!-- UPCOMING APPEARANCES -->
   <div class="block">
-    <div class="block-label">// FIND THE FORGE</div>
+    <div class="block-label">// UPCOMING APPEARANCES</div>
     <div class="market-grid">
+
       <div class="market-card">
-        <span class="market-priority">◆ FESTIVAL</span>
-        <div class="market-name">SHAMBHALA</div>
-        <div class="market-loc">SALMO, BC</div>
-      </div>
-      <div class="market-card">
-        <span class="market-priority">◆ FESTIVAL</span>
-        <div class="market-name">BASS COAST</div>
-        <div class="market-loc">MERRITT, BC</div>
-      </div>
-      <div class="market-card">
-        <span class="market-priority">◆ FESTIVAL</span>
-        <div class="market-name">RIFFLANDIA</div>
-        <div class="market-loc">VICTORIA, BC</div>
-      </div>
-      <div class="market-card">
-        <span class="market-priority">◆ MARKET</span>
-        <div class="market-name">VICTORIA NIGHT MARKET</div>
-        <div class="market-loc">VICTORIA, BC</div>
-      </div>
-      <div class="market-card">
-        <span class="market-priority">◆ MARKET</span>
+        <span class="market-priority">◆ PLANNED</span>
         <div class="market-name">MOSS STREET MARKET</div>
         <div class="market-loc">VICTORIA, BC</div>
       </div>
+
       <div class="market-card">
-        <span class="market-priority">◆ MARKET</span>
+        <span class="market-priority">◆ PLANNED</span>
         <div class="market-name">VANCOUVER MAKER FAIRS</div>
         <div class="market-loc">VANCOUVER, BC</div>
       </div>
+
     </div>
+    <p style="color:var(--forge-text-dim);font-style:italic;text-align:center;font-size:10px;letter-spacing:0.12em;margin-top:14px;font-family:var(--font-mono);">More events being scheduled — follow on Instagram for updates.</p>
   </div>
+
+  <!-- "ABOUT THE MAKER" section removed [CHANGE 5] -->
+  <!-- Engineering skills (BLE, ESP32, React Native, Elegoo printers) -->
+  <!-- were removed. They belong on the engineering discipline page,   -->
+  <!-- not on a jewellery commerce page where they cause brand         -->
+  <!-- confusion. Craft skills are implied by the product itself.      -->
 
   <!-- CTA STRIP -->
   <div class="cta-strip">
     <div class="cta-strip-text">
       <strong>READY TO ORDER?</strong>
-      Every piece is built to your sizing and woven to order in Victoria, BC. Send your piece, metal, weave, and measurements — or just describe what you're after and we'll figure it out together. Allow 1–2 weeks from order to ship.
+      Every piece is built to your sizing and woven to order in Victoria, BC. Send your piece, metal, weave, and measurements — or just describe what you're after.
     </div>
     <div class="cta-buttons">
-      <a class="btn shop" href="https://www.etsy.com/shop/TheForge" target="_blank" rel="noopener noreferrer">VISIT THE SHOP ↗</a>
-      <a class="btn amber" href="mailto:jeremy.a.guido@gmail.com">ORDER A PIECE</a>
+      <a class="btn primary" href="mailto:jeremy.a.guido@gmail.com">ORDER A PIECE</a>
       <a class="btn" href="https://www.instagram.com/nopwron" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
     </div>
   </div>
 
+  <!-- FOOTER NAV -->
+  <footer class="footer-nav">
+    <div class="footer-links">
+      <a class="btn" href="../engineering/engineering.html">ENGINEERING</a>
+      <a class="btn" href="../hospitality/hospitality.html">HOSPITALITY</a>
+      <a class="btn amber" href="forge.html">THE FORGE</a>
+    </div>
+    <div class="footer-links">
+      <a class="btn" href="https://github.com/nopwron" target="_blank" rel="noopener noreferrer">GITHUB</a>
+      <a class="btn" href="https://www.linkedin.com/in/jeremy-guido" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
+      <a class="btn" href="mailto:jeremy.a.guido@gmail.com">EMAIL</a>
+    </div>
+  </footer>
+
 </main>
-
-<!-- FOOTER NAV -->
-<footer class="footer-nav">
-  <div class="footer-links">
-    <a class="btn" href="../engineering/engineering.html">ENGINEERING</a>
-    <a class="btn" href="../hospitality/hospitality.html">HOSPITALITY</a>
-    <a class="btn amber" href="forge.html">THE FORGE</a>
-  </div>
-  <div class="footer-links">
-    <a class="btn" href="https://github.com/nopwron" target="_blank" rel="noopener noreferrer">GITHUB</a>
-    <a class="btn" href="https://www.linkedin.com/in/jeremy-guido" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
-    <a class="btn" href="mailto:jeremy.a.guido@gmail.com">EMAIL</a>
-  </div>
-</footer>
-
-<!-- STAR FIELD -->
-<script>
-  const canvas = document.getElementById('stars');
-  const ctx = canvas.getContext('2d');
-  let W, H, stars = [];
-  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-  function initStars() {
-    stars = [];
-    const count = Math.floor((W * H) / 8000);
-    for (let i = 0; i < count; i++) {
-      stars.push({ x: Math.random() * W, y: Math.random() * H, size: Math.random() * 1.4 + 0.3, speed: Math.random() * 0.18 + 0.04, alpha: Math.random() * 0.5 + 0.2 });
-    }
-  }
-  function drawStars() {
-    ctx.clearRect(0, 0, W, H);
-    const grad = ctx.createLinearGradient(0, 0, 0, H);
-    grad.addColorStop(0, '#0f0b08');
-    grad.addColorStop(1, '#1c1208');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, W, H);
-    for (const s of stars) {
-      ctx.globalAlpha = s.alpha;
-      ctx.fillStyle = '#e8c090';
-      ctx.fillRect(s.x, s.y, s.size, s.size);
-      s.y -= s.speed;
-      if (s.y < -2) { s.y = H + 2; s.x = Math.random() * W; }
-    }
-    ctx.globalAlpha = 1;
-    requestAnimationFrame(drawStars);
-  }
-  resize();
-  initStars();
-  drawStars();
-  window.addEventListener('resize', () => { resize(); initStars(); });
-</script>
 
 </body>
 </html>
