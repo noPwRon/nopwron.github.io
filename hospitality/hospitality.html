@@ -218,5 +218,14 @@
   </main>
 
   <script src="../assets/js/stars.js"></script>
+  <script>
+    const d = new Date();
+    const stamp = d.getFullYear().toString() +
+      String(d.getMonth() + 1).padStart(2, '0') +
+      String(d.getDate()).padStart(2, '0');
+    document.querySelectorAll('a[download][href="./resume.pdf"]').forEach(a => {
+      a.download = stamp + '-JGResume.pdf';
+    });
+  </script>
 </body>
 </html>
