@@ -331,4 +331,9 @@ body.scanlines {
   .contact-panel {
     display: none;
   }
+
+  #game,
+  .center-message {
+    display: none;
+  }
 }
