@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PENDULUM — Jeremy Guido</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/page-pendulum.css" />
+</head>
+<body class="scanlines site-pendulum">
+
+  <!-- ── HUD top bar ──────────────────────────────────────────── -->
+  <nav class="pend-hud" aria-label="Simulation header">
+    <div class="pend-hud__left">
+      <a href="./lab.html" class="pend-back">← LAB</a>
+      <span class="pend-title">JG//PENDULUM</span>
+    </div>
+    <div class="pend-hud__right">
+      <div class="pend-stat">
+        <span class="pend-stat-label">LINKS</span>
+        <span class="pend-stat-value" id="statLinks">1</span>
+      </div>
+      <div class="pend-stat">
+        <span class="pend-stat-label">MODE</span>
+        <span class="pend-stat-value" id="statMode">PID</span>
+      </div>
+      <div class="pend-stat">
+        <span class="pend-stat-label">STATUS</span>
+        <span class="pend-stat-value" id="statStatus">STANDBY</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Main: simulation canvas + controls sidebar ───────────── -->
+  <div class="pend-layout">
+
+    <div class="pend-sim-area" id="simArea">
+      <canvas id="sim" aria-label="Pendulum simulation canvas"></canvas>
+    </div>
+
+    <aside class="pend-controls panel" id="controls" aria-label="Controller settings">
+
+      <div class="pend-section-label">CONTROLLER MODE</div>
+      <div class="pend-mode-tabs" role="group" aria-label="Controller mode">
+        <button class="pend-mode-tab active" data-mode="PID" aria-pressed="true">PID</button>
+        <button class="pend-mode-tab"        data-mode="LQR" aria-pressed="false">LQR</button>
+      </div>
+
+      <div class="pend-section-label">LINK COUNT</div>
+      <div class="pend-link-tabs" role="group" aria-label="Number of links">
+        <button class="pend-link-tab active" data-links="1" aria-pressed="true">1</button>
+        <button class="pend-link-tab"        data-links="2" aria-pressed="false">2</button>
+        <button class="pend-link-tab"        data-links="3" aria-pressed="false">3</button>
+      </div>
+
+      <div id="pidControls">
+        <div class="pend-section-label">PID GAINS</div>
+
+        <div class="pend-row">
+          <label class="pend-label" for="slKp">Kp</label>
+          <span class="pend-value" id="valKp">50.0</span>
+        </div>
+        <input class="pend-slider" type="range" id="slKp" min="0" max="200" step="0.5" value="50"
+               aria-label="Proportional gain" />
+
+        <div class="pend-row">
+          <label class="pend-label" for="slKi">
+            Ki
+            <span class="pend-tooltip" title="Integral term with anti-windup clamp — eliminates steady-state error but can cause windup if too large">ⓘ</span>
+          </label>
+          <span class="pend-value" id="valKi">1.0</span>
+        </div>
+        <input class="pend-slider" type="range" id="slKi" min="0" max="10" step="0.05" value="1"
+               aria-label="Integral gain" />
+
+        <div class="pend-row">
+          <label class="pend-label" for="slKd">Kd</label>
+          <span class="pend-value" id="valKd">12.0</span>
+        </div>
+        <input class="pend-slider" type="range" id="slKd" min="0" max="50" step="0.5" value="12"
+               aria-label="Derivative gain" />
+
+        <div class="pend-section-label">PRESETS</div>
+        <div class="pend-btn-group">
+          <button class="pend-btn" data-preset="TUNED">TUNED</button>
+          <button class="pend-btn" data-preset="UNDERDAMPED">UNDER</button>
+          <button class="pend-btn" data-preset="CRITICALLY DAMPED">CRIT</button>
+          <button class="pend-btn pend-btn--amber" data-preset="UNSTABLE">UNSTABLE</button>
+        </div>
+      </div>
+
+      <div id="lqrInfo" class="hidden">
+        <div class="pend-section-label">LQR — FULL STATE FEEDBACK</div>
+        <p class="pend-placeholder">
+          Gains computed offline via continuous-time Riccati equation.
+          Hardcoded per link count. See PHYSICS.md.
+        </p>
+      </div>
+
+      <div class="pend-section-label">SIMULATION</div>
+      <div class="pend-row">
+        <label class="pend-label" for="slSpeed">SPEED</label>
+        <span class="pend-value" id="valSpeed">1.0×</span>
+      </div>
+      <input class="pend-slider" type="range" id="slSpeed" min="0.25" max="2" step="0.25" value="1"
+             aria-label="Simulation speed multiplier" />
+
+      <div class="pend-btn-group">
+        <button class="pend-btn" id="btnPause">PAUSE</button>
+        <button class="pend-btn pend-btn--amber" id="btnReset">RESET</button>
+        <button class="pend-btn" id="btnNudge" title="Apply random impulse disturbance">NUDGE</button>
+      </div>
+
+      <div class="pend-section-label">UNITS</div>
+      <div class="pend-btn-group">
+        <button class="pend-btn pend-btn--success active" id="btnDeg">DEG</button>
+        <button class="pend-btn" id="btnRad">RAD</button>
+      </div>
+
+    </aside>
+  </div>
+
+  <!-- ── Dashboard strip ──────────────────────────────────────── -->
+  <div class="pend-dashboard panel" id="dashboard" aria-label="Telemetry">
+
+    <div class="pend-readouts" id="readouts" aria-live="polite">
+      <div class="pend-section-label">TELEMETRY</div>
+      <div class="pend-readout">
+        <span class="pend-readout__label">θ₁</span>
+        <span class="pend-readout__val" id="rθ1">—</span>
+      </div>
+      <div class="pend-readout">
+        <span class="pend-readout__label">θ̇₁</span>
+        <span class="pend-readout__val" id="rθd1">—</span>
+      </div>
+      <div class="pend-readout">
+        <span class="pend-readout__label">θ₂</span>
+        <span class="pend-readout__val" id="rθ2">—</span>
+      </div>
+      <div class="pend-readout">
+        <span class="pend-readout__label">θ̇₂</span>
+        <span class="pend-readout__val" id="rθd2">—</span>
+      </div>
+      <div class="pend-readout">
+        <span class="pend-readout__label">θ₃</span>
+        <span class="pend-readout__val" id="rθ3">—</span>
+      </div>
+      <div class="pend-readout">
+        <span class="pend-readout__label">θ̇₃</span>
+        <span class="pend-readout__val" id="rθd3">—</span>
+      </div>
+      <div class="pend-readout">
+        <span class="pend-readout__label">x</span>
+        <span class="pend-readout__val" id="rx">—</span>
+      </div>
+      <div class="pend-readout">
+        <span class="pend-readout__label">ẋ</span>
+        <span class="pend-readout__val" id="rxd">—</span>
+      </div>
+      <div class="pend-readout">
+        <span class="pend-readout__label">u (N)</span>
+        <span class="pend-readout__val" id="ru">—</span>
+      </div>
+    </div>
+
+    <canvas id="chart" aria-label="Strip chart — angle and force history"></canvas>
+
+  </div>
+
+  <script type="module" src="../assets/js/pendulum/main.js"></script>
+</body>
+</html>

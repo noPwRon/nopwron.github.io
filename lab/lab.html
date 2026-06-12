@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>THE LAB — Jeremy Guido</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/page-discipline.css" />
+  <link rel="stylesheet" href="../assets/css/page-lab.css" />
+</head>
+<body class="scanlines site-discipline discipline-lab">
+  <canvas id="stars" aria-hidden="true"></canvas>
+
+  <nav class="hud-bar discipline-hud" aria-label="Page header">
+    <div class="discipline-hud__left">
+      <a href="../index.html" class="hud-back">← BACK</a>
+      <span class="hud-title">THE LAB</span>
+    </div>
+    <div class="discipline-hud__right" aria-label="Quick stats">
+      <div class="hud-stat">
+        <span class="hud-stat-label">DOMAIN</span>
+        <span class="hud-stat-value">PHYSICS</span>
+      </div>
+      <div class="hud-stat">
+        <span class="hud-stat-label">CONTROL</span>
+        <span class="hud-stat-value">PID / LQR</span>
+      </div>
+      <div class="hud-stat">
+        <span class="hud-stat-label">SIMS</span>
+        <span class="hud-stat-value">01 / 02</span>
+      </div>
+    </div>
+  </nav>
+
+  <main class="discipline-main">
+    <header class="section-header">
+      <h1 class="section-title">THE<br /><span>LAB</span></h1>
+      <p class="section-sub">
+        Interactive physics simulations and control theory demonstrations. Each simulation is
+        built from scratch — no libraries, no shortcuts. The physics, numerics, and rendering
+        are the portfolio piece.
+      </p>
+    </header>
+
+    <div class="divider-label">
+      <span>SIMULATIONS</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="sim-grid">
+
+      <article class="sim-card">
+        <span class="sim-card__status">ACTIVE</span>
+        <h2 class="sim-card__title">INVERTED PENDULUM</h2>
+        <div class="sim-card__sub">Cart-pole dynamics / PID + LQR control</div>
+        <p class="sim-card__desc">
+          2D cart with 1–3 rigid links balanced in the inverted position.
+          Tune a PID controller by hand and watch it fail on a triple pendulum —
+          then switch to LQR full-state feedback and watch all three links stabilise.
+        </p>
+        <div class="sim-card__tags">
+          <span class="sim-card__tag">LAGRANGIAN MECHANICS</span>
+          <span class="sim-card__tag">RK4</span>
+          <span class="sim-card__tag">PID</span>
+          <span class="sim-card__tag">LQR</span>
+          <span class="sim-card__tag">CANVAS</span>
+        </div>
+        <a class="nav-btn nav-btn--accent" href="./pendulum.html">LAUNCH →</a>
+      </article>
+
+      <article class="sim-card sim-card--inactive" aria-label="Coming soon">
+        <span class="sim-card__status">IN DEVELOPMENT</span>
+        <h2 class="sim-card__title">ROBOT SIMULATION</h2>
+        <div class="sim-card__sub">Kinematics / path planning / sensor fusion</div>
+        <p class="sim-card__desc">
+          Mobile robot simulation with differential drive kinematics, occupancy grid mapping,
+          and autonomous navigation. Coming soon.
+        </p>
+        <div class="sim-card__tags">
+          <span class="sim-card__tag">KINEMATICS</span>
+          <span class="sim-card__tag">A*</span>
+          <span class="sim-card__tag">SLAM</span>
+          <span class="sim-card__tag">CANVAS</span>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="divider-label">
+      <span>EXPLORE</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="../index.html" class="nav-btn">← MAIN</a>
+      <a href="../engineering/engineering.html" class="nav-btn">ENGINEERING →</a>
+      <a href="../hospitality/hospitality.html" class="nav-btn">HOSPITALITY →</a>
+      <a href="../forge/forge.html" class="nav-btn">THE FORGE →</a>
+      <a href="mailto:jeremy.a.guido@gmail.com" class="nav-btn">EMAIL</a>
+      <a href="https://github.com/nopwron" target="_blank" rel="noopener noreferrer" class="nav-btn">GITHUB</a>
+    </nav>
+  </main>
+
+  <script src="../assets/js/stars.js"></script>
+</body>
+</html>
