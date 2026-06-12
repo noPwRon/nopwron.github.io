@@ -62,9 +62,9 @@ named PID gain presets.
 ## Task Completion Log
 
 - [x] T0. Phase 0 complete, DECISIONS.md written, scope confirmed
-- [ ] T1. Scaffold: lab.html hub + pendulum.html with site HUD/styles, canvas renders
-- [ ] T2. params.js + dynamics.js (1 link); PHYSICS.md derivation for 1 link
-- [ ] T3. integrator.js (RK4 + accumulator); uncontrolled 1-link swings, energy drift < 1%
+- [x] T1. Scaffold: lab.html hub + pendulum.html with site HUD/styles, canvas renders, LAB card on index.html
+- [x] T2. params.js + dynamics.js (1 link); PHYSICS.md derivation complete
+- [x] T3. RK4 accumulator verified — |ΔE|/|E₀| = 1.573e-5% over 60 s (criterion: <1%) PASS
 - [ ] T4. render.js: cart, link, track, vector aesthetic
 - [ ] T5. controller.js: PID with anti-windup; 1-link balances with reference gains
 - [ ] T6. ui.js: gain sliders, reset/pause/speed, live tuning
