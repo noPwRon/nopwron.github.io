@@ -3,24 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ENGINEERING - Jeremy Guido</title>
+  <title>ENGINEERING — Jeremy Guido</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="../assets/css/tokens.css" />
   <link rel="stylesheet" href="../assets/css/base.css" />
-  <link rel="stylesheet" href="../assets/css/components.css" />
   <link rel="stylesheet" href="../assets/css/page-discipline.css" />
 </head>
-<body class="site-discipline">
-  <canvas class="site-stars" id="stars" aria-hidden="true"></canvas>
+<body class="scanlines site-discipline discipline-engineering">
+  <canvas id="stars" aria-hidden="true"></canvas>
 
-  <nav class="hud">
-    <div class="hud-left">
+  <nav class="hud-bar discipline-hud" aria-label="Page header">
+    <div class="discipline-hud__left">
       <a href="../index.html" class="hud-back">← BACK</a>
       <span class="hud-title">ENGINEERING</span>
     </div>
-    <div class="hud-right">
+
+    <div class="discipline-hud__right" aria-label="Quick stats">
       <div class="hud-stat">
         <span class="hud-stat-label">CREDENTIAL</span>
         <span class="hud-stat-value">B.ENG</span>
@@ -36,13 +38,19 @@
     </div>
   </nav>
 
-  <main class="site-main">
+  <main class="discipline-main">
     <header class="section-header">
-      <span class="section-prefix">// DISCIPLINE_01</span>
+      <!-- <span class="section-prefix">// DISCIPLINE_01</span> -->
       <h1 class="section-title">MECHANICAL<br /><span>ENGINEERING</span></h1>
       <p class="section-sub">
         Hands-on mechanical engineer with experience building, testing, and commissioning electro-mechanical and automated systems. Background spans applied research, industrial refrigeration, and embedded sensing.
       </p>
+
+      <div class="header-actions">
+        <a class="nav-btn nav-btn--primary" href="./resume.pdf" target="_blank" rel="noopener noreferrer" download>
+          GET PDF VERSION
+        </a>
+      </div>
     </header>
 
     <div class="divider-label">
@@ -50,19 +58,19 @@
       <div class="divider-line"></div>
     </div>
 
-    <section class="featured-card" data-label="FEATURED PROJECT">
-      <div class="card-kicker">CAMOSUN INNOVATES - APPLIED RESEARCH</div>
-      <h2 class="card-title">Distributed Backflow Preventer Monitoring System</h2>
-      <div class="card-meta">Embedded sensing / LoRa mesh networking / Field deployment</div>
+    <section class="featured-project" aria-labelledby="featured-project-title">
+      <div class="project-label">CAMOSUN INNOVATES — APPLIED RESEARCH</div>
+      <h2 class="project-name" id="featured-project-title">Distributed Backflow Preventer Monitoring System</h2>
+      <div class="project-org">Embedded sensing / LoRa mesh networking / Field deployment</div>
 
-      <ul class="feature-list">
+      <ul class="project-bullets">
         <li>Designed, tested, and deployed a remote monitoring system to detect leaks and failure modes in backflow preventers operating in live installations</li>
         <li>Developed firmware on ESP32 microcontrollers with LoRa mesh networking to support battery-powered operation in remote locations</li>
         <li>Implemented sensing strategies, fault detection logic, data acquisition, and gateway communication to a web-based monitoring platform</li>
-        <li>Performed field deployment, commissioning, reliability testing, and power optimisation, supported client demonstrations and technical documentation</li>
+        <li>Performed field deployment, commissioning, reliability testing, and power optimisation; supported client demonstrations and technical documentation</li>
       </ul>
 
-      <div class="tech-tags">
+      <div class="tech-tags" aria-label="Technology tags">
         <span class="tag">ESP32</span>
         <span class="tag">LORA MESH</span>
         <span class="tag">FIRMWARE</span>
@@ -78,13 +86,13 @@
       <div class="divider-line"></div>
     </div>
 
-    <section class="timeline">
+    <section class="timeline" aria-label="Work history">
       <article class="timeline-item">
         <div class="timeline-meta">
           <span class="timeline-role">Project Engineer</span>
-          <span class="timeline-date">AUG 2023 - JAN 2026</span>
+          <span class="timeline-date">AUG 2023 — JAN 2026</span>
         </div>
-        <div class="timeline-org">POLAR ENGINEERING - Victoria, BC</div>
+        <div class="timeline-org">POLAR ENGINEERING — Victoria, BC</div>
         <ul class="timeline-bullets">
           <li>Delivered energy audits and feasibility studies for buildings and industrial facilities</li>
           <li>Developed retrofit concepts involving refrigeration, heat recovery, and low-carbon systems</li>
@@ -96,9 +104,9 @@
       <article class="timeline-item">
         <div class="timeline-meta">
           <span class="timeline-role">Mechanical Engineer</span>
-          <span class="timeline-date">JUN 2022 - JUL 2023</span>
+          <span class="timeline-date">JUN 2022 — JUL 2023</span>
         </div>
-        <div class="timeline-org">FOCAL ENGINEERING - Victoria, BC</div>
+        <div class="timeline-org">FOCAL ENGINEERING — Victoria, BC</div>
         <ul class="timeline-bullets">
           <li>Supported development and calibration of building energy models from design drawings</li>
           <li>Assisted with mechanical system design, calculations, and drawing production</li>
@@ -109,9 +117,9 @@
       <article class="timeline-item">
         <div class="timeline-meta">
           <span class="timeline-role">Applied Research Technologist II</span>
-          <span class="timeline-date">JAN 2016 - JUN 2022</span>
+          <span class="timeline-date">JAN 2016 — JUN 2022</span>
         </div>
-        <div class="timeline-org">CAMOSUN INNOVATES - Victoria, BC</div>
+        <div class="timeline-org">CAMOSUN INNOVATES — Victoria, BC</div>
         <ul class="timeline-bullets">
           <li>Led applied research projects involving mechanical systems, automation, sensing, and embedded control</li>
           <li>Designed and built instrumented prototypes using CAD/CAM, CNC machining, and rapid prototyping tools</li>
@@ -123,9 +131,9 @@
       <article class="timeline-item">
         <div class="timeline-meta">
           <span class="timeline-role">Design Technologist</span>
-          <span class="timeline-date">JUN 2016 - JUL 2018</span>
+          <span class="timeline-date">JUN 2016 — JUL 2018</span>
         </div>
-        <div class="timeline-org">ACCENT REFRIGERATION - Victoria, BC</div>
+        <div class="timeline-org">ACCENT REFRIGERATION — Victoria, BC</div>
         <ul class="timeline-bullets">
           <li>Designed packaged industrial refrigeration and heat pump systems for manufacture</li>
           <li>Produced P&amp;IDs and detailed 3D CAD models for fabrication and assembly</li>
@@ -140,7 +148,7 @@
       <div class="divider-line"></div>
     </div>
 
-    <section class="skills-grid">
+    <section class="skills-grid" aria-label="Technical skills">
       <div class="skill-cell">
         <span class="skill-cell-label">PROGRAMMING</span>
         <div class="skill-items">
@@ -186,23 +194,23 @@
       <div class="divider-line"></div>
     </div>
 
-    <section class="edu-grid">
+    <section class="edu-grid" aria-label="Education">
       <article class="edu-card">
-        <span class="edu-year">2018 - 2021</span>
+        <span class="edu-year">2018 — 2021</span>
         <div class="edu-degree">Bachelor of Engineering</div>
-        <div class="edu-school">UNIVERSITY OF VICTORIA - Victoria, BC</div>
+        <div class="edu-school">UNIVERSITY OF VICTORIA — Victoria, BC</div>
       </article>
 
       <article class="edu-card">
-        <span class="edu-year">2015 - 2017</span>
+        <span class="edu-year">2015 — 2017</span>
         <div class="edu-degree">Mechanical Engineering Technologist</div>
-        <div class="edu-school">CAMOSUN COLLEGE - Victoria, BC</div>
+        <div class="edu-school">CAMOSUN COLLEGE — Victoria, BC</div>
       </article>
 
       <article class="edu-card">
-        <span class="edu-year">2008 - 2012</span>
+        <span class="edu-year">2008 — 2012</span>
         <div class="edu-degree">Red Seal Chef</div>
-        <div class="edu-school">OKANAGAN COLLEGE - Kelowna, BC</div>
+        <div class="edu-school">OKANAGAN COLLEGE — Kelowna, BC</div>
       </article>
     </section>
 
@@ -211,9 +219,12 @@
       <div class="divider-line"></div>
     </div>
 
-    <nav class="footer-nav">
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a class="nav-btn nav-btn--primary" href="./resume.pdf" target="_blank" rel="noopener noreferrer" download>
+        GET PDF VERSION
+      </a>
       <a href="../index.html" class="nav-btn">← MAIN</a>
-      <a href="../hospitality/hospitality.html" class="nav-btn amber">HOSPITALITY →</a>
+      <a href="../hospitality/hospitality.html" class="nav-btn nav-btn--accent">HOSPITALITY →</a>
       <a href="../forge/forge.html" class="nav-btn">THE FORGE →</a>
       <a href="mailto:jeremy.a.guido@gmail.com" class="nav-btn">EMAIL</a>
       <a href="https://www.linkedin.com/in/jeremy-guido" target="_blank" rel="noopener noreferrer" class="nav-btn">LINKEDIN</a>
@@ -222,6 +233,14 @@
   </main>
 
   <script src="../assets/js/stars.js"></script>
-  <script src="../assets/js/site.js"></script>
+  <script>
+    const d = new Date();
+    const stamp = d.getFullYear().toString() +
+      String(d.getMonth() + 1).padStart(2, '0') +
+      String(d.getDate()).padStart(2, '0');
+    document.querySelectorAll('a[download][href="./resume.pdf"]').forEach(a => {
+      a.download = stamp + '-JGResume.pdf';
+    });
+  </script>
 </body>
 </html>

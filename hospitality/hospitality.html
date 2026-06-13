@@ -3,24 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HOSPITALITY - Jeremy Guido</title>
+  <title>HOSPITALITY — Jeremy Guido</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="../assets/css/tokens.css" />
   <link rel="stylesheet" href="../assets/css/base.css" />
-  <link rel="stylesheet" href="../assets/css/components.css" />
   <link rel="stylesheet" href="../assets/css/page-discipline.css" />
 </head>
-<body class="site-discipline site-discipline--hospitality">
-  <canvas class="site-stars" id="stars" aria-hidden="true"></canvas>
+<body class="scanlines site-discipline discipline-hospitality">
+  <canvas id="stars" aria-hidden="true"></canvas>
 
-  <nav class="hud">
-    <div class="hud-left">
+  <nav class="hud-bar discipline-hud" aria-label="Page header">
+    <div class="discipline-hud__left">
       <a href="../index.html" class="hud-back">← BACK</a>
       <span class="hud-title">HOSPITALITY</span>
     </div>
-    <div class="hud-right">
+
+    <div class="discipline-hud__right" aria-label="Quick stats">
       <div class="hud-stat">
         <span class="hud-stat-label">CREDENTIAL</span>
         <span class="hud-stat-value">RED SEAL</span>
@@ -36,13 +38,19 @@
     </div>
   </nav>
 
-  <main class="site-main">
+  <main class="discipline-main">
     <header class="section-header">
-      <span class="section-prefix">// DISCIPLINE_02</span>
+      <!-- <span class="section-prefix">// DISCIPLINE_02</span> -->
       <h1 class="section-title">SERVICE +<br /><span>HOSPITALITY</span></h1>
       <p class="section-sub">
         Hospitality professional with fifteen years of experience across kitchens, events, and bar service. Fast, organized, calm under pressure, and comfortable wherever the floor gets loud and the timing gets tight.
       </p>
+
+      <div class="header-actions">
+        <a class="nav-btn nav-btn--primary" href="./resume.pdf" target="_blank" rel="noopener noreferrer" download>
+          GET PDF VERSION
+        </a>
+      </div>
     </header>
 
     <div class="divider-label">
@@ -50,27 +58,27 @@
       <div class="divider-line"></div>
     </div>
 
-    <section class="featured-card" data-label="SERVICE PROFILE">
-      <div class="card-kicker">SERVICE STYLE - HIGH VOLUME / EVENTS / EXECUTION</div>
-      <h2 class="card-title">Fast Service. No Drama. Doesn’t Break Under Pressure.</h2>
-      <div class="card-meta">Guest service / kitchen depth / event bar / operational discipline</div>
+    <section class="featured-project" aria-labelledby="featured-profile-title">
+      <div class="project-label">SERVICE STYLE — HIGH VOLUME / EVENTS / EXECUTION</div>
+      <h2 class="project-name" id="featured-profile-title">Fast Service. No Drama. Doesn’t Break Under Pressure.</h2>
+      <div class="project-org">Guest service / kitchen depth / event bar / operational discipline</div>
 
-      <ul class="feature-list">
+      <ul class="project-bullets">
         <li>Built experience across kitchens, events, bar service, and independent catering with a strong read on timing, flow, and pressure</li>
         <li>Cross-trained between front-of-house and back-of-house, able to step into service gaps without losing speed or control</li>
         <li>Used Red Seal culinary training to keep prep, standards, and consistency locked in during long, high-volume runs</li>
         <li>Engineering background adds structure, reliability, and calm decision-making in fast-moving service environments</li>
       </ul>
 
-      <div class="tech-tags">
-        <span class="tag tag--amber">GUEST SERVICE</span>
-        <span class="tag tag--amber">HIGH-VOLUME SERVICE</span>
-        <span class="tag tag--amber">EVENT BAR</span>
-        <span class="tag tag--amber">CASH HANDLING</span>
-        <span class="tag tag--amber">SERVICE FLOW</span>
-        <span class="tag tag--amber">KITCHEN LEADERSHIP</span>
-        <span class="tag tag--amber">TEAM COORDINATION</span>
-        <span class="tag tag--amber">RELIABILITY</span>
+      <div class="tech-tags" aria-label="Service tags">
+        <span class="tag">GUEST SERVICE</span>
+        <span class="tag">HIGH-VOLUME SERVICE</span>
+        <span class="tag">EVENT BAR</span>
+        <span class="tag">CASH HANDLING</span>
+        <span class="tag">SERVICE FLOW</span>
+        <span class="tag">KITCHEN LEADERSHIP</span>
+        <span class="tag">TEAM COORDINATION</span>
+        <span class="tag">RELIABILITY</span>
       </div>
     </section>
 
@@ -79,13 +87,13 @@
       <div class="divider-line"></div>
     </div>
 
-    <section class="timeline">
+    <section class="timeline" aria-label="Work history">
       <article class="timeline-item">
         <div class="timeline-meta">
           <span class="timeline-role">Owner / Operator</span>
-          <span class="timeline-date">2012 - 2014</span>
+          <span class="timeline-date">2012 — 2014</span>
         </div>
-        <div class="timeline-org">noPwRon Catering - Kelowna, BC</div>
+        <div class="timeline-org">noPwRon Catering — Kelowna, BC</div>
         <ul class="timeline-bullets">
           <li>Built and ran a full catering operation serving large groups across multi-day camp service</li>
           <li>Executed continuous service on tight schedules with minimal room for delay or error</li>
@@ -97,12 +105,12 @@
       <article class="timeline-item">
         <div class="timeline-meta">
           <span class="timeline-role">Banquet and Event Service</span>
-          <span class="timeline-date">2009 - 2013</span>
+          <span class="timeline-date">2009 — 2013</span>
         </div>
-        <div class="timeline-org">Kelowna Yacht Club / The Okanagan Golf Club - Kelowna, BC</div>
+        <div class="timeline-org">Kelowna Yacht Club / The Okanagan Golf Club — Kelowna, BC</div>
         <ul class="timeline-bullets">
           <li>Cross-trained across BOH and FOH in banquet and event environments</li>
-          <li>Ran event bar service with speed, organisation, and steady guest interaction</li>
+          <li>Ran event bar service with speed, organization, and steady guest interaction</li>
           <li>Maintained cash control and service flow under pressure during live events</li>
           <li>Supported large-scale functions with flexible coverage wherever the service load moved</li>
         </ul>
@@ -111,9 +119,9 @@
       <article class="timeline-item">
         <div class="timeline-meta">
           <span class="timeline-role">Seasoned Cook</span>
-          <span class="timeline-date">15 YEARS INDUSTRY EXPERIENCE</span>
+          <span class="timeline-date">2005 — 2020</span>
         </div>
-        <div class="timeline-org">Jam Cafe / 10 Acres / Penny Farthing / Vis-à-Vis</div>
+        <div class="timeline-org">Jam Cafe / 10 Acres / Penny Farthing / Vis-à-Vis — Victoria, BC</div>
         <ul class="timeline-bullets">
           <li>Advanced from dishpit to sous chef through sustained kitchen work in high-volume restaurants</li>
           <li>Delivered consistent brunch and dinner service across demanding, fast-paced environments</li>
@@ -128,7 +136,7 @@
       <div class="divider-line"></div>
     </div>
 
-    <section class="skills-grid">
+    <section class="skills-grid" aria-label="Core skills">
       <div class="skill-cell">
         <span class="skill-cell-label">GUEST SERVICE</span>
         <div class="skill-items">
@@ -171,11 +179,11 @@
       <div class="divider-line"></div>
     </div>
 
-    <section class="edu-grid">
+    <section class="edu-grid" aria-label="Education and certification">
       <article class="edu-card">
-        <span class="edu-year">2008 - 2012</span>
+        <span class="edu-year">2008 — 2012</span>
         <div class="edu-degree">Red Seal Chef</div>
-        <div class="edu-school">OKANAGAN COLLEGE - Kelowna, BC</div>
+        <div class="edu-school">OKANAGAN COLLEGE — Kelowna, BC</div>
       </article>
 
       <article class="edu-card">
@@ -196,10 +204,13 @@
       <div class="divider-line"></div>
     </div>
 
-    <nav class="footer-nav">
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a class="nav-btn nav-btn--primary" href="./resume.pdf" target="_blank" rel="noopener noreferrer" download>
+        GET PDF VERSION
+      </a>
       <a href="../index.html" class="nav-btn">← MAIN</a>
       <a href="../engineering/engineering.html" class="nav-btn">ENGINEERING →</a>
-      <a href="../forge/forge.html" class="nav-btn amber">THE FORGE →</a>
+      <a href="../forge/forge.html" class="nav-btn nav-btn--accent">THE FORGE →</a>
       <a href="mailto:jeremy.a.guido@gmail.com" class="nav-btn">EMAIL</a>
       <a href="https://www.linkedin.com/in/jeremy-guido" target="_blank" rel="noopener noreferrer" class="nav-btn">LINKEDIN</a>
       <a href="https://github.com/nopwron" target="_blank" rel="noopener noreferrer" class="nav-btn">GITHUB</a>
@@ -207,6 +218,14 @@
   </main>
 
   <script src="../assets/js/stars.js"></script>
-  <script src="../assets/js/site.js"></script>
+  <script>
+    const d = new Date();
+    const stamp = d.getFullYear().toString() +
+      String(d.getMonth() + 1).padStart(2, '0') +
+      String(d.getDate()).padStart(2, '0');
+    document.querySelectorAll('a[download][href="./resume.pdf"]').forEach(a => {
+      a.download = stamp + '-JGResume.pdf';
+    });
+  </script>
 </body>
 </html>

@@ -2,47 +2,53 @@
   --font-mono: "Share Tech Mono", "Courier New", Courier, monospace;
   --font-heading: "Rajdhani", "Arial Narrow", Arial, sans-serif;
 
-  --color-bg: #06070a;
-  --color-bg-panel: rgba(8, 14, 22, 0.94);
-  --color-bg-soft: rgba(8, 14, 22, 0.88);
-  --color-bg-glass: rgba(8, 14, 22, 0.72);
-  --color-bg-glass-strong: rgba(8, 14, 22, 0.84);
-  --color-bg-panel-glass: rgba(8, 14, 22, 0.88);
+  /* Core background */
+  --color-bg: #071019;
+  --color-bg-panel: rgba(10, 24, 38, 0.95);
+  --color-bg-soft: rgba(10, 24, 38, 0.9);
+  --color-bg-glass: rgba(10, 24, 38, 0.74);
+  --color-bg-glass-strong: rgba(10, 24, 38, 0.86);
+  --color-bg-panel-glass: rgba(10, 24, 38, 0.9);
 
-  --color-text: #d8fbff;
-  --color-text-ui: #d8fbff;
-  --color-text-soft: rgba(216, 251, 255, 0.82);
-  --color-text-dim: rgba(216, 251, 255, 0.6);
-  --color-text-faint: rgba(216, 251, 255, 0.48);
-  --color-text-muted: rgba(255, 255, 255, 0.65);
-  --color-text-list: rgba(216, 251, 255, 0.72);
-  --color-text-list-strong: rgba(255, 255, 255, 0.75);
+  /* Text, kept readable */
+  --color-text: #d9e6f2;
+  --color-text-ui: #dfeaf5;
+  --color-text-soft: rgba(217, 230, 242, 0.84);
+  --color-text-dim: rgba(217, 230, 242, 0.68);
+  --color-text-faint: rgba(217, 230, 242, 0.5);
+  --color-text-muted: rgba(223, 234, 245, 0.68);
+  --color-text-list: rgba(217, 230, 242, 0.76);
+  --color-text-list-strong: rgba(233, 240, 247, 0.82);
 
-  --color-cyan: #8cf7ff;
-  --color-cyan-dim: rgba(140, 247, 255, 0.35);
-  --color-cyan-soft: rgba(140, 247, 255, 0.08);
-  --color-cyan-soft-strong: rgba(140, 247, 255, 0.03);
-  --color-cyan-border: rgba(140, 247, 255, 0.3);
+  /* Cyan pushed toward forged steel blue */
+  --color-cyan: #6f97b3;
+  --color-cyan-dim: rgba(111, 151, 179, 0.34);
+  --color-cyan-soft: rgba(111, 151, 179, 0.08);
+  --color-cyan-soft-strong: rgba(111, 151, 179, 0.03);
+  --color-cyan-border: rgba(111, 151, 179, 0.3);
 
-  --color-amber: #ffe169;
-  --color-amber-dim: rgba(255, 225, 105, 0.35);
-  --color-amber-soft: rgba(255, 225, 105, 0.08);
-  --color-amber-soft-strong: rgba(255, 225, 105, 0.03);
-  --color-amber-border: rgba(255, 225, 105, 0.3);
+  /* Amber pushed warmer, closer to screenshot */
+  --color-amber: #e09a16;
+  --color-amber-dim: rgba(224, 154, 22, 0.38);
+  --color-amber-soft: rgba(224, 154, 22, 0.1);
+  --color-amber-soft-strong: rgba(224, 154, 22, 0.04);
+  --color-amber-border: rgba(224, 154, 22, 0.34);
 
   --color-success: #86f7b3;
 
-  --color-border: rgba(140, 247, 255, 0.35);
-  --color-border-ui: rgba(140, 247, 255, 0.7);
-  --color-border-strong: rgba(140, 247, 255, 0.45);
+  /* Border system */
+  --color-border: rgba(111, 151, 179, 0.34);
+  --color-border-ui: rgba(111, 151, 179, 0.62);
+  --color-border-strong: rgba(111, 151, 179, 0.44);
   --color-border-soft: rgba(255, 255, 255, 0.08);
   --color-border-soft-2: rgba(255, 255, 255, 0.1);
-  --color-border-panel: rgba(140, 247, 255, 0.5);
-  --color-border-game: rgba(140, 247, 255, 0.3);
+  --color-border-panel: rgba(111, 151, 179, 0.44);
+  --color-border-game: rgba(111, 151, 179, 0.28);
 
+  /* Atmospheric background, tuned closer to forge */
   --bg-gradient:
-    radial-gradient(circle at top, rgba(31, 66, 95, 0.35), transparent 40%),
-    radial-gradient(circle at bottom, rgba(0, 128, 128, 0.18), transparent 30%),
+    radial-gradient(circle at top, rgba(18, 41, 63, 0.42), transparent 40%),
+    radial-gradient(circle at bottom, rgba(9, 50, 58, 0.22), transparent 32%),
     var(--color-bg);
 
   --scanline-overlay: repeating-linear-gradient(
@@ -53,9 +59,10 @@
     transparent 4px
   );
 
+  /* Panel glow softened and deepened */
   --panel-glow:
-    0 0 20px rgba(140, 247, 255, 0.12),
-    inset 0 0 20px rgba(140, 247, 255, 0.04);
+    0 0 20px rgba(111, 151, 179, 0.12),
+    inset 0 0 20px rgba(111, 151, 179, 0.035);
 
   --transition-ui: 180ms ease;
 

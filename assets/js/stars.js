@@ -1,203 +1,101 @@
 (function () {
-  'use strict';
+  const canvas = document.getElementById("stars");
+  if (!canvas) return;
 
-  const DEFAULTS = {
-    selector: '#stars',
-    backgroundTop: '#08131a',
-    backgroundBottom: '#0d1f2d',
-    densityDivisor: 6000,
-    maxRadius: 1.2,
-    minAlpha: 0.1,
-    alphaRange: 0.6,
-    minSpeed: 0.01,
-    speedRange: 0.08,
-    shape: 'circle',
-    clearEachFrame: true
-  };
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
 
-  function clampNumber(value, fallback) {
-    const num = Number(value);
-    return Number.isFinite(num) ? num : fallback;
+  const body = document.body;
+  const isDisciplinePage = body.classList.contains("site-discipline");
+
+  let width = 0;
+  let height = 0;
+  let dpr = 1;
+  let stars = [];
+  let animationId = null;
+
+  function resizeCanvas() {
+    dpr = Math.max(1, window.devicePixelRatio || 1);
+    width = window.innerWidth;
+    height = window.innerHeight;
+
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    canvas.style.width = width + "px";
+    canvas.style.height = height + "px";
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
-  function boolFromData(value, fallback) {
-    if (value == null || value === '') {
-      return fallback;
+  function buildStars() {
+    const density = isDisciplinePage ? 6500 : 8000;
+    const count = Math.max(40, Math.floor((width * height) / density));
+    stars = [];
+
+    for (let i = 0; i < count; i += 1) {
+      stars.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 1.35 + 0.25,
+        a: Math.random() * 0.55 + 0.08,
+        speed: Math.random() * 0.12 + 0.02,
+      });
     }
-    if (value === 'false' || value === '0') {
-      return false;
-    }
-    if (value === 'true' || value === '1') {
-      return true;
-    }
-    return fallback;
   }
 
-  function readOptionsFromDataset(canvas) {
-    const data = canvas.dataset || {};
-    return {
-      densityDivisor: clampNumber(data.starDensity, DEFAULTS.densityDivisor),
-      maxRadius: clampNumber(data.starMaxRadius, DEFAULTS.maxRadius),
-      minAlpha: clampNumber(data.starMinAlpha, DEFAULTS.minAlpha),
-      alphaRange: clampNumber(data.starAlphaRange, DEFAULTS.alphaRange),
-      minSpeed: clampNumber(data.starMinSpeed, DEFAULTS.minSpeed),
-      speedRange: clampNumber(data.starSpeedRange, DEFAULTS.speedRange),
-      shape: data.starShape || DEFAULTS.shape,
-      backgroundTop: data.starBgTop || DEFAULTS.backgroundTop,
-      backgroundBottom: data.starBgBottom || DEFAULTS.backgroundBottom,
-      clearEachFrame: boolFromData(data.starClearEachFrame, DEFAULTS.clearEachFrame)
-    };
+  function drawBackground() {
+    const gradient = ctx.createLinearGradient(0, 0, 0, height);
+    gradient.addColorStop(0, "#071019");
+    gradient.addColorStop(0.55, "#0a1826");
+    gradient.addColorStop(1, "#0d1f2d");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
   }
 
-  function createStarfield(canvas, options) {
-    if (!canvas || !(canvas instanceof HTMLCanvasElement)) {
-      return null;
-    }
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) {
-      return null;
-    }
-
-    let stars = [];
-    let animationFrame = 0;
-    let running = false;
-
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-
-    function initStars() {
-      stars = [];
-      const count = Math.floor((canvas.width * canvas.height) / options.densityDivisor);
-
-      for (let i = 0; i < count; i += 1) {
-        stars.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          r: Math.random() * options.maxRadius,
-          a: Math.random() * options.alphaRange + options.minAlpha,
-          speed: Math.random() * options.speedRange + options.minSpeed
-        });
-      }
-    }
-
-    function drawBackground() {
-      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      gradient.addColorStop(0, options.backgroundTop);
-      gradient.addColorStop(1, options.backgroundBottom);
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
-
-    function drawStar(star) {
-      ctx.fillStyle = `rgba(255,255,255,${star.a})`;
-
-      if (options.shape === 'square') {
-        const size = Math.max(0.5, star.r + 0.3);
-        ctx.fillRect(star.x, star.y, size, size);
-        return;
-      }
-
+  function drawStars() {
+    for (const star of stars) {
       ctx.beginPath();
       ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(217, 230, 242, ${star.a})`;
       ctx.fill();
-    }
 
-    function step() {
-      if (!running) {
-        return;
+      star.y -= star.speed;
+
+      if (star.y < -2) {
+        star.y = height + 2;
+        star.x = Math.random() * width;
       }
-
-      if (options.clearEachFrame) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }
-
-      drawBackground();
-
-      for (let i = 0; i < stars.length; i += 1) {
-        const star = stars[i];
-        drawStar(star);
-
-        star.y -= star.speed;
-        if (star.y < -2) {
-          star.y = canvas.height + 2;
-          star.x = Math.random() * canvas.width;
-        }
-      }
-
-      animationFrame = window.requestAnimationFrame(step);
     }
-
-    function handleResize() {
-      resize();
-      initStars();
-    }
-
-    function start() {
-      if (running) {
-        return;
-      }
-      running = true;
-      handleResize();
-      step();
-      window.addEventListener('resize', handleResize);
-    }
-
-    function stop() {
-      running = false;
-      window.cancelAnimationFrame(animationFrame);
-      window.removeEventListener('resize', handleResize);
-    }
-
-    return {
-      start,
-      stop,
-      resize: handleResize,
-      canvas
-    };
   }
 
-  function init(customOptions) {
-    const baseOptions = Object.assign({}, DEFAULTS, customOptions || {});
-    const canvas = document.querySelector(baseOptions.selector);
+  function frame() {
+    ctx.clearRect(0, 0, width, height);
+    drawBackground();
+    drawStars();
+    animationId = window.requestAnimationFrame(frame);
+  }
 
-    if (!canvas) {
-      return null;
+  function handleResize() {
+    resizeCanvas();
+    buildStars();
+  }
+
+  handleResize();
+  frame();
+
+  window.addEventListener("resize", handleResize);
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      if (animationId !== null) {
+        window.cancelAnimationFrame(animationId);
+        animationId = null;
+      }
+      return;
     }
 
-    const datasetOptions = readOptionsFromDataset(canvas);
-    const starfield = createStarfield(
-      canvas,
-      Object.assign({}, baseOptions, datasetOptions, customOptions || {})
-    );
-
-    if (!starfield) {
-      return null;
+    if (animationId === null) {
+      frame();
     }
-
-    starfield.start();
-    return starfield;
-  }
-
-  const api = {
-    init,
-    createStarfield
-  };
-
-  if (window.Site) {
-    window.Site.stars = api;
-  } else {
-    window.SiteStars = api;
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function onReady() {
-      document.removeEventListener('DOMContentLoaded', onReady);
-      init();
-    });
-  } else {
-    init();
-  }
+  });
 })();

@@ -4,102 +4,114 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jeremy Guido | Retro Resume Arcade</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./assets/css/tokens.css" />
   <link rel="stylesheet" href="./assets/css/base.css" />
-  <link rel="stylesheet" href="./assets/css/components.css" />
   <link rel="stylesheet" href="./assets/css/page-index.css" />
 </head>
-<body class="site-index">
+
+<body class="scanlines site-index">
   <canvas id="game"></canvas>
 
-  <nav class="hud">
-    <div class="hud-left">
-      <span class="hud-mark">JG//INDEX</span>
-      <span class="hud-title">RETRO RESUME ARCADE</span>
-    </div>
-    <div class="hud-right">
-      <div class="hud-stat">
-        <span class="hud-stat-label">PAGES</span>
-        <span class="hud-stat-value">03</span>
-      </div>
-      <div class="hud-stat">
-        <span class="hud-stat-label">MODE</span>
-        <span class="hud-stat-value">ASTEROIDS</span>
-      </div>
-      <div class="hud-stat">
-        <span class="hud-stat-label">STATUS</span>
-        <span class="hud-stat-value">LIVE</span>
-      </div>
-    </div>
-  </nav>
+  <div class="hud">
+    <section class="panel">
+      <div class="eyebrow">EIT, Red Seal Chef</div>
+      <h1>JEREMY GUIDO</h1>
 
-  <div class="score-bar">
-    <div>
-      <span class="label">SCORE</span>
-      <span class="value" id="score">0</span>
-    </div>
-    <div>
-      <span class="label">LIVES</span>
-      <span class="value" id="lives">3</span>
-    </div>
-    <div>
-      <span class="label">WAVE</span>
-      <span class="value" id="wave">1</span>
-    </div>
-    <div>
-      <span class="label">HI</span>
-      <span class="value" id="highScore">0</span>
-    </div>
+      <p>
+        Engineer, hospitality professional, and builder of live-event objects.
+        Choose a discipline and go deeper.
+      </p>
+
+      <div class="discipline-list">
+        <article class="discipline-card engineering">
+          <!-- <div class="discipline-code">DISCIPLINE_01</div> -->
+          <h2>ENGINEERING</h2>
+          <p>
+            Mechanical engineering, industrial refrigeration, embedded systems, and applied technical work.
+          </p>
+          <a class="btn alt" href="./engineering/engineering.html">ENTER</a>
+        </article>
+
+        <article class="discipline-card hospitality">
+          <!-- <div class="discipline-code">DISCIPLINE_02</div> -->
+          <h2>HOSPITALITY</h2>
+          <p>
+            Front and back of house, service flow, events, and guest-facing execution.
+          </p>
+          <a class="btn alt" href="./hospitality/hospitality.html">ENTER</a>
+        </article>
+
+        <article class="discipline-card forge">
+          <!-- <div class="discipline-code">DISCIPLINE_03</div> -->
+          <h2>THE FORGE</h2>
+          <p>
+            Fabrication, props, wearables, and custom commissions.
+          </p>
+          <a class="btn alt" href="./forge/forge.html">ENTER</a>
+        </article>
+
+        <article class="discipline-card lab">
+          <h2>THE LAB</h2>
+          <p>
+            Interactive physics simulations and control theory demonstrations. Pendulum dynamics, PID tuning, LQR control.
+          </p>
+          <a class="btn alt" href="./lab/lab.html">ENTER</a>
+        </article>
+      </div>
+
+
+    </section>
+
+<div class="right">
+  <div class="topbar panel">
+    <div>SCORE<br><span id="score">0</span></div>
+    <div>LIVES<br><span id="lives">3</span></div>
+    <div>WAVE<br><span id="wave">1</span></div>
+    <div>HI<br><span id="highScore">0</span></div>
+
+      <a class="btn hud-btn" href="#" id="togglePause">PAUSE</a>
   </div>
 
-  <section class="index-panel">
-    <span class="eyebrow">// PRIMARY ENTRY</span>
-    <h1 class="panel-title">JEREMY<br><span>GUIDO</span></h1>
-    <p class="panel-copy">
-      Hospitality first, backed by engineering discipline and stage presence.
-    </p>
+  <section class="contact-panel panel">
+    <div class="contact-label">Socials</div>
 
-    <ul>
-      <li>Mechanical engineering and applied research</li>
-      <li>Hospitality, service, and performance</li>
-      <li>Fabrication, wearables, props, and product builds</li>
-    </ul>
+    <div class="contact-list">
+      <a class="contact-card" href="https://www.instagram.com/nopwron" target="_blank" rel="noopener noreferrer">
+        <span class="contact-code">Performance</span>
+        <span class="contact-name">INSTAGRAM</span>
+      </a>
 
-    <div class="divider-label">
-      <span>SELECT A PATH</span>
-      <div class="divider-line"></div>
-    </div>
+      <a class="contact-card" href="https://github.com/nopwron" target="_blank" rel="noopener noreferrer">
+        <span class="contact-code">Coding</span>
+        <span class="contact-name">GITHUB</span>
+      </a>
 
-    <div class="links">
-      <a class="btn btn--cyan" href="./engineering/engineering.html">ENGINEERING</a>
-      <a class="btn btn--amber" href="./hospitality/hospitality.html">HOSPITALITY</a>
-      <a class="btn" href="./forge/forge.html">THE FORGE</a>
-    </div>
+      <a class="contact-card" href="https://www.linkedin.com/in/jeremy-guido" target="_blank" rel="noopener noreferrer">
+        <span class="contact-code">Engineering</span>
+        <span class="contact-name">LINKEDIN</span>
+      </a>
 
-    <div class="divider-label">
-      <span>LINKS</span>
-      <div class="divider-line"></div>
-    </div>
-
-    <div class="links">
-      <a class="btn btn--amber" href="./assets/resume.pdf" target="_blank" rel="noopener noreferrer">OPEN RESUME PDF</a>
-      <a class="btn" href="#" id="togglePause">PAUSE GAME</a>
-      <a class="btn" href="https://www.instagram.com/nopwron" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
-      <a class="btn" href="https://github.com/nopwron" target="_blank" rel="noopener noreferrer">GITHUB</a>
-      <a class="btn" href="https://www.linkedin.com/in/jeremy-guido" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
-      <a class="btn" href="mailto:jeremy.a.guido@gmail.com">EMAIL</a>
+      <a class="contact-card" href="mailto:jeremy.a.guido@gmail.com">
+        <span class="contact-code">Direct</span>
+        <span class="contact-name">EMAIL</span>
+      </a>
     </div>
   </section>
-
-  <div id="centerMessage" class="center-message">
-    <div class="big">PRESS <span>SPACE</span></div>
-    <div class="small">Launch the ship, dodge the rocks, or pick a direction and dive deeper.</div>
+</div>
   </div>
 
-  <script src="./assets/js/asteroids.js"></script>
-  <script src="./assets/js/site.js"></script>
+  <div id="centerMessage" class="center-message">
+    <div>Press Space</div>
+  </div>
+
+  <script>
+    if (!window.matchMedia("(max-width: 980px)").matches) {
+      var s = document.createElement("script");
+      s.src = "./assets/js/asteroids.js";
+      document.body.appendChild(s);
+    }
+  </script>
 </body>
 </html>
