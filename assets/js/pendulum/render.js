@@ -64,7 +64,7 @@ export function draw(ctx, w, h, state, u, n, mode) {
   if (Math.abs(u) > 0.01) drawForceArrow(ctx, cx, cy, state[0], u);
 
   if (mode === 'CRASHED') drawCrashOverlay(ctx, w, h);
-  if (mode === 'STANDBY') drawStandbyLabel(ctx, w, h);
+  else drawInteractionHint(ctx, w, h);
 }
 
 // ── Track ────────────────────────────────────────────────────────────────────
@@ -347,12 +347,13 @@ function drawCrashOverlay(ctx, w, h) {
   ctx.restore();
 }
 
-// ── STANDBY label ─────────────────────────────────────────────────────────────
-function drawStandbyLabel(ctx, w, h) {
+// ── Persistent canvas interaction hint ───────────────────────────────────────
+function drawInteractionHint(ctx, w, h) {
   ctx.save();
-  ctx.font      = '11px "Share Tech Mono", monospace';
-  ctx.fillStyle = C.textFaint;
-  ctx.textAlign = 'center';
-  ctx.fillText('PRESS RESET TO BEGIN', w / 2, h * 0.85);
+  ctx.font          = '9px "Share Tech Mono", monospace';
+  ctx.fillStyle     = 'rgba(111,151,179,0.22)';
+  ctx.textAlign     = 'right';
+  ctx.textBaseline  = 'bottom';
+  ctx.fillText('TAP · SWIPE TO DISTURB', w - 10, h - 8);
   ctx.restore();
 }

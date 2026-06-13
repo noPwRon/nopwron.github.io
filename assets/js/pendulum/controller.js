@@ -1,39 +1,81 @@
 // PID and LQR controllers.
 // Both are pure functions (state in → force out).
-// Anti-windup on PID integral term is clamped, not back-calculated.
-// See docs/PHYSICS.md for LQR gain derivation method.
+// Anti-windup: integral clamped before accumulation (not back-calculated).
+// LQR gains computed offline — see docs/PHYSICS.md §5.2 for method.
 
 import { PARAMS } from './params.js';
 
+// Angle reference clamp — keeps cascade outer-loop reference within a safe range.
+// Prevents the centering correction from exceeding ~11° and destabilising the angle.
+const THETA_REF_MAX = 0.20; // rad ≈ 11.5°
+
 // ── PID ─────────────────────────────────────────────────────────────────────
-// Operates on θ₁ error (angle of first link from vertical).
-// Secondary weak loop on cart position x prevents track drift.
+// Cascade structure: outer loop sets angle reference from cart position/velocity;
+// inner PD loop drives θ₁ → θ_ref.
 //
-// pidState: { integral, prevError }  — mutated each call (caller owns it)
-// q, qdot:  current state vectors
-// gains:    { Kp, Ki, Kd, xKp }
-// dt:       timestep (s)
+// Additive structure (error = θ₁, u = Kp·θ + Kd·θ̇ − xKp·x) fails because the
+// angle term exactly cancels the centering term at steady state, leaving the cart
+// with zero restoring force. Cascade avoids this by generating a signed angle
+// reference that keeps the net force direction correct via the pendulum's inertia.
+//
+// For 2–3 links: same PID on θ₁ only — will visibly fail (by design).
+//
+// pidState: { integral, prevError }  — mutable, owned by caller
+// q:        [x, θ₁, …, θₙ]
+// qdot:     [ẋ, θ̇₁, …, θ̇ₙ]
+// gains:    { Kp, Ki, Kd, xKp, xKd }
+// dt:       physics timestep (s)
 // Returns:  force u (N), clamped to ±PARAMS.maxForce
 export function pidStep(pidState, q, qdot, gains, dt) {
-  // TODO T5: implement PID with anti-windup
-  return 0;
+  const theta1 = q[1];
+  const x      = q[0];
+  const xdot   = qdot[0];
+  const { Kp, Ki, Kd, xKp, xKd = 0 } = gains;
+
+  // Outer loop: desired angle reference from cart displacement and velocity.
+  // θ_ref < 0 when x > 0 (pendulum leans left to pull cart back to centre).
+  const thetaRef = clamp(-xKp * x - xKd * xdot, -THETA_REF_MAX, THETA_REF_MAX);
+
+  // Inner loop error relative to angle reference.
+  // θ̈ = 35.6·θ − 2.79·u: u > 0 when θ > thetaRef (tilt right of reference) stabilises.
+  const error  = theta1 - thetaRef;
+  const dError = qdot[1];  // θ̇₁ directly — avoids finite-difference noise
+  pidState.prevError = error;
+
+  // Integral with anti-windup clamp
+  pidState.integral = clamp(
+    pidState.integral + error * dt,
+    -PARAMS.integralClamp,
+    PARAMS.integralClamp,
+  );
+
+  return clamp(
+    Kp * error + Ki * pidState.integral + Kd * dError,
+    -PARAMS.maxForce,
+    PARAMS.maxForce,
+  );
 }
 
-// Reset PID integrator (call on mode switch, reset, link count change)
+// Reset integrator — call on mode change, link count change, or reset
 export function resetPID(pidState) {
   pidState.integral  = 0;
   pidState.prevError = 0;
 }
 
 // ── LQR ─────────────────────────────────────────────────────────────────────
-// Full-state feedback: u = -K · (state - x_ref)
-// x_ref is the upright equilibrium: all zeros.
-// K is a row vector hardcoded in PARAMS.lqrGains[n].
+// Full-state feedback: u = −K · z  where z is deviation from upright equilibrium.
+// State layout: [x, θ₁, …, θₙ, ẋ, θ̇₁, …, θ̇ₙ]
 //
-// state: [x, θ₁,…,θₙ, ẋ, θ̇₁,…,θ̇ₙ]  (length 2*(n+1))
-// n:     link count
-// Returns: force u (N), clamped to ±PARAMS.maxForce
+// Gains in PARAMS.lqrGains[n] computed offline via continuous CARE (see PHYSICS.md §5.2).
+// Returns 0 until gains are populated in T11.
 export function lqrStep(state, n) {
-  // TODO T11: populate PARAMS.lqrGains and implement multiplication
-  return 0;
+  const K = PARAMS.lqrGains[n];
+  if (!K) return 0;  // gains not yet computed
+
+  let u = 0;
+  for (let i = 0; i < K.length; i++) u -= K[i] * state[i];
+  return clamp(u, -PARAMS.maxForce, PARAMS.maxForce);
 }
+
+// ── Utility ──────────────────────────────────────────────────────────────────
+function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }

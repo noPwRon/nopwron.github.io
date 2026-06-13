@@ -98,8 +98,10 @@
       <div id="lqrInfo" class="hidden">
         <div class="pend-section-label">LQR — FULL STATE FEEDBACK</div>
         <p class="pend-placeholder">
-          Gains computed offline via continuous-time Riccati equation.
-          Hardcoded per link count. See PHYSICS.md.
+          Optimal full-state feedback: u&nbsp;=&nbsp;−K·z where z&nbsp;=&nbsp;[x,&nbsp;θ₁…θₙ,&nbsp;ẋ,&nbsp;θ̇₁…θ̇ₙ].
+          Gains K are computed offline by solving the continuous algebraic Riccati equation
+          (Q&nbsp;=&nbsp;diag([1,&nbsp;200n,&nbsp;0.5,&nbsp;10n]),&nbsp;R&nbsp;=&nbsp;0.01).
+          Hardcoded per link count — switch link count to reload.
         </p>
       </div>
 
@@ -112,15 +114,15 @@
              aria-label="Simulation speed multiplier" />
 
       <div class="pend-btn-group">
-        <button class="pend-btn" id="btnPause">PAUSE</button>
-        <button class="pend-btn pend-btn--amber" id="btnReset">RESET</button>
-        <button class="pend-btn" id="btnNudge" title="Apply random impulse disturbance">NUDGE</button>
+        <button class="pend-btn" id="btnPause" title="Pause or resume the simulation">PAUSE</button>
+        <button class="pend-btn pend-btn--amber" id="btnReset" title="Reset to initial conditions">RESET</button>
+        <button class="pend-btn" id="btnNudge" title="Apply a random horizontal impulse to the cart (also: tap or swipe the canvas)">NUDGE</button>
       </div>
 
       <div class="pend-section-label">UNITS</div>
       <div class="pend-btn-group">
-        <button class="pend-btn pend-btn--success active" id="btnDeg">DEG</button>
-        <button class="pend-btn" id="btnRad">RAD</button>
+        <button class="pend-btn pend-btn--success active" id="btnDeg" title="Show angles in degrees">DEG</button>
+        <button class="pend-btn" id="btnRad" title="Show angles in radians">RAD</button>
       </div>
 
     </aside>

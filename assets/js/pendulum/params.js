@@ -20,26 +20,27 @@ export const PARAMS = {
   fallThreshold: Math.PI * 0.75,  // rad from upright → fail state
 
   // ── Controller ────────────────────────────────────────
-  maxForce: 20.0,          // N — saturation limit on control output
-  integralClamp: 10.0,     // N·s — anti-windup clamp on PID integral term
+  maxForce: 20.0,         // N — saturation limit on control output
+  integralClamp: 5.0,     // N·s — anti-windup clamp on PID integral term
 
-  // ── PID presets (gains: { Kp, Ki, Kd, xKp }) ─────────
-  // xKp: weak secondary loop on cart position to prevent drift
+  // ── PID presets (gains: { Kp, Ki, Kd, xKp, xKd }) ─────────
+  // Cascade structure: outer loop computes θ_ref = clamp(-xKp·x - xKd·ẋ, ±0.2rad),
+  // inner PD drives θ₁ → θ_ref. xKp/xKd units: rad/m and rad/(m/s).
   pidPresets: {
-    'TUNED':             { Kp: 50,  Ki: 1.0, Kd: 12,  xKp: 0.5 },
-    'UNDERDAMPED':       { Kp: 25,  Ki: 0.5, Kd: 3,   xKp: 0.3 },
-    'CRITICALLY DAMPED': { Kp: 80,  Ki: 2.0, Kd: 18,  xKp: 0.8 },
-    'UNSTABLE':          { Kp: 5,   Ki: 0.0, Kd: 0.5, xKp: 0.0 },
+    'TUNED':             { Kp: 50,  Ki: 0.5, Kd: 12,  xKp: 0.05, xKd: 0.2 },
+    'UNDERDAMPED':       { Kp: 25,  Ki: 0.0, Kd: 3,   xKp: 0.02, xKd: 0.1 },
+    'CRITICALLY DAMPED': { Kp: 80,  Ki: 1.0, Kd: 18,  xKp: 0.08, xKd: 0.3 },
+    'UNSTABLE':          { Kp: 5,   Ki: 0.0, Kd: 0.5, xKp: 0.0,  xKd: 0.0 },
   },
 
-  // ── LQR gains (computed offline, hardcoded per link count) ──
-  // State vector: [x, θ₁, (θ₂, θ₃), ẋ, θ̇₁, (θ̇₂, θ̇₃)]
-  // K row vector: u = -K · (state - reference)
-  // Placeholder — will be filled after PHYSICS.md derivation in T2/T9/T11
+  // ── LQR gains (computed offline via continuous Riccati equation, T11) ──
+  // u = −K · z  where z = [x, θ₁,…,θₙ, ẋ, θ̇₁,…,θ̇ₙ]
+  // Q = diag([1, 200×n, 0.5, 10×n]),  R = 0.01
+  // Verified: all three link counts stabilise from θ₀=0.10 and ẋ₀=2 m/s impulse.
   lqrGains: {
-    1: null,  // [Kx, Kθ1, Kxdot, Kθ1dot]
-    2: null,  // [Kx, Kθ1, Kθ2, Kxdot, Kθ1dot, Kθ2dot]
-    3: null,  // [Kx, Kθ1, Kθ2, Kθ3, Kxdot, Kθ1dot, Kθ2dot, Kθ3dot]
+    1: [-10.0, -204.0361, -21.0758, -40.6922],
+    2: [10.0, -568.5984, 858.9738, 25.8617, 7.8914, 98.8117],
+    3: [-10.0, -668.2167, 3438.9155, -3199.1197, -29.8565, 8.2321, 98.3774, -263.7155],
   },
 
   // ── Rendering ─────────────────────────────────────────

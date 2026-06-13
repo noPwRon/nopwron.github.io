@@ -15,18 +15,27 @@ const chartCanvas = document.getElementById('chart');
 const simCtx      = simCanvas.getContext('2d');
 const chartCtx    = chartCanvas.getContext('2d');
 
-function resizeCanvases() {
-  const simRect   = simCanvas.getBoundingClientRect();
-  const chartRect = chartCanvas.getBoundingClientRect();
+function resizeCanvas(canvas, ctx) {
+  const rect = canvas.getBoundingClientRect();
+  if (rect.width === 0 || rect.height === 0) return;
   const dpr = devicePixelRatio || 1;
+  canvas.width  = Math.round(rect.width  * dpr);
+  canvas.height = Math.round(rect.height * dpr);
+  ctx.scale(dpr, dpr);
+}
 
-  simCanvas.width  = Math.round(simRect.width  * dpr);
-  simCanvas.height = Math.round(simRect.height * dpr);
-  simCtx.scale(dpr, dpr);
+function resizeCanvases() {
+  resizeCanvas(simCanvas,   simCtx);
+  resizeCanvas(chartCanvas, chartCtx);
+}
 
-  chartCanvas.width  = Math.round(chartRect.width  * dpr);
-  chartCanvas.height = Math.round(chartRect.height * dpr);
-  chartCtx.scale(dpr, dpr);
+// ResizeObserver catches orientation changes and CSS layout reflows on mobile
+if (typeof ResizeObserver !== 'undefined') {
+  const ro = new ResizeObserver(resizeCanvases);
+  ro.observe(simCanvas);
+  ro.observe(chartCanvas);
+} else {
+  window.addEventListener('resize', resizeCanvases);
 }
 
 // ── Simulation state ─────────────────────────────────────────────────────────
@@ -34,7 +43,7 @@ let nLinks      = 1;
 let ctrlMode    = 'PID';   // 'PID' | 'LQR'
 let simPaused   = false;
 let speedMult   = 1.0;
-let unitDeg     = false;
+let unitDeg     = true;    // DEG active by default (matches HTML initial state)
 let simStatus   = 'STANDBY';
 
 // State vector: [x, θ₁,…,θₙ, ẋ, θ̇₁,…,θ̇ₙ]
@@ -99,7 +108,50 @@ initUI({
   onPause(p)               { simPaused = p; if (!p) lastTime = null; },
   onSpeedChange(mult)      { speedMult = mult; },
   onNudge(impulse)         { state[nLinks + 1] += impulse; },  // kick ẋ
+  onUnitsChange(isDeg)     { unitDeg = isDeg; },
 });
+
+// ── Canvas drag disturbance (mouse + touch) ───────────────────────────────────
+// Tap: small random nudge. Swipe/drag: impulse proportional to horizontal velocity.
+{
+  let dragStartX = null, dragStartT = null;
+
+  function getCanvasX(e) {
+    const rect = simCanvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    return clientX - rect.left;
+  }
+
+  function onDragStart(e) {
+    e.preventDefault();
+    dragStartX = getCanvasX(e);
+    dragStartT = performance.now();
+  }
+
+  function onDragEnd(e) {
+    e.preventDefault();
+    if (dragStartX === null || simStatus === 'CRASHED') { dragStartX = null; return; }
+    const endX = e.changedTouches ? e.changedTouches[0].clientX - simCanvas.getBoundingClientRect().left : getCanvasX(e);
+    const dt   = (performance.now() - dragStartT) / 1000;
+    const dx   = endX - dragStartX;
+    const rect = simCanvas.getBoundingClientRect();
+    // Map pixel delta to m/s impulse (1 canvas-width = 2 * trackHalfLength m)
+    const mPerPx = (2 * PARAMS.trackHalfLength) / rect.width;
+    const vel    = dt > 0.02 ? (dx * mPerPx) / dt : 0;
+    const impulse = Math.abs(dx) < 6
+      // tap — random nudge matching nudge button
+      ? (Math.random() < 0.5 ? 1 : -1) * (1.2 + Math.random() * 1.0)
+      // swipe — directional, clamped to ±4 m/s
+      : Math.max(-4, Math.min(4, vel));
+    state[nLinks + 1] += impulse;
+    dragStartX = null;
+  }
+
+  simCanvas.addEventListener('mousedown',  onDragStart);
+  simCanvas.addEventListener('mouseup',    onDragEnd);
+  simCanvas.addEventListener('touchstart', onDragStart, { passive: false });
+  simCanvas.addEventListener('touchend',   onDragEnd,   { passive: false });
+}
 
 // ── Animation loop ────────────────────────────────────────────────────────────
 function frame(timestamp) {
@@ -149,10 +201,10 @@ function frame(timestamp) {
 
   draw(simCtx, simW, simH, state, u, nLinks, simStatus);
   updateDashboard(state, u, nLinks, unitDeg, simStatus);
+  drawStripChart(chartCtx, nLinks, unitDeg);
 }
 
 // ── Start ─────────────────────────────────────────────────────────────────────
-window.addEventListener('resize', resizeCanvases);
 resizeCanvases();
 updateHUDStatus();
 requestAnimationFrame(frame);
