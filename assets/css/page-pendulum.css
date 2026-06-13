@@ -1,0 +1,448 @@
+/* ─────────────────────────────
+   PENDULUM SIMULATION PAGE
+───────────────────────────── */
+
+/* Full-viewport flex column — no scroll on body */
+.site-pendulum {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─────────────────────────────
+   BASE.CSS CANVAS OVERRIDE
+   base.css makes all canvases position:fixed fullscreen.
+   Override for simulation canvases to respect layout.
+───────────────────────────── */
+
+.site-pendulum #sim,
+.site-pendulum #chart {
+  position: static;
+  inset: auto;
+  width: auto;
+  height: auto;
+  z-index: auto;
+  display: block;
+}
+
+/* ─────────────────────────────
+   HUD TOP BAR
+───────────────────────────── */
+
+.pend-hud {
+  flex-shrink: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-xl);
+  background: var(--color-bg-panel-glass);
+  border-bottom: 1px solid var(--color-border-soft);
+  backdrop-filter: blur(4px);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  z-index: 4;
+}
+
+.pend-hud__left,
+.pend-hud__right {
+  display: flex;
+  align-items: center;
+}
+
+.pend-hud__left { gap: var(--space-xl); }
+.pend-hud__right { gap: var(--space-lg); }
+
+.pend-back {
+  display: inline-block;
+  padding: 5px 12px;
+  text-decoration: none;
+  letter-spacing: var(--tracking-md);
+  font-size: 0.7rem;
+  border: 1px solid var(--color-amber);
+  color: var(--color-amber);
+  background: transparent;
+  transition: background var(--transition-ui), color var(--transition-ui);
+}
+
+.pend-back:hover {
+  background: var(--color-amber);
+  color: var(--color-bg);
+}
+
+.pend-title {
+  color: var(--color-text);
+  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+}
+
+.pend-stat {
+  text-align: center;
+}
+
+.pend-stat-label {
+  display: block;
+  color: var(--color-text-faint);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+}
+
+.pend-stat-value {
+  display: block;
+  margin-top: 1px;
+  color: var(--color-text);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+}
+
+.pend-stat-value--stable  { color: var(--color-success); }
+.pend-stat-value--warn    { color: var(--color-amber); }
+.pend-stat-value--fail    { color: #ff6b6b; }
+
+/* ─────────────────────────────
+   MAIN LAYOUT: SIM + CONTROLS
+───────────────────────────── */
+
+.pend-layout {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* Simulation canvas container */
+.pend-sim-area {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+  background: var(--color-bg);
+}
+
+.pend-sim-area #sim {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;  /* prevent scroll while dragging canvas */
+  cursor: crosshair;
+}
+
+/* Controls sidebar */
+.pend-controls {
+  width: 272px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  padding: var(--space-md);
+  border-left: 1px solid var(--color-border-soft);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* ─────────────────────────────
+   DASHBOARD STRIP (BOTTOM)
+───────────────────────────── */
+
+.pend-dashboard {
+  flex-shrink: 0;
+  height: 192px;
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border-top: 1px solid var(--color-border-soft);
+  background: var(--color-bg-panel-glass);
+  backdrop-filter: blur(4px);
+  z-index: 2;
+  overflow: hidden;
+}
+
+.pend-readouts {
+  width: 220px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.pend-dashboard #chart {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 1px solid var(--color-border-soft);
+}
+
+/* ─────────────────────────────
+   SHARED UI PRIMITIVES
+───────────────────────────── */
+
+.pend-section-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--color-text-faint);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.pend-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.pend-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--color-text-dim);
+  white-space: nowrap;
+}
+
+.pend-value {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--color-cyan);
+  min-width: 64px;
+  text-align: right;
+}
+
+/* Sliders */
+.pend-slider {
+  width: 100%;
+  accent-color: var(--color-cyan);
+  cursor: pointer;
+}
+
+/* Buttons */
+.pend-btn {
+  display: inline-block;
+  padding: 7px 12px;
+  border: 1px solid var(--color-cyan-border);
+  color: var(--color-text);
+  background: var(--color-cyan-soft);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: background var(--transition-ui), color var(--transition-ui);
+}
+
+.pend-btn:hover {
+  background: var(--color-cyan);
+  color: var(--color-bg);
+}
+
+.pend-btn--amber {
+  border-color: var(--color-amber-border);
+  background: var(--color-amber-soft);
+}
+
+.pend-btn--amber:hover {
+  background: var(--color-amber);
+  color: var(--color-bg);
+}
+
+.pend-btn--success {
+  border-color: rgba(134, 247, 179, 0.36);
+  background: rgba(134, 247, 179, 0.05);
+  color: var(--color-success);
+}
+
+.pend-btn--success:hover {
+  background: var(--color-success);
+  color: var(--color-bg);
+}
+
+.pend-btn.active {
+  background: var(--color-cyan);
+  color: var(--color-bg);
+}
+
+.pend-btn--amber.active {
+  background: var(--color-amber);
+  color: var(--color-bg);
+}
+
+.pend-btn--success.active {
+  background: var(--color-success);
+  color: var(--color-bg);
+}
+
+.pend-btn-group {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Link selector tabs */
+.pend-link-tabs {
+  display: flex;
+  border: 1px solid var(--color-border-soft);
+}
+
+.pend-link-tab {
+  flex: 1;
+  padding: 6px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--color-text-dim);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--color-border-soft);
+  transition: background var(--transition-ui), color var(--transition-ui);
+}
+
+.pend-link-tab:last-child { border-right: none; }
+
+.pend-link-tab.active {
+  background: var(--color-cyan-soft);
+  color: var(--color-cyan);
+}
+
+.pend-link-tab:hover:not(.active) {
+  background: var(--color-bg-soft);
+  color: var(--color-text);
+}
+
+/* Controller mode toggle */
+.pend-mode-tabs {
+  display: flex;
+  border: 1px solid var(--color-border-soft);
+}
+
+.pend-mode-tab {
+  flex: 1;
+  padding: 7px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: var(--color-text-dim);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--color-border-soft);
+  transition: background var(--transition-ui), color var(--transition-ui);
+}
+
+.pend-mode-tab:last-child { border-right: none; }
+
+.pend-mode-tab.active[data-mode="PID"] {
+  background: var(--color-cyan-soft);
+  color: var(--color-cyan);
+}
+
+.pend-mode-tab.active[data-mode="LQR"] {
+  background: rgba(134, 247, 179, 0.07);
+  color: var(--color-success);
+}
+
+.pend-mode-tab:hover:not(.active) {
+  background: var(--color-bg-soft);
+  color: var(--color-text);
+}
+
+/* Readout rows in dashboard */
+.pend-readout {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  padding: 2px 0;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.pend-readout:last-child { border-bottom: none; }
+
+.pend-readout__label {
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  color: var(--color-text-faint);
+  white-space: nowrap;
+}
+
+.pend-readout__val {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--color-cyan);
+  text-align: right;
+}
+
+/* Placeholder text shown before controls are wired */
+.pend-placeholder {
+  font-size: 0.72rem;
+  color: var(--color-text-faint);
+  letter-spacing: 0.08em;
+  margin-top: var(--space-sm);
+}
+
+/* ─────────────────────────────
+   MOBILE / TOUCH
+───────────────────────────── */
+
+@media (max-width: 860px) {
+  .site-pendulum {
+    height: auto;
+    overflow: auto;
+  }
+
+  .pend-layout {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .pend-sim-area {
+    height: 55vw;
+    min-height: 280px;
+    max-height: 460px;
+  }
+
+  .pend-controls {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--color-border-soft);
+    max-height: none;
+  }
+
+  .pend-dashboard {
+    height: auto;
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  .pend-readouts {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pend-dashboard #chart {
+    height: 120px;
+    width: 100%;
+  }
+
+  .pend-hud__right .pend-stat:last-child {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .pend-hud {
+    padding: 0 var(--space-md);
+  }
+
+  .pend-title {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+  }
+
+  .pend-hud__right {
+    gap: var(--space-md);
+  }
+}
